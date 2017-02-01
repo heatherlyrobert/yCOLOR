@@ -1,0 +1,40 @@
+.TH yCOLOR 0 2010-Aug "linux" "heatherly custom programming manual"
+
+.SH NAME
+.B yCOLOR
+\- predictably aesthetic color palettes and transformations
+
+.SH DESCRIPTION (short)
+yCOLOR is a heatherly library for maintaining, generating, and supplying
+consistenly aesthetic and professional color palettes for a myriad of end-uses
+including both programs and end-users.
+
+.SH DECISION PROCESS
+
+.B situation (s).  
+nearly every program requires the use of color to highlight, differentiate,
+inform, group, categorize, and focus end-users.  professional colors are a
+critical part of user acceptance.
+
+.B complication (c).  
+for the non-artist, this is a difficult, tedious, unreliable task with a almost
+trivial chance of success.  it is important and it is nearly impossible to
+do right -- awesome.
+
+.B problem statement (p).  
+this is important for my future as it allows faster and more reliable intake
+of data and analysis.  how do i create a method of generating color palettes
+to use across all my programs.
+
+.B answer (a).  
+i will take some of the best designed color schemes and also the best thinking
+on generating new color palettes and put it into once place so i can experiment
+quickly with relaible results.
+
+.B objectives (o).  
+   -- large set of publicly available color schemes ready for use
+   -- specialty color schemes for large data set visualization
+   -- fully testing and accurate kinematics using opengl as the benchmark
+   -- expansive spider movement scripting meta-language
+   -- predict servo positioning issues without real-life experimentation
+   -- controlled using completely standard vi-keys (zero mouse/touch)
