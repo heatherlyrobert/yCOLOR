@@ -66,7 +66,6 @@ yPALETTE_clear()             /* PURPOSE = fully clear/initialize a color      */
    strncpy(MOTHERED,  "", 10);
    strncpy(MIXED   ,  "", 10);
    strncpy(CURRENT ,  "", 10);
-   strncpy(MODIFIED,  "", 10);
    strncpy(HEX,       "", 10);
    int      i = 0;                         /* loop iterator                   */
    for (i = 0; i < 16; ++i) {
@@ -98,12 +97,6 @@ yPALETTE_clear()             /* PURPOSE = fully clear/initialize a color      */
    /*---(well)-----------------------------*/
    POSITION        = 0;
    ACCENT          = 0;
-   o->its_varied      = 0;
-   o->its_normed      = 0;
-   o->its_mothered    = 0;
-   for (i = 0; i < 20; ++i) {
-      o->its_accents[i]  = 0;
-   }
    /*---(complete)-------------------------*/
    return 0;
 }

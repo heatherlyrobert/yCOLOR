@@ -60,7 +60,7 @@ yPALETTE__ryb(               /* PURPOSE = set color from RYB wheel angle      */
    if (o == NULL)                return -1;
    /*---(convert to RGB hex)---------------*/
    char   x_rc = 0;                          /* generic return code           */
-   if (x_rc == 0) x_rc = yPALETTE__ryb2hex(a_angle, DOMINANT_HEX);
+   if (x_rc == 0) x_rc = yCOLOR_ryb_hex   (a_angle, DOMINANT_HEX);
    if (x_rc == 0) DOMINANT_HUE = a_angle;
    /*---(complete)-------------------------*/
    return x_rc;

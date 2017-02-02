@@ -5,6 +5,7 @@ BASE    = yCOLOR
 DEBUG   = ${BASE}_debug
 UNIT    = ${BASE}_unit
 HDIR    = /home/system/yCOLOR.color_scheme_creator
+IDIR    = /usr/local/bin
 #*---(library documentation)----------*#
 MNUM    = 3
 MDIR    = /usr/share/man/man${MNUM}
@@ -42,10 +43,17 @@ STRIP   = @grep -v -e " DEBUG_" -e " yLOG_"
 
 
 
-all                : 
+all                : ${BASE}_make
 	#-----------------------#
 
 
+${BASE}_make       : ${BASE}_make.o
+	${LINK}  -o ${BASE}_make        ${BASE}_make.os  -lX11  -lyX11  -lGL  -lm  -lySTR  -lyURG  -lyFONT
+
+${BASE}_make.o     : ${HEADS}       ${BASE}_make.c
+	${COMP}  -fPIC  ${BASE}_make.c                           ${INC}
+	${STRIP}        ${BASE}_make.c      > ${BASE}_make.cs
+	${COMP}  -fPIC  ${BASE}_make.cs    -o ${BASE}_make.os    ${INC}
 
 
 #*---(standard library build)---------*#
@@ -164,10 +172,10 @@ install            :
 #	_lib      -A ${DEBUG}
 #	ldconfig
 	#---(production version)--------------#
-#	${COPY}   ${BASE}_make         ${IDIR}/
-#	chown     root:root            ${IDIR}/${BASE}_make
-#	chmod     0755                 ${IDIR}/${BASE}_make
-#	@sha1sum  ${BASE}_make
+	${COPY}   ${BASE}_make         ${IDIR}/
+	chown     root:root            ${IDIR}/${BASE}_make
+	chmod     0755                 ${IDIR}/${BASE}_make
+	@sha1sum  ${BASE}_make
 	#---(debug version)-------------------#
 #	${COPY}   ${BASE}_make_debug   ${IDIR}/
 #	chown     root:root            ${IDIR}/${BASE}_make_debug

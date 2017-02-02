@@ -535,7 +535,7 @@ yPALETTE_well(
    int x_rc = 0;
    if (x_rc == 0) x_rc = yPALETTE__switch(DOMINANT_HUE, SCHEME_ID, COMP_ID, a_position, &ANGLE);
    if (x_rc == 0) {
-      x_rc = yPALETTE__ryb2hex(ANGLE, BASE);
+      x_rc = yCOLOR_ryb_hex   (ANGLE, BASE);
       if (x_rc == 0) x_rc = yPALETTE__variant_make  (VARIANT_ID,   BASE,    VARIANT);
       if (x_rc == 0) x_rc = yPALETTE__norming_make  (NORMING_ID,   VARIANT, NORMED);
       /*> strncpy(MOTHERED, NORMED,       HEXMAX);                                    <*/

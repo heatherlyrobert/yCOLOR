@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YFONT_VER_NUM   "1.0a"
-#define     YFONT_VER_TXT   "moved yPALETTE to yCOLOR to start new effort"
+#define     YFONT_VER_NUM   "1.0b"
+#define     YFONT_VER_TXT   "yCOLOR_make works with variant coloring"
 
 
 
@@ -45,6 +45,21 @@
 #include    <yX11.h>         /* CUSTOM  heatherly xlib/glx setup/teardown     */
 #include    <yGLTEX.h>       /* CUSTOM  heatherly texture handling            */
 
+
+
+/*===[[ RATIONAL LIMITS ]]====================================================*/
+/*   LEN_ is a length or size of something
+ *   MIN_ is a minimum count
+ *   DEF_ is a default count
+ *   MAX_ is a maximum count
+ *
+ */
+/*3456789012+123456789012+123456789012+123456789012+123456789012+123456789012*/
+/*---(string length)------------------*/
+#define     LEN_RECD     2000
+#define     LEN_STR      200
+#define     LEN_LABEL    20
+#define     LEN_HEX      10
 
 
 
@@ -90,7 +105,6 @@
 
 /*---(main)---------------------*/
 #define  HEX         o->hex
-#define  MODIFIED    o->modified
 #define  CURRENT     o->current
 /*---(ryb bytes)----------------*/
 #define  RED_BYTE    o->r
@@ -141,6 +155,14 @@
 char  gen_hex [HEXMAX];
 
 
+typedef struct  cCOLR  tCOLR;
+struct cCOLR  {
+   char        hex         [LEN_HEX];
+   float       red;
+   float       grn;
+   float       blu;
+};
+
 
 typedef struct cCOLOR  tCOLOR;
 struct cCOLOR
@@ -173,19 +195,10 @@ struct cCOLOR
 
 
 
-   long      its_mother;          /* mothered version for mixing              */
-   /*---(well)--------------------*/
-   long      its_varied;          /* color after variation applied            */
-   long      its_normed;          /* color after norming applied              */
-   long      its_mothered;        /* color after mothering applied            */
-   long      its_accents[20];     /* all the accents                          */
-   /*---(older hex based)---------*/
    char      is_ryb;              /* is it an RYB scheme                      */
    /*---(working area)------------*/
-   int       max;                 /* count of the max colors in scheme        */
    int       curr;                /* number of the current color in scheme    */
    char      current [HEXMAX];    /* rgb hexadecimal representation as text   */
-   char      modified[HEXMAX];    /* rgb hexadecimal representation as text   */
    /*---(color information)-------*/
    char      hex[HEXMAX];         /* rgb hexadecimal representation as text   */
    uchar     r, g, b;             /* red, green, and blue as 0-255            */
@@ -390,7 +403,7 @@ int           yCOLOR__dehex       (char   a_ch);
 uchar         yCOLOR__webhex      (uchar  a_hex);
 uchar         yCOLOR__csshex      (uchar  a_hex);
 /*---(internal convertors)-------*/
-char          yPALETTE__ryb2hex   (int      a_hue, char    *a_hex);
+char          yCOLOR_ryb_hex      (int a_deg, char *a_hex);
 /*---(HSV conversions)-----------*/
 char          yPALETTE__hsv2hex   (float    a_hue, float    a_sat, float   a_val, char   *a_hex);
 char          yPALETTE__hex2hsv   (char    *a_hex, float   *a_hue, float  *a_sat, float  *a_val);

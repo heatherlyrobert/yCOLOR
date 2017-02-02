@@ -626,8 +626,7 @@ yCOLOR__line(      /*  PURPOSE = create a output string for a single color    */
    while (x_new < 0)    x_new += 360;
    while (x_new >= 360) x_new -= 360;
    char  x_ryb[10];
-   /*> strncpy(x_ryb, ryb_hex[x_new], 10);                                            <*/
-   yPALETTE__ryb2hex(x_new, x_ryb);
+   yCOLOR_ryb_hex   (x_new, x_ryb);
    if (o->is_ryb  == 1) yCOLOR__hex(x_ryb);
    else                 yCOLOR__hsv(x_new, 1, 1);
    if (a_variant == 'v') {
@@ -757,12 +756,11 @@ yCOLOR__run()                     /* PURPOSE = regen a specific color         */
    tCOLOR *o  = yPALETTE__current();
    if (o == NULL)                return -1;
    char x_rc = 0;
-   if (x_rc == 0) x_rc = yPALETTE__ryb2hex(ANGLE, BASE);
+   if (x_rc == 0) x_rc = yCOLOR_ryb_hex   (ANGLE, BASE);
    if (x_rc == 0) x_rc = yPALETTE__variant_make  (VARIANT_ID,   BASE,    VARIANT);
    if (x_rc == 0) x_rc = yPALETTE__norming_make  (NORMING_ID,   VARIANT, NORMED);
    /*> if (x_rc == 0) x_rc = yPALETTE__mothering_make(MOTHERING_ID, MOTHER,  NORMED,  MOTHERED);   <*/
    /*---(complete)-------------------------*/
-   /*> strncpy(MODIFIED, CURRENT, HEXMAX);                                            <*/
    /*> x_rc = yCOLOR__hex(CURRENT);                                                   <*/
    /*> if (x_rc == 0) x_rc = yCOLOR_variant();                                        <*/
    /*> if (x_rc == 0) x_rc = yCOLOR__mother(MOTHERING_ID, MOTHER, BASE, MIXED);       <*/
