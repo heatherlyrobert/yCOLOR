@@ -48,7 +48,9 @@ all                : ${BASE}_make
 
 
 ${BASE}_make       : ${BASE}_make.o
-	${LINK}  -o ${BASE}_make        ${BASE}_make.os  -lX11  -lyX11  -lGL  -lm  -lySTR  -lyURG  -lyFONT
+	${LINK}  -o ${BASE}_make        ${BASE}_make.os  ${LIBS}  -lX11  -lyX11  -lGL -lyFONT
+	${LINK}  -o ${BASE}_make_debug  ${BASE}_make.os  ${LIBD}  -lX11  -lyX11  -lGL -lyFONT
+
 
 ${BASE}_make.o     : ${HEADS}       ${BASE}_make.c
 	${COMP}  -fPIC  ${BASE}_make.c                           ${INC}
@@ -177,10 +179,10 @@ install            :
 	chmod     0755                 ${IDIR}/${BASE}_make
 	@sha1sum  ${BASE}_make
 	#---(debug version)-------------------#
-#	${COPY}   ${BASE}_make_debug   ${IDIR}/
-#	chown     root:root            ${IDIR}/${BASE}_make_debug
-#	chmod     0755                 ${IDIR}/${BASE}_make_debug
-#	@sha1sum  ${BASE}_make_debug
+	${COPY}   ${BASE}_make_debug   ${IDIR}/
+	chown     root:root            ${IDIR}/${BASE}_make_debug
+	chmod     0755                 ${IDIR}/${BASE}_make_debug
+	@sha1sum  ${BASE}_make_debug
 	#---(production version)--------------#
 #	${COPY}   ${BASE}_show         ${IDIR}/
 #	chown     root:root            ${IDIR}/${BASE}_show

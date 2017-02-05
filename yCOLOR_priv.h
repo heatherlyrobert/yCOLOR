@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YFONT_VER_NUM   "1.0b"
-#define     YFONT_VER_TXT   "yCOLOR_make works with variant coloring"
+#define     YFONT_VER_NUM   "1.0c"
+#define     YFONT_VER_TXT   "fixed yCOLOR_variant to take text name"
 
 
 
