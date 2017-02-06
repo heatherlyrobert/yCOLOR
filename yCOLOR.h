@@ -157,75 +157,25 @@
 #define     YCOLOR   loaded
 
 
+#define     YCOLOR_WHEEL     'w'     /* wheel of 36 colors (ryb wheel)        */
+#define     YCOLOR_SMALL     's'     /* strip of 25 colors (red to blue)      */
+#define     YCOLOR_FULL      'f'     /* strip of 67 colors (brown to grey)    */
 
-typedef unsigned char uchar;
-
-#define  GEN_NORM    gen_norm
-typedef struct cNORMAL tNORMAL;
-struct cNORMAL {
-   float red;
-   float grn;
-   float blu;
-};
-tNORMAL gen_norm;
-
-/*===[[ PUBLIC INTERFACES ]]==================================================*/
-/*---(constructor/destructor)--------------*/
-int           yPALETTE_new        (void);
-char          yPALETTE_clear      (void);
-char          yPALETTE_select     (int     a_color);
-char          yPALETTE_list       (void);
-char          yPALETTE_free       (void);
-char          yPALETTE_free_all   (void);
-/*---(dominant)------------------*/
-char          yPALETTE_artist     (int     a_angle, char *a_variation, char *norming);
-char          yPALETTE__ryb       (int     a_angle);
-/*---(setters)-------------------*/
-char          yCOLOR_hue          (double  a_angle);
-char          yCOLOR_hex          (char   *a_hex);
-char          yCOLOR_rgb          (uchar   a_red, uchar a_grn, uchar a_blu);
-char          yCOLOR_hsv          (double  a_hue, double a_sat, double a_val);
-char          yCOLOR_hsl          (double  a_hue, double a_sat, double a_lig);
-/*---(options)-------------------*/
-char          yPALETTE__variant_set    (char *a_abbrev, int  *a_index);
-char          yPALETTE__variant_make   (int   a_index,  char *a_hex,    char *a_out);
-char          yPALETTE__norming_set    (char *a_abbrev, int  *a_index);
-char          yPALETTE__norming_make   (int   a_index,  char *a_hex,    char *a_out);
-char          yPALETTE__mothering_set  (char *a_abbrev, int *a_index);
-char          yPALETTE__mothering_make (int   a_index,  char *a_mother, char *a_base, char *a_mixed);
-char          yPALETTE_scheme          (char *a_scheme, char *a_mother, char *a_accenting);
-char          yPALETTE__scheme_set     (char *a_abbrev, int  *a_scheme, int  *a_comp);
-char          yPALETTE__switch         (int   a_dom,    int   a_scheme, int a_comp, int a_pos, int *a_hue);
-char          yCOLOR_norming      (char   *a_norming);
-char          yCOLOR_scheme       (char   *a_scheme);
-char          yCOLOR_mothering    (char   *a_mothering);
-char          yCOLOR_accenting    (char   *a_accenting);
-/*---(schemes)-------------------*/
-char          yPALETTE_well            (int   a_position, int a_accent, char *a_out);
-char*         yPALETTE_well2hex        (int   a_position, int a_accent);
-tNORMAL       yPALETTE_well2norm       (int   a_position, int a_accent);
-char*         yCOLOR_single       (void   *a_color, char   a_type,  char a_option);
-char*         yCOLOR_analogic     (void   *a_color, char   a_type,  char a_option);
-
-
-int                /*  return  = simple integer error code                    */
-yCOLOR_generate(   /*  PURPOSE = generate a scheme from config table          */
-      char   *a_scheme,           /*  sub-type of this scheme                 */
-      char    a_variant,          /*  variant scheme                          */
-      char    a_output)           /*  style of output                         */
-;
-
-char*
-yCOLOR_circle    (
-      void   *a_color,
-      char    a_type,
-      char    a_inc,
-      char    a_option)
-;
-
-void          yCOLOR_help      (void);
-
-void          yCOLOR__varsetup (int);
+/*---(utility)------------------------*/
+char        yCOLOR_init          (char   a_use);
+char        yCOLOR_use           (char   a_use);
+/*---(color by degree)----------------*/
+char        yCOLOR_deg2index     (int    a_deg);
+char        yCOLOR_deg2hex       (int    a_deg  , char  *a_hex);
+char        yCOLOR_deg2color     (int    a_deg);
+/*---(color by hex)-------------------*/
+char        yCOLOR_hex2color     (char  *a_hex);
+/*---(HSV color format)---------------*/
+char        yCOLOR_hex2hsv       (char  *a_hex  , float *a_hue, float *a_sat, float *a_val);
+char        yCOLOR_hsv2hex       (float  a_hue  , float  a_sat, float  a_val, char  *a_hex);
+/*---(variations)---------------------*/
+char        yCOLOR_variant       (char  *a_name , char  *a_hex, char  *a_out);
+char        yCOLOR_accent        (char   a_level, char  *a_hex, char  *a_out);
 
 
 

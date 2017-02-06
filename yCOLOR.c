@@ -2,775 +2,672 @@
 #include    "yCOLOR.h"
 #include    "yCOLOR_priv.h"
 
-#define  HEXMAX     8
 
 
+char  s_use        = 'w';
+int   s_cset       =  5;
+int   s_ccolor     =  0;
+int   s_ncolor     =  0;
+int   s_cvariant   =  0;
+int   s_lvariant   =  0;
+int   s_nvariant   =  0;
+int   s_cnorming   =  0;
+int   s_nnorming   =  0;
 
 
-#ifdef NORMAL
-int
-main (int argc, char *argv[])
-{
-   long x_col = -1;
-   int  x_red, x_grn, x_blu;
-   float x_hue, x_sat, x_val;
-   /*---(try HEX)---------------------*/
-   yPALETTE__hex2int("#ffff00", &x_col);
-   x_red = x_col / (256 * 256);
-   x_grn = (x_col / 256) % 256;
-   x_blu = x_col % 256;
-   printf("color %10ld = #%06lx, red = %3d, grn = %3d, blu = %3d\n",
-         x_col, x_col, x_red, x_grn, x_blu);
-   printf("RED = %4.2f or %3d\n", R_FLOAT(x_col), R_BYTE(x_col));
-   printf("GRN = %4.2f or %3d\n", G_FLOAT(x_col), G_BYTE(x_col));
-   printf("BLU = %4.2f or %3d\n", B_FLOAT(x_col), B_BYTE(x_col));
-   yPALETTE__int2hsv(x_col, &x_hue, &x_sat, &x_val);
-   printf("back to HSV :: hue = %3.0f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);
-   /*---(try HSV)---------------------*/
-   yPALETTE__hsv2int( 60.0, 1.0, 1.0, &x_col);
-   x_red = x_col / (256 * 256);
-   x_grn = (x_col / 256) % 256;
-   x_blu = x_col % 256;
-   printf("color %10ld = #%06lx, red = %3d, grn = %3d, blu = %3d\n",
-         x_col, x_col, x_red, x_grn, x_blu);
-   printf("RED = %4.2f or %3d\n", R_FLOAT(x_col), R_BYTE(x_col));
-   printf("GRN = %4.2f or %3d\n", G_FLOAT(x_col), G_BYTE(x_col));
-   printf("BLU = %4.2f or %3d\n", B_FLOAT(x_col), B_BYTE(x_col));
-   yPALETTE__int2hsv(x_col, &x_hue, &x_sat, &x_val);
-   printf("back to HSV :: hue = %3.0f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);
-   /*---(try RGB)---------------------*/
-   yCOLOR__rgb2int(  1.0, 1.0, 0.0, &x_col);
-   x_red = x_col / (256 * 256);
-   x_grn = (x_col / 256) % 256;
-   x_blu = x_col % 256;
-   printf("color %10ld = #%06lx, red = %3d, grn = %3d, blu = %3d\n",
-         x_col, x_col, x_red, x_grn, x_blu);
-   printf("RED = %4.2f or %3d\n", R_FLOAT(x_col), R_BYTE(x_col));
-   printf("GRN = %4.2f or %3d\n", G_FLOAT(x_col), G_BYTE(x_col));
-   printf("BLU = %4.2f or %3d\n", B_FLOAT(x_col), B_BYTE(x_col));
-   yPALETTE__int2hsv(x_col, &x_hue, &x_sat, &x_val);
-   printf("back to HSV :: hue = %3.0f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);
-   /*---(try CHR)---------------------*/
-   yCOLOR__chr2int(  255,   0,   0, &x_col);
-   x_red = x_col / (256 * 256);
-   x_grn = (x_col / 256) % 256;
-   x_blu = x_col % 256;
-   printf("color %10ld = #%06lx, red = %3d, grn = %3d, blu = %3d\n",
-         x_col, x_col, x_red, x_grn, x_blu);
-   printf("RED = %4.2f or %3d\n", R_FLOAT(x_col), R_BYTE(x_col));
-   printf("GRN = %4.2f or %3d\n", G_FLOAT(x_col), G_BYTE(x_col));
-   printf("BLU = %4.2f or %3d\n", B_FLOAT(x_col), B_BYTE(x_col));
-   yPALETTE__int2hsv(x_col, &x_hue, &x_sat, &x_val);
-   printf("new dominant is %ld\n", DOMINANT_HEX);
-   printf("back to HSV :: hue = %3.0f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);
-   /*---(try CHR)---------------------*/
-   yCOLOR__chr2int(    0, 127, 127, &x_col);
-   x_red = x_col / (256 * 256);
-   x_grn = (x_col / 256) % 256;
-   x_blu = x_col % 256;
-   printf("color %10ld = #%06lx, red = %3d, grn = %3d, blu = %3d\n",
-         x_col, x_col, x_red, x_grn, x_blu);
-   printf("RED = %4.2f or %3d\n", R_FLOAT(x_col), R_BYTE(x_col));
-   printf("GRN = %4.2f or %3d\n", G_FLOAT(x_col), G_BYTE(x_col));
-   printf("BLU = %4.2f or %3d\n", B_FLOAT(x_col), B_BYTE(x_col));
-   yPALETTE__int2hsv(x_col, &x_hue, &x_sat, &x_val);
-   printf("back to HSV :: hue = %3.0f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);
-   /*---(try CHR)---------------------*/
-   yCOLOR__rgb2int( 0.25,0.25, 0.0, &x_col);
-   x_red = x_col / (256 * 256);
-   x_grn = (x_col / 256) % 256;
-   x_blu = x_col % 256;
-   printf("color %10ld = #%06lx, red = %3d, grn = %3d, blu = %3d\n",
-         x_col, x_col, x_red, x_grn, x_blu);
-   printf("RED = %4.2f or %3d\n", R_FLOAT(x_col), R_BYTE(x_col));
-   printf("GRN = %4.2f or %3d\n", G_FLOAT(x_col), G_BYTE(x_col));
-   printf("BLU = %4.2f or %3d\n", B_FLOAT(x_col), B_BYTE(x_col));
-   yPALETTE__int2hsv(x_col, &x_hue, &x_sat, &x_val);
-   printf("back to HSV :: hue = %3.0f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);
-   /*---(complete)--------------------*/
-   yCOLOR_help();
-   return 0;
-}
-#endif
-
-
-
-
-
-
-/*----------------------------------------------------------------------------*/
-/*-------                      color variants                          -------*/
-/*----------------------------------------------------------------------------*/
-/*
- * THE FOLLOWING ONLY APPLIES TO THE FOLLOWING THREE (3) FUNCTIONS
- *    - yCOLOR__varsetup()
- *    - yCOLOR__varcalc()
- *    - yCOLOR__variants()
- *
- * Color.js library
- *
- *  Copyright (c) 2002-2009, Petr Stanicek, pixy@pixy.cz ("the author")
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Any commercial use of this software is not allowed unless an exemption
- *     was granted by the author.
- *
- *  This software is provided by the author "as is" and any express or implied
- *  warranties, including, but not limited to, the implied warranties or
- *  merchantability and fitness for a particular purpose are disclaimed.
- *  In no event shall the author be liable for any direct, indirect, incidental,
- *  special, exemplary, or consequential damages (including, but not limited to,
- *  procurement of substitute goods or services; loss of use, data, or profits;
- *  or business interruption) however caused and on any theory of liability,
- *  whether in contract, strict liability, or tort (including negligence or
- *  otherwise) arising in any way out of the use of this software, even if
- *  advised of the possibility of such damage.
- *
- */
-
-
-enum yCOLOR_variants
-{
-   /*  0 */ NORMAL,          MED,
-   /*  2 */ DARK,             DARKER,           DARKEST,
-   /*  5 */ CONTRAST_MAX,    CONTRAST_HIGH,    CONTRAST_MORE,
-   /*  8 */ CONTRAST_LESS,   CONTRAST_LOW,     CONTRAST_MIN,
-   /* 11 */ PASTEL,          PASTEL_DARK,      PASTEL_DARKER,    PASTEL_DARKEST,
-   /* 15 */ PALE,            PALE_DARK,        PALE_DARKER,      PALE_DARKEST,
-   /* 19 */ GREYISH_LIGHT,   GREYISH_MEDIUM,   GREYISH_DARK,
-   /* 22 */ GREYACC_LIGHT,   GREYACC_MEDIUM,   GREYACC_DARK,
-   /* 25 */ SAT_LESS,        SAT_LOW,          SAT_MIN,
+const char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_HEX] =
+{  /*         original    pass 2     pass 1   paletton    latest      feb 5                                               */
+   /*-120 */ "brown"           , "#000000", "#99401a", "#99804d", "#99804d", "#4a2208", "#4a2208", "#4a2208", "#4a2208", "#4a2208", "#4a2208",
+   /*-110 */ ""                , "#000000", "#943920", "#946f4a", "#946f4a", "#522011", "#5a2011", "#522011", "#522011", "#522011", "#522011",
+   /*-100 */ ""                , "#000000", "#903326", "#905e48", "#905e48", "#5b1f1a", "#6a1f1a", "#5b1f1a", "#5b1f1a", "#5b1f1a", "#5b1f1a",
+   /*-090 */ ""                , "#000000", "#8c2c2d", "#8c4d46", "#8c4d46", "#641e24", "#7a1e24", "#641e24", "#641e24", "#641e24", "#641e24",
+   /*-080 */ ""                , "#000000", "#882633", "#883c44", "#883c44", "#6d1c2d", "#8a1c2d", "#6d1c2d", "#6d1c2d", "#6d1c2d", "#6d1c2d",
+   /*-070 */ ""                , "#000000", "#842039", "#842b42", "#842b42", "#761b36", "#9a1b36", "#761b36", "#761b36", "#761b36", "#761b36",
+   /*-060 */ "blood"           , "#000000", "#801a40", "#801a40", "#801a40", "#7f1a40", "#aa1a40", "#7f1a40", "#7f1a40", "#7f1a40", "#7f1a40",
+   /*-050 */ ""                , "#000000", "#951535", "#951535", "#951535", "#941535", "#b51535", "#941535", "#941535", "#941535", "#941535",
+   /*-040 */ ""                , "#000000", "#aa112a", "#aa112a", "#aa112a", "#a9112a", "#c0112a", "#a9112a", "#a9112a", "#a9112a", "#a9112a",
+   /*-030 */ ""                , "#000000", "#bf0d20", "#bf0d20", "#bf0d20", "#bf0d20", "#cc0d20", "#bf0d20", "#bf0d20", "#bf0d20", "#bf0d20",
+   /*-020 */ ""                , "#000000", "#d40815", "#d40815", "#d40815", "#d40815", "#d70815", "#d40815", "#d40815", "#d40815", "#d40815",
+   /*-010 */ ""                , "#000000", "#e9040a", "#e9040a", "#e9040a", "#e9040a", "#e2040a", "#e9040a", "#e9040a", "#e9040a", "#e9040a",
+   /*------------------------(normal wheel)----------------------*/
+   /* 000 */ "red"             , "#ff0000", "#ff0000", "#ff0000", "#aa3939", "#ff0000", "#ee0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000",
+   /* 010 */ ""                , "#ff3500", "#fb1400", "#ff1700", "#aa5039", "#ff1500", "#ee1500", "#ff1500", "#ff1500", "#ff1500", "#ff1500",
+   /* 020 */ ""                , "#ff5900", "#f72800", "#ff3500", "#aa6039", "#ff2a00", "#ee2a00", "#ff2a00", "#ff2a00", "#ff2a00", "#ff2a00",
+   /* 030 */ ""                , "#ff7400", "#f33d00", "#ff4700", "#aa6c39", "#ff3f00", "#ee3f00", "#ff3f00", "#ff3f00", "#ff3f00", "#ff3f00",
+   /* 040 */ ""                , "#ff8900", "#f05100", "#ff5900", "#aa7539", "#ff5500", "#ee5500", "#ff5500", "#ff5500", "#ff5500", "#ff5500",
+   /* 050 */ ""                , "#ff9a00", "#ec6600", "#ff6700", "#aa7d39", "#ff6a00", "#ee6900", "#ff6a00", "#ff6a00", "#ff6a00", "#ff6a00",
+   /* 060 */ "orange"          , "#ffaa00", "#e87a00", "#ff7400", "#aa8439", "#ff7f00", "#ee7f00", "#ff7f00", "#ff7f00", "#ff7f00", "#ff7f00",
+   /* 070 */ ""                , "#ffb800", "#e48e00", "#ff8b00", "#aa8b39", "#f98e00", "#e58900", "#f98e00", "#f98e00", "#f98e00", "#f98e00",
+   /* 080 */ ""                , "#ffc600", "#e1a300", "#ffa200", "#aa9139", "#f39e00", "#dd9300", "#f39e00", "#f39e00", "#f39e00", "#f39e00",
+   /* 090 */ ""                , "#ffd300", "#ddb700", "#ffb900", "#aa9739", "#edad00", "#d49d00", "#edad00", "#edad00", "#edad00", "#edad00",
+   /* 100 */ ""                , "#ffe100", "#d9cc00", "#ffd000", "#aa9d39", "#e8bd00", "#cca700", "#e8bd00", "#e8bd00", "#e8bd00", "#e8bd00",
+   /* 110 */ ""                , "#ffef00", "#d5e000", "#ffe500", "#aaa339", "#e2cd00", "#c3b100", "#e2cd00", "#e2cd00", "#e2cd00", "#e2cd00",
+   /* 120 */ "yellow"          , "#ffff00", "#d2f500", "#ffff00", "#aaaa39", "#dddd00", "#bbbb00", "#dddd00", "#dddd00", "#dddd00", "#dddd00",
+   /* 130 */ ""                , "#dcf900", "#afee00", "#d2ff00", "#99a637", "#b8df00", "#9bbd00", "#b8df00", "#b8df00", "#b8df00", "#b8df00",
+   /* 140 */ ""                , "#bdf400", "#8ce700", "#a8ff00", "#8aa236", "#93e200", "#7cbd00", "#93e200", "#93e200", "#93e200", "#93e200",
+   /* 150 */ ""                , "#9fee00", "#69e000", "#7eff00", "#7b9f35", "#6ee500", "#5dc300", "#6ee500", "#6ee500", "#6ee500", "#6ee500",
+   /* 160 */ ""                , "#7ce700", "#46d900", "#54ff00", "#6b9a33", "#49e800", "#3ec600", "#49e800", "#49e800", "#49e800", "#49e800",
+   /* 170 */ ""                , "#4dde00", "#23d200", "#2aff00", "#549431", "#24eb00", "#1fc900", "#24eb00", "#24eb00", "#24eb00", "#24eb00",
+   /* 180 */ "green"           , "#00cc00", "#00cc15", "#00ff00", "#2d882d", "#00ee00", "#00cc00", "#00ee00", "#00ee00", "#00ee00", "#00ee00",
+   /* 190 */ ""                , "#00b64f", "#07b13c", "#00d22a", "#28794c", "#00c62a", "#00af2a", "#00c62a", "#00c62a", "#00c62a", "#00c62a",
+   /* 200 */ ""                , "#00a876", "#0e9663", "#00a854", "#25705a", "#009e55", "#009955", "#009e55", "#009e55", "#009e55", "#009e55",
+   /* 210 */ ""                , "#009999", "#157b8a", "#00867e", "#226666", "#00777f", "#007f99", "#00777f", "#00777f", "#00777f", "#00777f",
+   /* 220 */ ""                , "#086fa1", "#1c60b1", "#0064a8", "#27556c", "#004faa", "#0066aa", "#004faa", "#004faa", "#004faa", "#004faa",
+   /* 230 */ ""                , "#0d56a6", "#2345d8", "#0032d2", "#2b4b6f", "#0027d4", "#0044dd", "#0027d4", "#0027d4", "#0027d4", "#0027d4",
+   /* 240 */ "blue"            , "#1240ab", "#2a2aff", "#0000ff", "#2e4272", "#0000ff", "#0022ff", "#0000ff", "#0000ff", "#0000ff", "#0000ff",
+   /* 250 */ ""                , "#1729b0", "#3523f0", "#1500e7", "#313975", "#1f00f3", "#1f11f3", "#1f00f3", "#1f00f3", "#1f00f3", "#1f00f3",
+   /* 260 */ ""                , "#2618b1", "#411ce2", "#2a00d2", "#383276", "#3e00e8", "#3e00e8", "#3e00e8", "#3e00e8", "#3e00e8", "#3e00e8",
+   /* 270 */ ""                , "#3914af", "#4d15d4", "#3f00bd", "#403075", "#5d00dc", "#5d00dc", "#5d00dc", "#5d00dc", "#5d00dc", "#5d00dc",
+   /* 280 */ ""                , "#4a11ae", "#590ec6", "#5400a8", "#482e74", "#7c00d1", "#7c00d1", "#7c00d1", "#7c00d1", "#7c00d1", "#7c00d1",
+   /* 290 */ ""                , "#5c0dac", "#6507b8", "#690093", "#4f2c73", "#9b00c6", "#9b00c6", "#9b00c6", "#9b00c6", "#9b00c6", "#9b00c6",
+   /* 300 */ "royal"           , "#7109aa", "#7100aa", "#7e007e", "#582a72", "#bb00bb", "#bb00bb", "#bb00bb", "#bb00bb", "#bb00bb", "#bb00bb",
+   /* 310 */ ""                , "#8f04a8", "#88008d", "#930069", "#652770", "#c6009b", "#c3009b", "#c6009b", "#c6009b", "#c6009b", "#c6009b",
+   /* 320 */ ""                , "#b70094", "#a00071", "#a80054", "#7a296a", "#d1007c", "#cc007c", "#d1007c", "#d1007c", "#d1007c", "#d1007c",
+   /* 330 */ ""                , "#cd0074", "#b70055", "#bd003f", "#882d61", "#dd005d", "#d4005d", "#dd005d", "#dd005d", "#dd005d", "#dd005d",
+   /* 340 */ ""                , "#dc0055", "#cf0038", "#d2002a", "#933157", "#e8003e", "#dd003e", "#e8003e", "#e8003e", "#e8003e", "#e8003e",
+   /* 350 */ ""                , "#ec0033", "#e7001c", "#e70015", "#9d344b", "#f3001f", "#e5001f", "#f3001f", "#f3001f", "#f3001f", "#f3001f",
+   /*---------------------(alternate ending)---------------------*/
+   /* 310 */ ""                , "#000000", "#68049c", "#68049c", "#68049c", "#a604aa", "#a404aa", "#a604aa", "#a604aa", "#a604aa", "#a604aa",
+   /* 320 */ ""                , "#000000", "#60088f", "#60088f", "#60088f", "#91089a", "#9a089a", "#91089a", "#91089a", "#91089a", "#91089a",
+   /* 330 */ ""                , "#000000", "#530c81", "#530c81", "#530c81", "#7d0c8a", "#8a0c8a", "#7d0c8a", "#7d0c8a", "#7d0c8a", "#7d0c8a",
+   /* 340 */ ""                , "#000000", "#501174", "#501174", "#501174", "#681179", "#791179", "#681179", "#681179", "#681179", "#681179",
+   /* 350 */ ""                , "#000000", "#471566", "#471566", "#471566", "#541569", "#691569", "#541569", "#541569", "#541569", "#541569",
+   /* 360 */ "purple"          , "#000000", "#3f1959", "#3f1959", "#3f1959", "#3f1959", "#591959", "#3f1959", "#3f1959", "#3f1959", "#3f1959",
+   /* 370 */ ""                , "#000000", "#41225f", "#41225f", "#41225f", "#41225f", "#57225f", "#41225f", "#41225f", "#41225f", "#41225f",
+   /* 380 */ ""                , "#000000", "#442a66", "#442a66", "#442a66", "#442a66", "#552a66", "#442a66", "#442a66", "#442a66", "#442a66",
+   /* 390 */ ""                , "#000000", "#46336c", "#46336c", "#46336c", "#46336c", "#52336c", "#46336c", "#46336c", "#46336c", "#46336c",
+   /* 400 */ ""                , "#000000", "#483b72", "#483b72", "#483b72", "#483b72", "#503b72", "#483b72", "#483b72", "#483b72", "#483b72",
+   /* 410 */ ""                , "#000000", "#4a4479", "#4a4479", "#4a4479", "#4a4479", "#4e4479", "#4a4479", "#4a4479", "#4a4479", "#4a4479",
+   /* 420 */ "steel"           , "#000000", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f",
+   /* 430 */ ""                , "#000000", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f",
+   /* 440 */ ""                , "#000000", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f",
+   /* 450 */ ""                , "#000000", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f",
+   /* 460 */ ""                , "#000000", "#66667f", "#66667f", "#66667f", "#66667f", "#66667f", "#66667f", "#66667f", "#66667f", "#66667f",
+   /* 470 */ ""                , "#000000", "#6c6c7f", "#6c6c7f", "#6c6c7f", "#6c6c7f", "#6c6c7f", "#6c6c7f", "#6c6c7f", "#6c6c7f", "#6c6c7f",
+   /* 480 */ "grey"            , "#000000", "#72727f", "#72727f", "#72727f", "#72727f", "#72727f", "#72727f", "#72727f", "#72727f", "#72727f",
 };
 
-void               /* return  = nothing                                       */
-yCOLOR__varsetup(  /* PURPOSE = set parameters driving shadow and accents     */
-      int   a_variation)          /* particular accenting scheme              */
-{
-   /*> tCOLOR *o  = my_curr;                                                          <*/
-   /*> VARIATION  = a_variation;                                                        <* 
-    *> switch (VARIATION) {                                                             <* 
-    *> case MED            : DS =  0.500; DV = -0.220; CS =  0.60; CL =  0.60; break;   <* 
-    *> case DARK           : DS =  0.500; DV = -0.440; CS =  0.40; CL =  0.40; break;   <* 
-    *> case DARKER         : DS =  1.000; DV = -0.700; CS =  0.25; CL =  0.25; break;   <* 
-    *> case DARKEST        : DS =  1.000; DV = -0.800; CS =  0.10; CL =  0.10; break;   <* 
-    *>                       /+---(contrasts)----------------+/                         <* 
-    *> case CONTRAST_MAX   : DS =  1.000; DV =  1.000; CS =  1.00; CL =  1.00; break;   <* 
-    *> case CONTRAST_HIGH  : DS = -0.100; DV = -0.100; CS =  0.75; CL =  0.75; break;   <* 
-    *> case CONTRAST_MORE  : DS = -0.100; DV = -0.100; CS =  0.66; CL =  0.66; break;   <* 
-    *> case CONTRAST_LESS  : DS =  0.000; DV =  0.000; CS =  0.33; CL =  0.33; break;   <* 
-    *> case CONTRAST_LOW   : DS =  0.000; DV =  0.000; CS =  0.20; CL =  0.20; break;   <* 
-    *> case CONTRAST_MIN   : DS =  0.000; DV =  0.000; CS =  0.10; CL =  0.10; break;   <* 
-    *>                       /+---(pastels)------------------+/                         <* 
-    *> case PASTEL         : DS = -0.440; DV = -0.125; CS =  0.25; CL =  0.25; break;   <* 
-    *> case PASTEL_DARK    : DS = -0.440; DV = -0.440; CS =  0.25; CL =  0.25; break;   <* 
-    *> case PASTEL_DARKER  : DS = -0.440; DV = -0.700; CS =  0.25; CL =  0.25; break;   <* 
-    *> case PASTEL_DARKEST : DS = -0.440; DV = -0.800; CS =  0.10; CL =  0.10; break;   <* 
-    *>                       /+---(pale pastels)-------------+/                         <* 
-    *> case PALE           : DS = -0.750; DV = -0.100; CS =  0.10; CL =  0.10; break;   <* 
-    *> case PALE_DARK      : DS = -0.750; DV = -0.440; CS =  0.10; CL =  0.10; break;   <* 
-    *> case PALE_DARKER    : DS = -0.750; DV = -0.700; CS =  0.10; CL =  0.10; break;   <* 
-    *> case PALE_DARKEST   : DS = -0.800; DV = -0.800; CS =  0.05; CL =  0.05; break;   <* 
-    *>                       /+---(greys)--------------------+/                         <* 
-    *> case GREYACC_LIGHT  : DS = -0.950; DV = -0.100; CS =  0.50; CL =  0.50; break;   <* 
-    *> case GREYACC_MEDIUM : DS = -0.950; DV = -0.440; CS =  0.50; CL =  0.50; break;   <* 
-    *> case GREYACC_DARK   : DS = -0.950; DV = -0.800; CS =  0.50; CL =  0.50; break;   <* 
-    *> case GREYISH_LIGHT  : DS = -0.950; DV = -0.100; CS =  0.10; CL =  0.10; break;   <* 
-    *> case GREYISH_MEDIUM : DS = -0.950; DV = -0.440; CS =  0.10; CL =  0.10; break;   <* 
-    *> case GREYISH_DARK   : DS = -0.950; DV = -0.800; CS =  0.10; CL =  0.10; break;   <* 
-    *>                       /+---(pure saturation)----------+/                         <* 
-    *> case SAT_LESS       : DS = -0.333; DV =  0.000; CS =  0.50; CL =  0.50; break;   <* 
-    *> case SAT_LOW        : DS = -0.666; DV =  0.000; CS =  0.50; CL =  0.50; break;   <* 
-    *> case SAT_MIN        : DS = -1.000; DV =  0.000; CS =  0.50; CL =  0.50; break;   <* 
-    *>                       /+---(default)------------------+/                         <* 
-    *> default             :                                                            <* 
-    *> case NORMAL         : DS =  0.000; DV =  0.000; CS =  0.50; CL =  0.50; break;   <* 
-    *> }                                                                                <*/
-   return;
-}
+tVARIANT    s_variants  [MAX_VARIANT] = {
+   { "-"         , "no", "none"                  ,   0.00,  0.00,  0.35 },
+   /*---(full sat)--------------------*/
+   { "fullsome"  , "vi", "vivid"                 ,   1.00,  1.00,  0.50 },
+   { "fullsome"  , "st", "strong"                ,   1.00,  0.90,  0.50 },
+   { "fullsome"  , "ba", "balanced"              ,   1.00,  0.80,  0.50 },
+   { "fullsome"  , "wa", "warm"                  ,   1.00,  0.70,  0.50 },
+   { "fullsome"  , "me", "medium"                ,   1.00,  0.60,  0.50 },
+   { "fullsome"  , "ea", "earthy"                ,   1.00,  0.50,  0.50 },
+   { "fullsome"  , "ri", "rich"                  ,   1.00,  0.40,  0.50 },
+   { "fullsome"  , "da", "dark"                  ,   1.00,  0.30,  0.50 },
+   { "fullsome"  , "de", "deep"                  ,   1.00,  0.20,  0.50 },
+   { "fullsome"  , "de", "deeper"                ,   1.00,  0.10,  0.50 },
+   /*---(strong sat)------------------*/
+   { "warmer"    , "br", "bright"                ,   0.80,  1.00,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.90,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.80,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.70,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.60,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.50,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.40,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.30,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.20,  0.50 },
+   { "warmer"    , "ar", "artists"               ,   0.80,  0.10,  0.50 },
+   /*---(whiteish)--------------------*/
+   { "whites"    , "--", "whiteish"              ,   0.15,  1.00,  0.50 },
+   { "whites"    , "--", "pale"                  ,   0.15,  0.90,  0.50 },
+   { "whites"    , "--", "pale"                  ,   0.15,  0.70,  0.50 },
+   /*---(modern)----------------------*/
+   { "modern"    , "22", "modern"                ,   0.65,  1.00,  0.50 },
+   { "modern"    , "mo", "modern"                ,   0.65,  0.90,  0.50 },
+   { "modern"    , "mo", "modern"                ,   0.65,  0.80,  0.50 },
+   { "modern"    , "mo", "modern"                ,   0.65,  0.70,  0.50 },
+   { "modern"    , "mo", "modern"                ,   0.65,  0.60,  0.50 },
+   { "modern"    , "mo", "modern"                ,   0.65,  0.50,  0.50 },
+   { "modern"    , "ne", "neutral"               ,   0.65,  0.35,  0.50 },
+   /*---(moderate sat)----------------*/
+   { "pastels"   , "ch", "chalk"                 ,   0.50,  1.00,  0.50 },
+   { "pastels"   , "pa", "pastel"                ,   0.50,  0.90,  0.50 },
+   { "pastels"   , "xp", "pastel_csd"            ,   0.50,  0.80,  0.50 },
+   { "pastels"   , "op", "pastel_oil"            ,   0.50,  0.70,  0.50 },
+   { "pastels"   , "--", "pastel_med"            ,   0.50,  0.60,  0.25 },
+   { "pastels"   , "su", "pastel_rich"           ,   0.50,  0.50,  0.50 },
+   { "pastels"   , "co", "pastel_dark"           ,   0.50,  0.40,  0.50 },
+   { "pastels"   , "co", "pastel_deep"           ,   0.50,  0.30,  0.50 },
+   /*---(low sat)---------------------*/
+   { "pales"     , "--", "whiteish"              ,   0.30,  1.00,  0.50 },
+   { "pales"     , "--", "pale"                  ,   0.30,  0.90,  0.50 },
+   { "pales"     , "--", "pale"                  ,   0.30,  0.80,  0.50 },
+   { "pales"     , "li", "light"                 ,   0.30,  0.70,  0.50 },
+   { "pales"     , "li", "light"                 ,   0.30,  0.60,  0.50 },
+   { "pales"     , "wa", "washout"               ,   0.30,  0.50,  0.50 },
+   { "pales"     , "wa", "washout"               ,   0.30,  0.40,  0.50 },
+   { "pales"     , "gr", "greyish"               ,   0.30,  0.30,  0.50 },
+   { "pales"     , "gr", "least"                 ,   0.30,  0.20,  0.50 },
+   /*---(complete)--------------------*/
+   { "-"         , ""  , "end of input"          ,   0.00,  0.00,  0.00 },
+   /*---(older)-----------------------*/
+};
 
-double             /* return  = adjusted color delta                          */
-yCOLOR__varcalc(   /* PURPOSE = calculate the proper adjusted sat/val         */
-      double x,                   /* base SAT/VAR number                      */
-      double d)                   /* delta                                    */
+tNORMING s_normings   [MAX_NORMING] =
 {
-   if (d <= 0)    return x * (d + 1);
-   else           return x + ((1 - x) * d);
-}
+   { "no"  , "none"                           , 0.00, 0.00, 0.00, 'n' },
+   { "bl"  , "byte_light"                     , 0.05, 0.05, 0.00, 'n' },
+   { "bi"  , "byte_intensity"                 , 0.05, 0.10, 0.00, 'n' },
+   { "bm"  , "byte_moderate"                  , 0.10, 0.10, 0.00, 'n' },
+   { "bh"  , "byte_heavy"                     , 0.20, 0.20, 0.00, 'n' },
+   { "bz"  , "byte_intensity+"                , 0.10, 0.20, 0.00, 'n' },
+   { "bs"  , "byte_intensity++"               , 0.15, 0.30, 0.00, 'n' },
+   { "tl"  , "total_light"                    , 0.05, 0.05, 0.00, 'y' },
+   { "ti"  , "total_intensity"                , 0.05, 0.10, 0.00, 'y' },
+   { "nw"  , "new one"                        , 0.05, 0.20, 0.05, 't' },
+   { ""    , "end of input"                   , 0.00, 0.00, 0.00, 'n' }
+};
 
-char               /*  return  = nothing                                      */
-yCOLOR__accents()  /*  PURPOSE = generate base, shadow and accent variations  */
+
+
+/*============================--------------------============================*/
+/*===----                           utility                            ----===*/
+/*============================--------------------============================*/
+static void      o___UTILITY_________________o (void) {;}
+
+float
+yCOLOR__min3       (float a_one, float a_two, float a_three)
 {
-   printf("colors = ");
-   /*---(defense on my_curr)---------------*/
-   tCOLOR *o  = yPALETTE__current();
-   if (o == NULL)                return -1;
-   /*---(adjust the main)------------------*/
-   char    x_hex[10];
-   strncpy(x_hex, CURRENT, 10);
-   if (DSAT != 0 || DINT != 0) {           /* avoid rounding errors in conversion */
-      yCOLOR__hsv(HUE,
-            yCOLOR__varcalc(SAT, DSAT),
-            yCOLOR__varcalc(VAL, DINT));
+   if    (a_one <= a_two) {
+      if (a_one <= a_three)  return a_one;
+      return                        a_three;
+   } else {
+      if (a_two <= a_three)  return a_two;
+      return                        a_three;
    }
-   strncpy(VAR0, HEX, 10);
-   printf(" %s", HEX);
-   /*---(darkest)--------------------------*/
-   yCOLOR__hex(VAR0);
-   yCOLOR__hsv(HUE,
-         yCOLOR__varcalc(SAT,  1.00 * CS),
-         yCOLOR__varcalc(VAL, -0.70 * CS));
-   strncpy(VAR1, HEX, 10);
-   printf(" %s", HEX);
-   /*---(reset and darker)-----------------*/
-   yCOLOR__hex(VAR0);
-   yCOLOR__hsv(HUE,
-         yCOLOR__varcalc(SAT, -0.50 * CS),
-         yCOLOR__varcalc(VAL, -0.50 * CS));
-   strncpy(VAR2, HEX, 10);
-   printf(" %s", HEX);
-   /*---(reset and lighter)----------------*/
-   yCOLOR__hex(VAR0);
-   yCOLOR__hsv(HUE,
-         yCOLOR__varcalc(SAT, -0.50 * CL),
-         yCOLOR__varcalc(VAL,  1.00 * CL));
-   strncpy(VAR3, HEX, 10);
-   printf(" %s", HEX);
-   /*---(reset and lightest)---------------*/
-   yCOLOR__hex(VAR0);
-   yCOLOR__hsv(HUE,
-         yCOLOR__varcalc(SAT, -0.90 * CL),
-         yCOLOR__varcalc(VAL,  1.00 * CL));
-   strncpy(VAR4, HEX, 10);
-   printf(" %s", HEX);
-   /*---(complete)-------------------------*/
-   printf(" << done\n");
-   yCOLOR__hex(x_hex);
+   return                           a_two;
+}
+
+float
+yCOLOR__max3       (float a_one, float a_two, float a_three)
+{
+   if    (a_one >= a_two) {
+      if (a_one >= a_three)  return a_one;
+      return                        a_three;
+   } else {
+      if (a_two >= a_three)  return a_two;
+      return                        a_three;
+   }
+   return                           a_two;
+}
+
+
+
+/*============================--------------------============================*/
+/*===----                         preparation                          ----===*/
+/*============================--------------------============================*/
+static void      o___PREPARATION_____________o (void) {;}
+
+char
+yCOLOR_use           (char  a_use)
+{
+   /*---(locals)-----------+-----------+-*/
+   char        rce         = -10;      /* return code for errors              */
+   /*---(defense)------------------------*/
+   --rce;  if (strchr ("wsf", a_use) == NULL) {
+      s_use = 'w';   /* safe default */
+      return rce;
+   }
+   /*---(set global)---------------------*/
+   s_use = a_use;
+   /*---(complete)-----------------------*/
    return 0;
-}
-
-/*-----------------------------end-of-copyright-------------------------------*/
-
-void               /*  return  = none                                         */
-yCOLOR__ascending()/*  PURPOSE = generate an ascending monochrome variant set */
-{
-   /*---(get the current color)------------*/
-   tCOLOR *o  = yPALETTE__current();
-   yCOLOR__varsetup(VARIANT_ID);
-   char    x_hex[10], x_orig[10];
-   /*---(save the main)--------------------*/
-   strncpy(x_hex, HEX, 10);
-   /*---(adjust the main)------------------*/
-   /*> yCOLOR__hsv(o, HUE, SAT * 1.000, VAL * 0.800);                                 <*/
-   if (DSAT != 0 || DINT != 0) {           /* avoid rounding errors in conversion */
-      yCOLOR__hsv(HUE, yCOLOR__varcalc(SAT, DSAT), yCOLOR__varcalc(VAL, DINT));
-   }
-   strncpy(x_orig, HEX, 10);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 1.000, VAL * 0.200);
-   strncpy(VAR0, HEX, 10);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 1.000, VAL * 0.500);
-   strncpy(VAR1, HEX, 10);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 1.000, VAL * 0.750);
-   strncpy(VAR2, HEX, 10);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 0.800, VAL * 0.900);
-   strncpy(VAR3, HEX, 10);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 0.500, VAL * 1.000);
-   strncpy(VAR4, HEX, 10);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 0.150, VAL * 1.000);
-   strncpy(VAR5, HEX, 10);
-   /*---(complete)-------------------------*/
-   return;
-}
-
-char               /*  return  = none                                         */
-yCOLOR__descending()/* PURPOSE = generate an ascending monochrome variant set */
-{
-   printf("colors =");
-   /*---(defense on my_curr)---------------*/
-   tCOLOR *o  = yPALETTE__current();
-   if (o == NULL)                return -1;
-   char    x_hex[10], x_orig[10];
-   /*---(save the main)--------------------*/
-   strncpy(x_hex, CURRENT, 10);
-   /*---(adjust the main)------------------*/
-   /*> yCOLOR__hsv(o, HUE, SAT * 1.000, VAL * 0.800);                                 <*/
-   if (DSAT != 0 || DINT != 0) {           /* avoid rounding errors in conversion */
-      yCOLOR__hsv(HUE, yCOLOR__varcalc(SAT, DSAT), yCOLOR__varcalc(VAL, DINT));
-   }
-   strncpy(x_orig, HEX, 10);
-   printf(" %s", HEX);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 1.000, VAL * 0.200);
-   strncpy(VAR5, HEX, 10);
-   printf(" %s", HEX);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 1.000, VAL * 0.500);
-   strncpy(VAR4, HEX, 10);
-   printf(" %s", HEX);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 1.000, VAL * 0.750);
-   strncpy(VAR3, HEX, 10);
-   printf(" %s", HEX);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 0.800, VAL * 0.900);
-   strncpy(VAR2, HEX, 10);
-   printf(" %s", HEX);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 0.500, VAL * 1.000);
-   strncpy(VAR1, HEX, 10);
-   printf(" %s", HEX);
-   /*---*/
-   yCOLOR__hex(x_orig);
-   yCOLOR__hsv(HUE, SAT * 0.150, VAL * 1.000);
-   strncpy(VAR0, HEX, 10);
-   printf(" %s", HEX);
-   /*---(complete)-------------------------*/
-   printf("\n");
-   return 0;
-}
-
-void               /*  return  = none                                         */
-yCOLOR__reduction( /*  PURPOSE = generate a broad monochrome variant set      */
-      char a_extended)            /*  option to extend variations             */
-{
-   /*---(get the current color)------------*/
-   tCOLOR *o  = yPALETTE__current();
-   yCOLOR__varsetup(VARIANT_ID);
-   char    x_hex[10];
-   /*---(save the main)--------------------*/
-   strncpy(x_hex, HEX, 10);
-   /*---(adjust the main)------------------*/
-   /*> yCOLOR__hsv(o, HUE, SAT * 1.000, VAL * 0.800);                                 <*/
-   if (DSAT != 0 || DINT != 0) {           /* avoid rounding errors in conversion */
-      yCOLOR__hsv(HUE, yCOLOR__varcalc(SAT, DSAT), yCOLOR__varcalc(VAL, DINT));
-   }
-   strncpy(VAR0, HEX, 10);
-   /*===[[ sitepro central : color scheme chooser ]]================*/
-   /*> yCOLOR__hsv(o, HUE, SAT * 0.250, VAL * 1.000);                                 <* 
-    *> yCOLOR__hsv(o, HUE, SAT * 0.666, VAL * 0.666);                                 <* 
-    *> yCOLOR__hsv(o, HUE, SAT * 0.500, VAL * 1.000);                                 <* 
-    *> yCOLOR__hsv(o, HUE, SAT * 0.666, VAL * 0.333);                                 <*/
-   /*---*/
-   yCOLOR__hex(VAR0);
-   yCOLOR__hsv(HUE, SAT * 0.250, VAL * 1.000);
-   strncpy(VAR1, HEX, 10);
-   /*---*/
-   yCOLOR__hex(VAR0);
-   yCOLOR__hsv(HUE, SAT * 0.666, VAL * 0.666);
-   strncpy(VAR2, HEX, 10);
-   /*---*/
-   yCOLOR__hex(VAR0);
-   yCOLOR__hsv(HUE, SAT * 0.500, VAL * 1.000);
-   strncpy(VAR3, HEX, 10);
-   /*---*/
-   yCOLOR__hex(VAR0);
-   /*> yCOLOR__hsv(o, HUE, SAT * 1.000, VAL * 0.333);                                 <*/
-   yCOLOR__hsv(HUE, SAT * 0.666, VAL * 0.333);
-   strncpy(VAR4, HEX, 10);
-   /*===[[ heatherly extended for a big monochrome set ]]===========*/
-   if (a_extended == 'e') {
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 1.250, VAL * 0.750);
-      strncpy(VAR5, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 1.250, VAL * 0.500);
-      strncpy(VAR7, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.500, VAL * 0.750);
-      strncpy(VAR6, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.800, VAL * 0.850);
-      strncpy(VAR8, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.700, VAL * 0.650);
-      strncpy(VAR9, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.750, VAL * 0.333);
-      strncpy(VARA, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.333, VAL * 0.650);
-      strncpy(VARB, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.500, VAL * 0.500);
-      strncpy(VARC, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.250, VAL * 0.870);
-      strncpy(VARD, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      /*> yCOLOR__hsv(o, HUE, SAT * 0.500, VAL * 0.333);                              <*/
-      yCOLOR__hsv(HUE, SAT * 0.700, VAL * 1.200);
-      strncpy(VARE, HEX, 10);
-      /*---*/
-      yCOLOR__hex(VAR0);
-      yCOLOR__hsv(HUE, SAT * 0.750, VAL * 0.200);
-      strncpy(VARF, HEX, 10);
-   }
-   /*---(complete)-------------------------*/
-   yCOLOR__hex(x_hex);
-   return;
-}
-
-
-/*----------------------------------------------------------------------------*/
-/*-------                       unit test                              -------*/
-/*----------------------------------------------------------------------------*/
-
-char*      /*=[[ FAQ ]]======* return  : cstring answer                       */
-yPALETTE__getter(           /* PURPOSE : unit test state accessor             */
-      char *a_question)           /* request for information                  */
-{
-   tCOLOR *o  = yPALETTE__current();
-   if (o == NULL) return "no current color";
-   /*---(answer question)-----------------------*/
-   strncpy(yCOLOR_answer, "unknown request", 100);
-   if        (strcmp(a_question, "Dominant")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Dominant Color   : %7s at %3dh",
-            DOMINANT_HEX, DOMINANT_HUE);
-   } else if (strcmp(a_question, "Base")        == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Base Color       : %7s at %3dh",
-            BASE, ANGLE);
-   } else if (strcmp(a_question, "Modifiers")   == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color Modifiers  : %3dv,  %3dn,  %3dm", 
-            VARIANT_ID, NORMING_ID, MOTHERING_ID);
-   } else if (strcmp(a_question, "Variant")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Variant     (%2s) : %s (%s)", 
-            table_variation[VARIANT_ID].abbr, VARIANT, table_variation[VARIANT_ID].name);
-   } else if (strcmp(a_question, "Norming")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Norming     (%2s) : %s (%s)", 
-            table_norming[NORMING_ID].abbr, NORMED , table_norming[NORMING_ID].name);
-   } else if (strcmp(a_question, "Mother")      == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Mothering   (%2s) : %s (%s)", 
-            table_mother[MOTHERING_ID].abbr, MOTHERED , table_mother[MOTHERING_ID].name);
-   } else if (strcmp(a_question, "Well")        == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Well Color       : %7s (%02dp, %02da)", 
-            MIXED, POSITION, ACCENT);
-   } else if (strcmp(a_question, "hex2norm")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "HEX2NORM         :  %4.2fr,   %4.2fg,   %4.2fb", 
-            GEN_NORM.red, GEN_NORM.grn, GEN_NORM.blu);
-   } else if (strcmp(a_question, "HSV_norm")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "HSV normals      : %5.0fh,  %5.2fs,  %5.2fv", 
-            HUE, SAT, VAL);
-   } else if (strcmp(a_question, "HSL_norm")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color HSL norms  : %5.0fh,  %5.2fs,  %5.2fb", 
-            HSL_HUE, HSL_SAT, HSL_LIG);
-   } else if (strcmp(a_question, "RGB_norm")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color RGB norms  :  %4.2fr,   %4.2fg,   %4.2fb", 
-            RED, GRN, BLU);
-   } else if (strcmp(a_question, "RYB_norm")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color RYB norms  :  %4.2fr,   %4.2fy,   %4.2fb", 
-            o->rr, o->yy, o->bb);
-   } else if (strcmp(a_question, "RYB_hsv")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color RYB rev    : %5.0fhh", 
-            o->ryb_hh);
-   } else if (strcmp(a_question, "RGB_byte")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color RGB bytes  :   %3dr,    %3dg,    %3db", 
-            RED_BYTE, GRN_BYTE, BLU_BYTE);
-   } else if (strcmp(a_question, "RGB_hex")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "RGB Hex Code     : %s", 
-            HEX);
-   } else if (strcmp(a_question, "RYB_hue")    == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color RYB hue    :   %3.0f", 
-            (float) o->ryb_hue);
-   } else if (strcmp(a_question, "RGB_hue")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color RGB hue    :   %3.0f", 
-            HUE);
-   } else if (strcmp(a_question, "variant")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Variants: %s, %s, %s, %s, %s", 
-            VAR0, VAR1, VAR2, VAR3, VAR4);
-   } else if (strcmp(a_question, "Greyscale")   == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Greyscale        : %s", 
-            o->grey);
-   } else if (strcmp(a_question, "Websafe")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Websafe          : %s", 
-            o->web);
-   } else if (strcmp(a_question, "CSS_hex")     == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "CSS hex          : %s", 
-            o->css);
-   } else if (strcmp(a_question, "Top")         == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Top               : d=%s, m=%s, h=%s", 
-            DOMINANT_HEX, MOTHERED, HEX);
-   } else if (strcmp(a_question, "Scheme")      == 0) {
-      snprintf(yCOLOR_answer, LEN_TEXT, "Color Scheme     : %02ds, %02dc",  
-            SCHEME_ID, COMP_ID);
-   } else if (strcmp(a_question, "Linked_list") == 0) {
-      char hex1[20] = "--#------";
-      char hex2[20] = "--#------";
-      char hex3[20] = "--#------";
-      snprintf(hex2, 20, "%02d%s", o->iden, o->hex);
-      if (o->prev != NULL)
-         snprintf(hex1, 20, "%02d%s", o->prev->iden, o->prev->hex);
-      if (o->next != NULL)
-         snprintf(hex3, 20, "%02d%s", o->next->iden, o->next->hex);
-      snprintf(yCOLOR_answer, LEN_TEXT, "Linked list      : %s, %s, %s", 
-            hex1, hex2, hex3);
-   }
-   return yCOLOR_answer;
-}
-
-/*> int                          /+  return  = index to table                     +/   <* 
- *> yCOLOR_variant(              /+  PURPOSE = identify color variant index       +/   <* 
- *>       void   *a_color,            /+  color object                            +/   <* 
- *>       char    a_scheme[8])        /+  scheme name abbreviation                +/   <* 
- *> {                                                                                  <* 
- *>    /+---(check for null/default)-----------+/                                      <* 
- *>    if (a_color == NULL) a_color = my_curr;                                         <* 
- *>    if (a_color == NULL) return -1;                                                 <* 
- *>    tCOLOR *o   = my_curr  = (tCOLOR *) a_color;                                    <* 
- *>    /+---(local variables)------------------+/                                      <* 
- *>    int       x_variant = 0;                /+ variant index (default = 0)     +/   <* 
- *>    int       i = 0;                        /+ loop counter                    +/   <* 
- *>    char      x_abbr[10] = "";              /+ scheme abbreviation             +/   <* 
- *>    /+---(find complement)------------------+/                                      <* 
- *>    if (strlen(a_scheme) == 5) {                                                    <* 
- *>       x_abbr[0] = a_scheme[3];                                                     <* 
- *>       x_abbr[1] = a_scheme[4];                                                     <* 
- *>       x_abbr[2] = '\0';                                                            <* 
- *>       for (i = 0; i < 50; ++i) {                                                   <* 
- *>          if (strcmp(g_variant[i].abbr, "eoi") == 0) break;                         <* 
- *>          if (strcmp(g_variant[i].abbr, x_abbr) == 0) x_variant = i;                <* 
- *>       }                                                                            <* 
- *>    }                                                                               <* 
- *>    /+---(load information)-----------------+/                                      <* 
- *>    VARIANT = x_variant;                                                            <* 
- *>    /+---(complete)-------------------------+/                                      <* 
- *>    return x_variant;                                                               <* 
- *> }                                                                                  <*/
-
-
-
-
-
-char               /*  return  = simple error code                            */
-yCOLOR__html(      /*  PURPOSE = create a output html line for a single color */
-      int     a_count,            /*  color sequence number                   */
-      char    a_format)           /*  type of output (html, tagged, ascii,...)*/
-{
-   /*---(defense on my_curr)---------------*/
-   tCOLOR *o  = yPALETTE__current();
-   if (o == NULL)                return -1;
-   int i;
-   char hex0[10] = "";
-   char hex1[10] = "";
-   char hex2[10] = "";
-   char hex3[10] = "";
-   char hex4[10] = "";
-   strncpy(hex0, VAR0, 10);
-   strncpy(hex1, VAR1, 10);
-   strncpy(hex2, VAR2, 10);
-   strncpy(hex3, VAR3, 10);
-   strncpy(hex4, VAR4, 10);
-   printf("<tr height=%d valign=center align=center>\n", a_count * 8);
-   printf("<td bgcolor=%s width=200>%s</td>\n", hex2, (a_format == 't') ? hex2 : "");
-   printf("<td rowspan=2 bgcolor=%s width=400>%s</td>\n", hex0, (a_format == 't') ? hex0 : "");
-   printf("<td bgcolor=%s width=200>%s</td>\n", hex3, (a_format == 't') ? hex3 : "");
-   /*---(the full 16)-------------------------------*/
-   yCOLOR__reduction('e');
-   for (i = 0; i < 16; ++i) {
-      printf("<td rowspan=2 bgcolor=%s width=50>%s</td>\n", o->var[i], (a_format == 't') ? o->var[i] : "");
-   }
-   /*---(rest of original)--------------------------*/
-   printf("</tr>\n");
-   printf("<tr height=%d valign=center align=center>\n", a_count * 8);
-   printf("<td bgcolor=%s width=200>%s</td>\n", hex1, (a_format == 't') ? hex1 : "");
-   printf("<td bgcolor=%s width=200>%s</td>\n", hex4, (a_format == 't') ? hex4 : "");
-   /*---(finish)------------------------------------*/
-   printf("</tr>\n\n");
-   return 0;
-}
-
-char*              /*  return  = c-string of space-delimeted hex colors       */
-yCOLOR__line(      /*  PURPOSE = create a output string for a single color    */
-      float   a_hue,              /*  hue (degree) to use                     */
-      char    a_variant,          /*  variant flag                            */
-      int     a_count,            /*  number of the color                     */
-      char    a_format)           /*  stlye of output                         */
-{
-   /*---(defense on my_curr)---------------*/
-   tCOLOR *o  = yPALETTE__current();
-   if (o == NULL)          return "nada";
-   /*---(process)--------------------------*/
-   char x_text[200] = "";
-   int x_new = (int) a_hue;
-   while (x_new < 0)    x_new += 360;
-   while (x_new >= 360) x_new -= 360;
-   char  x_ryb[10];
-   yCOLOR_ryb_hex   (x_new, x_ryb);
-   if (o->is_ryb  == 1) yCOLOR__hex(x_ryb);
-   else                 yCOLOR__hsv(x_new, 1, 1);
-   if (a_variant == 'v') {
-      yCOLOR__accents();
-      snprintf(x_text, 200, "%s %s %s %s %s\n", VAR0, VAR1, VAR2, VAR3, VAR4);
-   } else if (a_variant == 'a') {
-      yCOLOR__ascending();
-      snprintf(x_text, 200, "%s %s %s %s %s %s\n", VAR0, VAR1, VAR2, VAR3, VAR4, VAR5);
-   } else if (a_variant == 'd') {
-      yCOLOR__descending();
-      snprintf(x_text, 200, "%s %s %s %s %s %s\n", VAR0, VAR1, VAR2, VAR3, VAR4, VAR5);
-   } else if (a_variant == 'r') {
-      yCOLOR__reduction('-');
-      snprintf(x_text, 200, "%s %s %s %s %s\n", VAR0, VAR1, VAR2, VAR3, VAR4);
-   } else if (a_variant == 'e') {
-      yCOLOR__reduction('e');
-      snprintf(x_text, 200, "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n",
-            VAR0, VAR1, VAR2, VAR3, VAR4, VAR5, VAR6, VAR7, VAR8, VAR9,
-            VARA, VARB, VARC, VARD, VARE, VARF);
-   } else if (a_variant == 'm') {
-      yCOLOR__reduction('e');
-      snprintf(x_text, 200, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
-            VAR0, VAR1, VAR2, VAR3, VAR4, VAR5, VAR6, VAR7, VAR8, VAR9,
-            VARA, VARB, VARC, VARD, VARE, VARF);
-}
-strncat(yCOLOR_answer, x_text, 200);
-if (a_format == 'a') {
-   printf("%s", x_text);
-} else if (a_format == 's') {
-   /*---(nothing)----*/
-} else {
-   yCOLOR__accents();                /* just to load the basics           */
-   yCOLOR__html(a_count, a_format);
-}
-/*---(complete)-------------------------*/
-return yCOLOR_answer;
 }
 
 char
-yCOLOR__stdout()
+yCOLOR_init          (char  a_use)
 {
-   /*---(defense on my_curr)---------------*/
-   tCOLOR *o  = yPALETTE__current();
-   if (o == NULL)          return -1;
-   printf("%s %s %s %s %s\n", VAR0, VAR1, VAR2, VAR3, VAR4);
+   int         i           = 0;
+   s_ncolor   = 0;
+   yCOLOR_use (a_use);
+   for (i = 0; i < MAX_COLOR  ; ++i) {
+      if (s_RYB      [i][1][0] == '\0')            break;
+      ++s_ncolor;
+   }
+   s_nvariant = 0;
+   for (i = 0; i < MAX_VARIANT; ++i) {
+      if (s_variants [i].abbr [0] == '\0')            break;
+      ++s_nvariant;
+   }
+   s_nnorming = 0;
+   for (i = 0; i < MAX_NORMING; ++i) {
+      if (s_normings [i].abbr[0] == '\0') break;
+      ++s_nnorming;
+   }
    return 0;
 }
 
-/*> int                /+  return  = simple integer error code                    +/                                                                                         <* 
- *> yCOLOR_generate(   /+  PURPOSE = generate a scheme from config table          +/                                                                                         <* 
- *>       char   *a_scheme,           /+  scheme name abbreviation                +/                                                                                         <* 
- *>       char    a_variant,          /+  variant style                           +/                                                                                         <* 
- *>       char    a_format)           /+  type of output (html, tagged, ascii,...)+/                                                                                         <* 
- *> {                                                                                                                                                                        <* 
- *>    /+---(defense on my_curr)---------------+/                                                                                                                            <* 
- *>    tCOLOR *o  = yPALETTE__current();                                                                                                                                     <* 
- *>    if (o == NULL)                return -1;                                                                                                                              <* 
- *>    /+---(set the base color)---------------+/                                                                                                                            <* 
- *>    int x_base = HUE;                                                                                                                                                     <* 
- *>    if (o->is_ryb  == 1) x_base = o->base;                                                                                                                                <* 
- *>    /+---(identify)-------------------------+/                                                                                                                            <* 
- *>    yCOLOR_scheme(a_scheme);                                                                                                                                              <* 
- *>    /+> yCOLOR_variant(a_scheme);                                                      <+/                                                                                <* 
- *>    /+---(print header)---------------------+/                                                                                                                            <* 
- *>    if (a_format == 'a') {                                                                                                                                                <* 
- *>       printf("_colorscheme : %-15.15s at %03dd using %-3.3s%-2.2s [%c] adj=%2d\n",                                                                                       <* 
- *>             (o->is_ryb == 1) ? "RYB (artistic)" : "RGB (technical)",                                                                                                     <* 
- *>             o->base, table_scheme[SCHEME_ID].abbr, table_comp[COMP].abbr,                                                                                                <* 
- *>             table_accent[ACCENTING_ID].abbr[0], VARIANT_ID);                                                                                                             <* 
- *>    } else if (a_format == 's') {                                                                                                                                         <* 
- *>       int z = 0;                                                                                                                                                         <* 
- *>       /+> printf("FORMAT FORMAT FORMAT :: <<%c>>\n", a_format);                       <+/                                                                                <* 
- *>    } else {                                                                                                                                                              <* 
- *>       printf("<html><head><title>swatch</title></head><body>\n\n<h1>_colorscheme : %-15.15s at %03dd using %-3.3s%-2.2s [%c] adj=%2d</h1>\n",                            <* 
- *>             (o->is_ryb == 1) ? "RYB (artistic)" : "RGB (technical)",                                                                                                     <* 
- *>             o->base, table_scheme[SCHEME_ID].abbr, table_comp[COMP].abbr,                                                                                                <* 
- *>             table_accent[ACCENTING_ID].abbr[0], VARIANT_ID);                                                                                                             <* 
- *>       printf("<table border=0 cellspacing=0><tr><th>shadows</th><th>dominant</th><th>accents</th><th colspan=5>reductions</th><th colspan=11>extended</th></tr>\n\n");   <* 
- *>    }                                                                                                                                                                     <* 
- *>    /+---(generate colors)------------------+/                                                                                                                            <* 
- *>    int j;                                                                                                                                                                <* 
- *>    int x_angle;                                                                                                                                                          <* 
- *>    int x_size;                                                                                                                                                           <* 
- *>    j = 0;                                                                                                                                                                <* 
- *>    x_size = 10;                                                                                                                                                          <* 
- *>    x_angle = table_scheme[SCHEME_ID].angle[j];                                                                                                                           <* 
- *>    if (CIRCLE == 'n') {                                                                                                                                                  <* 
- *>       while (x_angle != 0) {                                                                                                                                             <* 
- *>          strncpy(yCOLOR_answer, yCOLOR__line(x_base + x_angle, a_variant, x_size, a_format), LEN_TEXT);                                                                  <* 
- *>          x_size = 5;                                                                                                                                                     <* 
- *>          ++j;                                                                                                                                                            <* 
- *>          x_angle = table_scheme[SCHEME_ID].angle[j];                                                                                                                     <* 
- *>       }                                                                                                                                                                  <* 
- *>       j = 0;                                                                                                                                                             <* 
- *>       x_size = 3;                                                                                                                                                        <* 
- *>       x_angle = table_comp[COMP].angle[j];                                                                                                                               <* 
- *>       while (x_angle != 0) {                                                                                                                                             <* 
- *>          strncpy(yCOLOR_answer, yCOLOR__line(x_base + x_angle, a_variant, x_size, a_format), LEN_TEXT);                                                                  <* 
- *>          ++j;                                                                                                                                                            <* 
- *>          x_angle = table_comp[COMP].angle[j];                                                                                                                            <* 
- *>       }                                                                                                                                                                  <* 
- *>    } else {                                                                                                                                                              <* 
- *>       int   x_seg = atoi(a_scheme + 3);                                                                                                                                  <* 
- *>       float x_deg = 360 / x_seg;                                                                                                                                         <* 
- *>       /+> printf("circle <<%s>> with %d segments and %d degrees\n",                   <*                                                                                 <* 
- *>        *>       a_scheme, x_seg, (int) x_deg);                                        <+/                                                                                <* 
- *>       for (j = 0; j < x_seg; ++j) {                                                                                                                                      <* 
- *>          strncpy(yCOLOR_answer, yCOLOR__line(x_base + (int) (x_deg * j), a_variant, x_size, a_format), LEN_TEXT);                                                        <* 
- *>          x_size = 5;                                                                                                                                                     <* 
- *>       }                                                                                                                                                                  <* 
- *>    }                                                                                                                                                                     <* 
- *>    if (a_format == 'a') {                                                                                                                                                <* 
- *>       int z = 0;                                                                                                                                                         <* 
- *>    } else if (a_format == 's') {                                                                                                                                         <* 
- *>       int z = 0;                                                                                                                                                         <* 
- *>    } else {                                                                                                                                                              <* 
- *>       printf("</table></body></html>\n");                                                                                                                                <* 
- *>    }                                                                                                                                                                     <* 
- *>    /+---(complete)-------------------------+/                                                                                                                            <* 
- *>    return 0;                                                                                                                                                             <* 
- *> }                                                                                                                                                                        <*/
 
-char       /*=((p_uptate))=========* return  = simple error code              */
-yCOLOR__run()                     /* PURPOSE = regen a specific color         */
+
+/*============================--------------------============================*/
+/*===----                           accessors                          ----===*/
+/*============================--------------------============================*/
+static void      o___ACCESSOR________________o (void) {;}
+
+char
+yCOLOR_deg2index     (int a_deg)
 {
-   /*---(defense on my_curr)---------------*/
-   tCOLOR *o  = yPALETTE__current();
-   if (o == NULL)                return -1;
-   char x_rc = 0;
-   if (x_rc == 0) x_rc = yCOLOR_ryb_hex   (ANGLE, BASE);
-   if (x_rc == 0) x_rc = yPALETTE__variant_make  (VARIANT_ID,   BASE,    VARIANT);
-   if (x_rc == 0) x_rc = yPALETTE__norming_make  (NORMING_ID,   VARIANT, NORMED);
-   /*> if (x_rc == 0) x_rc = yPALETTE__mothering_make(MOTHERING_ID, MOTHER,  NORMED,  MOTHERED);   <*/
-   /*---(complete)-------------------------*/
-   /*> x_rc = yCOLOR__hex(CURRENT);                                                   <*/
-   /*> if (x_rc == 0) x_rc = yCOLOR_variant();                                        <*/
-   /*> if (x_rc == 0) x_rc = yCOLOR__mother(MOTHERING_ID, MOTHER, BASE, MIXED);       <*/
-   /*> if (x_rc == 0) x_rc = yCOLOR__norming();                                       <*/
-   /*> if (x_rc == 0) x_rc = yCOLOR__descending();                                    <*/
-   /*> if (x_rc == 0) x_rc = yCOLOR__stdout();                                        <*/
-   return x_rc;
+   /*---(locals)-----------+-----------+-*/
+   int         x_index     =   0;
+   /*---(adjust)-------------------------*/
+   if (s_use == YCOLOR_WHEEL) {
+      while (a_deg <    0)   a_deg +=  360;
+      while (a_deg >= 360)   a_deg -=  360;
+   }
+   if (s_use == YCOLOR_SMALL) {
+      if    (a_deg <    0)   a_deg  =    0;
+      if    (a_deg >  240)   a_deg  =  240;
+   }
+   if (s_use == YCOLOR_FULL ) {
+      if    (a_deg < -120)   a_deg  = -120;
+      if    (a_deg >  300)   a_deg +=   50;
+      if    (a_deg >  480)   a_deg  =  480;
+   }
+   /*---(calculate)----------------------*/
+   x_index = a_deg / 10 + 12;
+   /*---(complete)-----------------------*/
+   return x_index;
+}
+
+char
+yCOLOR_deg2hex       (int a_deg, char *a_hex)
+{
+   /*---(locals)-----------+-----------+-*/
+   int         x_index     =   0;
+   /*---(parse color)--------------------*/
+   x_index = yCOLOR_deg2index (a_deg);
+   strlcpy (a_hex, s_RYB [x_index][s_cset], LEN_HEX);
+   /*---(complete)-----------------------*/
+   return 0;
+}
+
+char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
+yCOLOR_hex2color     (char *a_hex)
+{
+   /*---(locals)-----------+-----------+-*/
+   int         x_deg       =   0;
+   float       x_red       = 0.0;
+   float       x_grn       = 0.0;
+   float       x_blu       = 0.0;
+   /*---(parse color)--------------------*/
+   x_red = yCOLOR__unhex (a_hex[1], a_hex[2]);
+   x_grn = yCOLOR__unhex (a_hex[3], a_hex[4]);
+   x_blu = yCOLOR__unhex (a_hex[5], a_hex[6]);
+   /*---(set color)----------------------*/
+   glColor4f   (x_red, x_grn, x_blu, 1.0f);
+   /*---(complete)-----------------------*/
+   return 0;
+}
+
+char         /*--> use degree to set opengl color --------[ ------ [ ------ ]-*/
+yCOLOR_deg2color     (int a_deg)
+{
+   /*---(locals)-----------+-----------+-*/
+   int         x_index     =   0;
+   float       x_red       = 0.0;
+   float       x_grn       = 0.0;
+   float       x_blu       = 0.0;
+   /*---(parse color)--------------------*/
+   x_index = yCOLOR_deg2index (a_deg);
+   x_red   = yCOLOR__unhex (s_RYB [x_index][s_cset][1], s_RYB [x_index][s_cset][2]);
+   x_grn   = yCOLOR__unhex (s_RYB [x_index][s_cset][3], s_RYB [x_index][s_cset][4]);
+   x_blu   = yCOLOR__unhex (s_RYB [x_index][s_cset][5], s_RYB [x_index][s_cset][6]);
+   /*---(set color)----------------------*/
+   glColor4f   (x_red, x_grn, x_blu, 1.0f);
+   /*---(complete)-----------------------*/
+   return 0;
 }
 
 
-/*----------------------------------------------------------------------------*/
-/*--------------------------------end-of-file---------------------------------*/
-/*----------------------------------------------------------------------------*/
+
+/*============================--------------------============================*/
+/*===----                          conversions                         ----===*/
+/*============================--------------------============================*/
+static void      o___CONVERSION______________o (void) {;}
+
+float
+yCOLOR__unhex        (char a_one, char a_two)
+{
+   /*---(locals)-----------+-----------+-*/
+   float       x_one       = 0.0;
+   float       x_two       = 0.0;
+   float       x_result    = 0.0;
+   /*---(first char)---------------------*/
+   if      (a_one >= '0' && a_one <= '9')   x_one = a_one - '0';
+   else if (a_one >= 'a' && a_one <= 'f')   x_one = a_one - 'a' + 10;
+   else if (a_one >= 'A' && a_one <= 'F')   x_one = a_one - 'A' + 10;
+   else                                     x_one = 0.0;
+   /*---(second char)--------------------*/
+   if      (a_two >= '0' && a_two <= '9')   x_two = a_two - '0';
+   else if (a_two >= 'a' && a_two <= 'f')   x_two = a_two - 'a' + 10;
+   else if (a_two >= 'A' && a_two <= 'F')   x_two = a_two - 'A' + 10;
+   else                                     x_two = 0.0;
+   /*---(calc)---------------------------*/
+   x_result =  ((x_one * 16.0) + x_two) / 255.0;
+   /*---(complete)-----------------------*/
+   return x_result;
+}
+
+char       /*=((p_convert))===* return  = simple error code                   */
+yCOLOR_hex2hsv      (     /* PURPOSE = convert RGB hex into HSV            */
+      char     *a_hex,            /* RBG 24-bit hex code            (#RRGGBB) */
+      float    *a_hue,            /* hue color component              (0-359) */
+      float    *a_sat,            /* saturation color component     (0.0-1.0) */
+      float    *a_val)            /* value color component          (0.0-1.0) */
+{
+   /*---(locals)-----------+-----------+-*/
+   float       x_red       = 0.0;
+   float       x_grn       = 0.0;
+   float       x_blu       = 0.0;
+   float       x_min       = 0.0;
+   float       x_max       = 0.0;
+   float       x_del       = 0.0;
+   /*---(simple defense)-------------------*/
+   if (strlen(a_hex) != 7)    return -2;
+   x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);
+   x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);
+   x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);
+   /*---(setup)----------------------------*/
+   x_min   = yCOLOR__min3 (x_red, x_grn, x_blu);
+   x_max   = yCOLOR__max3 (x_red, x_grn, x_blu);
+   x_del   = x_max - x_min;
+   /*---(value)----------------------------*/
+   if (a_val)  *a_val = x_max;
+   /*---(saturation)-----------------------*/
+   if (x_max == 0.0) {
+      *a_sat  = 0.0;
+      *a_hue  = 0.0;
+      return 0;
+   }
+   if (a_sat)  *a_sat = x_del / x_max;
+   /*---(hue)------------------------------*/
+   if      (x_del   == 0.0  )   *a_hue = 0.0;
+   else if (x_red   == x_max)   *a_hue = 0.0 + (x_grn - x_blu) / x_del;
+   else if (x_grn   == x_max)   *a_hue = 2.0 + (x_blu - x_red) / x_del;
+   else                         *a_hue = 4.0 + (x_red - x_grn) / x_del;
+   *a_hue *= 60;
+   if (*a_hue < 0.0) *a_hue += 360.0;
+   /*---(complete)-------------------------*/
+   return 0;
+}
+
+char       /*=((p_convert))===* return  = simple error code                   */
+yCOLOR_hsv2hex    (           /* PURPOSE = convert HSV to RGB HEX              */
+      float     a_hue,            /* hue color component              (0-359) */
+      float     a_sat,            /* saturation color component     (0.0-1.0) */
+      float     a_val,            /* value color component          (0.0-1.0) */
+      char     *a_hex)            /* RGB 24-bit hex code            (#RRGGBB) */
+{
+   /*---(defense)--------------------------*/
+   while (a_hue <  0.0)     a_hue += 360.0;
+   while (a_hue >= 360.0)   a_hue -= 360.0;
+   if (a_sat < 0.0)         a_sat  = 0.0;
+   if (a_sat > 1.0)         a_sat  = 1.0;
+   if (a_val < 0.0)         a_val  = 0.0;
+   if (a_val > 1.0)         a_val  = 1.0;
+   /*---(locals)---------------------------*/
+   int       i;
+   float     h, f, p, q, t;
+   float     x_red, x_grn, x_blu;
+   /*---(check for grey)-------------------*/
+   if (a_sat == 0) {
+      x_red = x_grn = x_blu  = a_val;
+   } else {
+      /*---(prepare)-----------------------*/
+      h = a_hue / 60;           /* divide into six sectors (0 - 5)            */
+      i = floor(h);             /* section number as integer                  */
+      f = h - i;                /* fractional part of section number          */
+      p = a_val * (1 - a_sat);
+      q = a_val * (1 - a_sat * f);
+      t = a_val * (1 - a_sat * (1 - f));
+      /*---(assign color)------------------*/
+      switch (i) {
+      case 0:  x_red = a_val; x_grn = t;     x_blu = p;     break;
+      case 1:  x_red = q;     x_grn = a_val; x_blu = p;     break;
+      case 2:  x_red = p;     x_grn = a_val; x_blu = t;     break;
+      case 3:  x_red = p;     x_grn = q;     x_blu = a_val; break;
+      case 4:  x_red = t;     x_grn = p;     x_blu = a_val; break;
+      default: x_red = a_val; x_grn = p;     x_blu = q;     break;
+      }
+   }
+   /*---(truncate into 0-255)--------------*/
+   uchar u_red = x_red * 255;
+   uchar u_grn = x_grn * 255;
+   uchar u_blu = x_blu * 255;
+   /*---(place into RGB hex)---------------*/
+   snprintf(a_hex, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);
+   /*---(complete)-------------------------*/
+   return 0;
+}
+
+
+
+/*============================--------------------============================*/
+/*===----                         color changes                        ----===*/
+/*============================--------------------============================*/
+static void      o___CHANGES_________________o (void) {;}
+
+char       /*=((c_convert))===* return  = simple error code                   */
+yCOLOR_accent        (       /* PURPOSE = apply a color variation             */
+      char      a_level,          /* accent level                             */
+      char     *a_hex,            /* rgb three byte hex code        (#rrggbb) */
+      char     *a_out)            /* rgb three byte hex code        (#rrggbb) */
+{
+   /*---(locals)-----------+-----------+-*/
+   char        rce         = -10;      /* return code for errors              */
+   int         i           =   0;      /* generic iterator                    */
+   int         x_index     =  -1;      /* variant index                       */
+   int         rc          =   0;      /* generic return code                 */
+   float       x_hue       =   0.0;    /* HSV hue                             */
+   float       x_sat       =   0.0;    /* HSV saturation                      */
+   float       x_val       =   0.0;    /* HSV value                           */
+   /*---(defense)--------------------------*/
+   --rce;  if (a_hex  == NULL) {
+      return rce;
+   }
+   --rce;  if (a_out  == NULL) {
+      return rce;
+   }
+   /*---(initialize)-----------------------*/
+   strlcpy (a_out, a_hex, LEN_HEX);
+   /*---(search)---------------------------*/
+   x_index = s_cvariant;
+   /*---(get the base)---------------------*/
+   rc = yCOLOR_hex2hsv (a_hex, &x_hue, &x_sat, &x_val);
+   --rce;  if (rc != 0) {
+      return rce;
+   }
+   /*> printf ("\n");                                                                                     <* 
+    *> printf ("base   hex = %s, hue = %4.2f, sat = %4.2f, val = %4.2f\n", a_hex, x_hue, x_sat, x_val);   <*/
+   /*---(get the modifiers)----------------*/
+   --rce;  switch (a_level) {
+   case '^' :  /* lightest      */
+      x_sat   = x_sat - (x_sat * (s_variants [x_index].accent * 1.75));
+      x_val   = x_val + (x_val * (s_variants [x_index].accent * 1.00));
+      /*> printf ("top    hue = %4.2f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);   <*/
+      break;
+   case '+' :  /* lighter       */
+      x_sat   = x_sat - (x_sat * (s_variants [x_index].accent * 1.25));
+      x_val   = x_val + (x_val * (s_variants [x_index].accent * 0.50));
+      /*> printf ("plus   hue = %4.2f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);   <*/
+      break;
+   case '-' :  /* darker        */
+      x_sat   = x_sat;
+      x_val   = x_val - (x_val * (s_variants [x_index].accent * 0.45));
+      /*> printf ("minus  hue = %4.2f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);   <*/
+      break;
+   case 'v' :  /* darkest       */
+      x_sat   = x_sat;
+      x_val   = x_val - (x_val * (s_variants [x_index].accent * 0.95));
+      /*> printf ("bot    hue = %4.2f, sat = %4.2f, val = %4.2f\n", x_hue, x_sat, x_val);   <*/
+      break;
+   default  :
+      return rce;
+      break;
+   }
+   /*---(apply the modifiers)--------------*/
+   rc = yCOLOR_hsv2hex (x_hue, x_sat, x_val, a_out);
+   /*> printf ("modded hex = %s, hue = %4.2f, sat = %4.2f, val = %4.2f\n", a_out, x_hue, x_sat, x_val);   <*/
+   --rce;  if (rc != 0) {
+      return rce;
+   }
+   /*---(complete)-------------------------*/
+   return 0;
+}
+
+char       /*=((c_convert))===* return  = simple error code                   */
+yCOLOR_variant       (       /* PURPOSE = apply a color variation             */
+      char     *a_name,           /* variation name                           */
+      char     *a_hex,            /* rgb three byte hex code        (#rrggbb) */
+      char     *a_out)            /* rgb three byte hex code        (#rrggbb) */
+{
+   /*---(locals)-----------+-----------+-*/
+   char        rce         = -10;      /* return code for errors              */
+   int         i           =   0;      /* generic iterator                    */
+   int         x_index     =  -1;      /* variant index                       */
+   int         rc          =   0;      /* generic return code                 */
+   float       x_hue       =   0.0;    /* HSV hue                             */
+   float       x_sat       =   0.0;    /* HSV saturation                      */
+   float       x_val       =   0.0;    /* HSV value                           */
+   /*---(defense)--------------------------*/
+   --rce;  if (a_name == NULL) {
+      return rce;
+   }
+   --rce;  if (a_hex  == NULL) {
+      return rce;
+   }
+   --rce;  if (a_out  == NULL) {
+      return rce;
+   }
+   /*---(initialize)-----------------------*/
+   strlcpy (a_out, a_hex, LEN_HEX);
+   /*---(search)---------------------------*/
+   if (strcmp (a_name, "CURRENT") == 0)  x_index = s_cvariant;
+   if (strcmp (a_name, "SAME"   ) == 0)  x_index = s_lvariant;
+   if (strcmp (a_name, "FIRST"  ) == 0)  x_index = 0;
+   if (strcmp (a_name, "NEXT"   ) == 0)  x_index = ++s_lvariant;
+   if (x_index < 0) {
+      for (i = 0; i < MAX_VARIANT; ++i) {
+         if (s_variants [i].abbr [0] == '\0')            break;
+         if ((strcmp (s_variants [i].abbr, a_name) != 0) &&
+               (strcmp (s_variants [i].name, a_name) != 0))  continue;
+         x_index = i;
+         break;
+      }
+   }
+   --rce;  if (x_index < 0) {
+      return rce;
+   }
+   --rce;  if (x_index >= s_nvariant) {
+      return rce;
+   }
+   s_lvariant = x_index;
+   /*---(check for nothing)----------------*/
+   if (x_index == 0) {
+      return 0;
+   }
+   /*---(get the base)---------------------*/
+   rc = yCOLOR_hex2hsv (a_hex, &x_hue, &x_sat, &x_val);
+   --rce;  if (rc != 0) {
+      return rce;
+   }
+   /*---(get the modifiers)----------------*/
+   x_sat   = s_variants [x_index].new_sat;
+   x_val   = s_variants [x_index].new_val;
+   /*---(apply the modifiers)--------------*/
+   rc = yCOLOR_hsv2hex (x_hue, x_sat, x_val, a_out);
+   --rce;  if (rc != 0) {
+      return rce;
+   }
+   /*---(complete)-------------------------*/
+   return 0;
+}
+
+char       /*=((c_convert))===* return  = simple error code                   */
+yCOLOR_norming_find  (char *a_name)
+{
+   /*---(locals)-----------+-----------+-*/
+   int         i           = 0;
+   int         x_index     = 0;
+   /*---(search)---------------------------*/
+   for (i = 0; i < MAX_NORMING; ++i) {
+      if (s_normings [i].abbr [0] == '\0')            break;
+      if (s_normings [i].abbr [0] != a_name [0])      continue;
+      if ((strcmp (s_normings [i].abbr, a_name) != 0) &&
+            (strcmp (s_normings [i].name, a_name) != 0))  continue;
+      x_index = i;
+      break;
+   }
+   /*---(complete)-------------------------*/
+   return x_index;
+}
+
+char       /*=((pUPDATE ]]=========* return  = simple error code              */
+yCOLOR__norming    (      /* PURPOSE = level color intensity               */
+      int       a_index,          /* norming index                            */
+      char     *a_hex,            /* rgb three byte hex code        (#rrggbb) */
+      char     *a_out)            /* rgb three byte hex code        (#rrggbb) */
+{
+   /*---(locals)-----------+-----------+-*/
+   float       x_red       = 0.0;
+   float       x_grn       = 0.0;
+   float       x_blu       = 0.0;
+   float       x_hue       = 0.0;
+   float       x_sat       = 0.0;
+   float       x_val       = 0.0;
+   float       x_total     = 0.0;
+   int         rc          = 0;
+   float       x_norm      = 0.0;
+   float       x_redpct    = 0.0;
+   float       x_grnpct    = 0.0;
+   float       x_blupct    = 0.0;
+   /*---(brightness)-----------------------*/
+   float  d_red  = s_normings [a_index].red;
+   float  d_grn  = s_normings [a_index].grn;
+   float  d_blu  = s_normings [a_index].blu;
+   /*> printf("norming [%d]... hsv based = %c\n", a_index, s_normings [a_index].is_value);   <* 
+    *> printf("  factor    %5.3fr, %5.3fg, %5.3fb\n", d_red, d_grn, d_blu);                    <*/
+   /*> printf("  color     %3dr, %3dg, %3db\n", x_red, x_grn, x_blu);                 <*/
+   /*---(pull values)----------------------*/
+   x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);
+   x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);
+   x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);
+   if (s_normings [a_index].is_value == 'y') {
+      /*---(update)---------------------------*/
+      x_red *= (s_normings [a_index].red);
+      x_grn *= (s_normings [a_index].grn);
+      x_blu *= (s_normings [a_index].blu);
+      x_norm = 1.000 - x_red - x_grn - x_blu;
+      yCOLOR_hex2hsv (a_hex, &x_hue, &x_sat, &x_val);
+      yCOLOR_hsv2hex (x_hue, x_sat, x_val * x_norm, a_out);
+   } else if (s_normings [a_index].is_value == 'n') {
+      /*---(update)---------------------------*/
+      x_red *= (1.0 - s_normings [a_index].red);
+      x_grn *= (1.0 - s_normings [a_index].grn);
+      x_blu *= (1.0 - s_normings [a_index].blu);
+      /*---(truncate into 0-255)--------------*/
+      uchar u_red = x_red * 255;
+      uchar u_grn = x_grn * 255;
+      uchar u_blu = x_blu * 255;
+      /*---(place into RGB hex)---------------*/
+      snprintf (a_out, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);
+   } else if (s_normings [a_index].is_value == 't') {
+      /*---(update)---------------------------*/
+      x_total = x_red + x_grn + x_blu;
+      x_redpct = x_red / x_total;
+      x_grnpct = x_grn / x_total;
+      x_blupct = x_blu / x_total;
+      /*---(truncate into 0-255)--------------*/
+      uchar u_red = x_redpct * 255;
+      uchar u_grn = x_grnpct * 255;
+      uchar u_blu = x_blupct * 255;
+      /*---(place into RGB hex)---------------*/
+      snprintf (a_out, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);
+   }
+   /*---(complete)-------------------------*/
+   return 0;
+}
