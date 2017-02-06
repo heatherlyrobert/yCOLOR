@@ -159,14 +159,14 @@
 
 #define     YCOLOR_WHEEL     'w'     /* wheel of 36 colors (ryb wheel)        */
 #define     YCOLOR_SMALL     's'     /* strip of 25 colors (red to blue)      */
-#define     YCOLOR_FULL      'f'     /* strip of 67 colors (brown to grey)    */
+#define     YCOLOR_LARGE     'l'     /* strip of 67 colors (brown to grey)    */
 
 /*---(utility)------------------------*/
 char        yCOLOR_init          (char   a_use);
 char        yCOLOR_use           (char   a_use);
 /*---(color by degree)----------------*/
-char        yCOLOR_deg2index     (int    a_deg);
-char        yCOLOR_deg2hex       (int    a_deg  , char  *a_hex);
+char        yCOLOR_deg2index     (int    a_deg  , int   *a_index);
+char        yCOLOR_deg2hex       (int    a_deg  , char  *a_hex  );
 char        yCOLOR_deg2color     (int    a_deg);
 /*---(color by hex)-------------------*/
 char        yCOLOR_hex2color     (char  *a_hex);
@@ -176,6 +176,8 @@ char        yCOLOR_hsv2hex       (float  a_hue  , float  a_sat, float  a_val, ch
 /*---(variations)---------------------*/
 char        yCOLOR_variant       (char  *a_name , char  *a_hex, char  *a_out);
 char        yCOLOR_accent        (char   a_level, char  *a_hex, char  *a_out);
+/*---(special)------------------------*/
+char        yCOLOR_error         (char   a_level, char  *a_hex, char  *a_out);
 
 
 

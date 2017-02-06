@@ -431,7 +431,7 @@ DRAW_scale          (void)
    int         x_set       =  0;             /* loop iterator -- word          */
    char        x_base      [LEN_HEX] = "";
    char        x_hex       [LEN_HEX] = "";
-   yCOLOR_use (YCOLOR_FULL);
+   yCOLOR_use (YCOLOR_LARGE);
    for (i = -120; i <= 480; i += 10) {
       glPushMatrix(); {
          yCOLOR_deg2hex  (i, x_base);

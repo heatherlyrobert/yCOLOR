@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YFONT_VER_NUM   "1.0d"
-#define     YFONT_VER_TXT   "created library version and updated yCOLOR_make"
+#define     YFONT_VER_NUM   "1.0e"
+#define     YFONT_VER_TXT   "adapted to support power meter program"
 
 
 

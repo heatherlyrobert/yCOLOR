@@ -4,8 +4,8 @@
 
 
 
-char  s_use        = 'w';
-int   s_cset       =  5;
+char  s_use        = YCOLOR_WHEEL;
+int   s_cset       =  6;
 int   s_ccolor     =  0;
 int   s_ncolor     =  0;
 int   s_cvariant   =  0;
@@ -207,23 +207,31 @@ yCOLOR_use           (char  a_use)
 {
    /*---(locals)-----------+-----------+-*/
    char        rce         = -10;      /* return code for errors              */
+   char        x_ncolor    =   0;
    /*---(defense)------------------------*/
-   --rce;  if (strchr ("wsf", a_use) == NULL) {
-      s_use = 'w';   /* safe default */
+   --rce;  if (strchr ("wsl", a_use) == NULL) {
+      s_use = YCOLOR_WHEEL;   /* safe default */
       return rce;
    }
    /*---(set global)---------------------*/
    s_use = a_use;
+   switch (a_use) {
+   case YCOLOR_WHEEL :  x_ncolor = 36;  break;
+   case YCOLOR_SMALL :  x_ncolor = 25;  break;
+   case YCOLOR_LARGE :  x_ncolor = 67;  break;
+   default           :  x_ncolor =  0;  break;
+   }
    /*---(complete)-----------------------*/
-   return 0;
+   return x_ncolor;
 }
 
 char
 yCOLOR_init          (char  a_use)
 {
    int         i           = 0;
+   char        x_ncolor    =   0;
    s_ncolor   = 0;
-   yCOLOR_use (a_use);
+   x_ncolor = yCOLOR_use (a_use);
    for (i = 0; i < MAX_COLOR  ; ++i) {
       if (s_RYB      [i][1][0] == '\0')            break;
       ++s_ncolor;
@@ -238,7 +246,7 @@ yCOLOR_init          (char  a_use)
       if (s_normings [i].abbr[0] == '\0') break;
       ++s_nnorming;
    }
-   return 0;
+   return x_ncolor;
 }
 
 
@@ -249,50 +257,67 @@ yCOLOR_init          (char  a_use)
 static void      o___ACCESSOR________________o (void) {;}
 
 char
-yCOLOR_deg2index     (int a_deg)
-{
+yCOLOR_deg2index     (int a_deg, int *a_index)
+{  /*---(design notes)-------------------*/
+   /*
+    *  always returns a valid index, but sends a positive return code if it
+    *  must adjust to obtain a valid degree.
+    */
    /*---(locals)-----------+-----------+-*/
+   char        rce         = -10;
+   char        rc          =   0;
    int         x_index     =   0;
    /*---(adjust)-------------------------*/
-   if (s_use == YCOLOR_WHEEL) {
-      while (a_deg <    0)   a_deg +=  360;
-      while (a_deg >= 360)   a_deg -=  360;
-   }
-   if (s_use == YCOLOR_SMALL) {
-      if    (a_deg <    0)   a_deg  =    0;
-      if    (a_deg >  240)   a_deg  =  240;
-   }
-   if (s_use == YCOLOR_FULL ) {
-      if    (a_deg < -120)   a_deg  = -120;
-      if    (a_deg >  300)   a_deg +=   50;
-      if    (a_deg >  480)   a_deg  =  480;
+   if        (s_use == YCOLOR_WHEEL) {
+      while (a_deg <    0)  { a_deg +=  360; rc = -rce; }
+      while (a_deg >= 360)  { a_deg -=  360; rc = -rce; }
+   } else if (s_use == YCOLOR_SMALL) {
+      if    (a_deg <    0)  { a_deg  =    0; rc = -rce; }
+      if    (a_deg >  240)  { a_deg  =  240; rc = -rce; }
+   } else if (s_use == YCOLOR_LARGE) {
+      if    (a_deg < -120)  { a_deg  = -120; rc = -rce; }
+      if    (a_deg >  300)  { a_deg +=   50;            }
+      if    (a_deg >  480)  { a_deg  =  480; rc = -rce; }
+   } else {
+      a_deg = 0;
+      rc = -rce;
    }
    /*---(calculate)----------------------*/
    x_index = a_deg / 10 + 12;
+   if (a_index)  *a_index = x_index;
    /*---(complete)-----------------------*/
-   return x_index;
+   return rc;
 }
 
 char
 yCOLOR_deg2hex       (int a_deg, char *a_hex)
 {
    /*---(locals)-----------+-----------+-*/
+   char        rc          =   0;
    int         x_index     =   0;
    /*---(parse color)--------------------*/
-   x_index = yCOLOR_deg2index (a_deg);
+   rc = yCOLOR_deg2index (a_deg, &x_index);
    strlcpy (a_hex, s_RYB [x_index][s_cset], LEN_HEX);
    /*---(complete)-----------------------*/
-   return 0;
+   return rc;
 }
 
 char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
 yCOLOR_hex2color     (char *a_hex)
 {
    /*---(locals)-----------+-----------+-*/
-   int         x_deg       =   0;
+   char        rce         = -10;
+   int         i           =   0;
    float       x_red       = 0.0;
    float       x_grn       = 0.0;
    float       x_blu       = 0.0;
+   /*---(defense)------------------------*/
+   --rce;  if (a_hex == NULL)        return rce;
+   --rce;  if (strlen (a_hex) != 7)  return rce;
+   --rce;  if (a_hex [0] != '#')     return rce;
+   --rce;  for (i = 1; i < 7; ++i) {
+      if (strchr ("0123456789abcdefABCDEF", a_hex [i]) == NULL)  return rce;
+   }
    /*---(parse color)--------------------*/
    x_red = yCOLOR__unhex (a_hex[1], a_hex[2]);
    x_grn = yCOLOR__unhex (a_hex[3], a_hex[4]);
@@ -307,19 +332,20 @@ char         /*--> use degree to set opengl color --------[ ------ [ ------ ]-*/
 yCOLOR_deg2color     (int a_deg)
 {
    /*---(locals)-----------+-----------+-*/
+   char        rc          =   0;
    int         x_index     =   0;
    float       x_red       = 0.0;
    float       x_grn       = 0.0;
    float       x_blu       = 0.0;
    /*---(parse color)--------------------*/
-   x_index = yCOLOR_deg2index (a_deg);
+   rc = yCOLOR_deg2index (a_deg, &x_index);
    x_red   = yCOLOR__unhex (s_RYB [x_index][s_cset][1], s_RYB [x_index][s_cset][2]);
    x_grn   = yCOLOR__unhex (s_RYB [x_index][s_cset][3], s_RYB [x_index][s_cset][4]);
    x_blu   = yCOLOR__unhex (s_RYB [x_index][s_cset][5], s_RYB [x_index][s_cset][6]);
    /*---(set color)----------------------*/
    glColor4f   (x_red, x_grn, x_blu, 1.0f);
    /*---(complete)-----------------------*/
-   return 0;
+   return rc;
 }
 
 
