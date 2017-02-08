@@ -159,7 +159,7 @@ DRAW_column         (void)
       glTranslatef ( 20, -win_h / 2 + 20,   0.0);
       for (x_deg =  0; x_deg < 360; x_deg += 10) {
          glPushMatrix(); {
-            yCOLOR_deg2color   (x_deg);
+            yCOLOR_deg2color   (x_deg, 1.0);
             glBegin         (GL_POLYGON); {
                glVertex3f  (   0.0, x_inc,     0.0);
                glVertex3f  (x_wide, x_inc,     0.0);
@@ -172,6 +172,14 @@ DRAW_column         (void)
                sprintf (x_text, "%03d", x_deg);
                glTranslatef ( 80 ,   3.0,   0.0);
                yFONT_print  (s_font,   8, YF_BASLEF, x_text);
+            } glPopMatrix();
+         }
+         if (s_notation == 'y') {
+            glPushMatrix(); {
+               glTranslatef (  37,   x_inc / 2 + 1,   0.0);
+               glColor4f    ( 0.0, 0.0, 0.0, 1.0);
+               /*> yFONT_print  (s_font,   8, YF_MIDCEN, x_norm);                  <*/
+               yFONT_print  (s_font,   6, YF_MIDCEN, yCOLOR_deg2name (x_deg));
             } glPopMatrix();
          }
          glTranslatef ( 0.0, x_inc,   0.0);
@@ -197,22 +205,23 @@ DRAW_wheel          (char a_which)
    char        x_base      [LEN_HEX] = "";
    char        x_hex       [LEN_HEX] = "";
    char        x_norm      [LEN_HEX] = "";
+   char        x_save      = 0;
    yCOLOR_use (YCOLOR_WHEEL);
    glPushMatrix(); {
-      if      (a_which == 'o')  glTranslatef ( 380,   0.0,   0.0);
-      else if (a_which == 'O')  glTranslatef ( 380,   0.0,   0.0);
-      else                      glTranslatef (1100,   0.0,   0.0);
+      if      (a_which == 'o')  glTranslatef ( 380,  40.0,   0.0);
+      else if (a_which == 'O')  glTranslatef ( 380,  40.0,   0.0);
+      else                      glTranslatef (1100,  40.0,   0.0);
       for (x_deg = 0; x_deg < 360; x_deg += 10) {
          glPushMatrix(); {
             glRotatef    (x_deg + 90, 0.0f, 0.0f, 1.0f);
             /*---(set color)-------------*/
             yCOLOR_deg2hex     (x_deg, x_base);
-            yCOLOR_deg2color   (x_deg);
+            yCOLOR_deg2color   (x_deg, 1.0);
             strlcpy (x_norm, x_base, LEN_HEX);
             if (a_which != 'o') {
                yCOLOR_variant ("CURRENT", x_base, x_hex);
                yCOLOR__norming (s_cnorming, x_hex , x_norm);
-               yCOLOR_hex2color (x_norm);
+               yCOLOR_hex2color (x_norm, 1.0);
             }
             /*---(draw)------------------*/
             r1  = win_h / 4.0;
@@ -223,6 +232,20 @@ DRAW_wheel          (char a_which)
                glVertex3f  (r2, -r2 * sin (5.5 * DEG2RAD),     0.0);
                glVertex3f  (r1, -r1 * sin (5.5 * DEG2RAD),     0.0);
             } glEnd   ();
+            if (x_deg % 30 == 0) {
+               x_save = s_cset;
+               s_cset = 7;
+               r2 = r1 + 20;
+               yCOLOR_deg2color   (x_deg, 1.0);
+               glBegin         (GL_POLYGON); {
+                  glVertex3f  (r1,  r1 * sin (5.5 * DEG2RAD),     0.0);
+                  glVertex3f  (r2,  r2 * sin (5.5 * DEG2RAD),     0.0);
+                  glVertex3f  (r2, -r2 * sin (5.5 * DEG2RAD),     0.0);
+                  glVertex3f  (r1, -r1 * sin (5.5 * DEG2RAD),     0.0);
+               } glEnd   ();
+               s_cset = x_save;
+               yCOLOR_deg2color   (x_deg, 1.0);
+            }
             if (x_deg % 60 == 0) {
                glPushMatrix(); {
                   glTranslatef ( 80,   0.0,   0.0);
@@ -275,20 +298,24 @@ DRAW_wheel          (char a_which)
                glPushMatrix(); {
                   sprintf (x_text, "%03d", x_deg);
                   glTranslatef ( 240,   0.0,   0.0);
+                  if (x_deg < 180) glRotatef    (180       , 0.0f, 0.0f, 1.0f);
                   yFONT_print  (s_font,   8, YF_MIDCEN, x_text);
                } glPopMatrix();
             }
             if (x_deg == s_ccolor) {
                glPushMatrix(); {
-                  glTranslatef ( 145,   0.0,   0.0);
-                  yFONT_print  (s_font,   8, YF_MIDRIG, "curr");
+                  glTranslatef ( 135,   0.0,   0.0);
+                  if (x_deg < 180) glRotatef    (180       , 0.0f, 0.0f, 1.0f);
+                  yFONT_print  (s_font,   8, YF_MIDCEN, "curr");
                } glPopMatrix();
             }
             if (s_notation == 'y') {
                glPushMatrix(); {
                   glTranslatef ( 200,   0.0,   0.0);
+                  if (x_deg < 180) glRotatef    (180       , 0.0f, 0.0f, 1.0f);
                   glColor4f    ( 0.0, 0.0, 0.0, 1.0);
-                  yFONT_print  (s_font,   8, YF_MIDCEN, x_norm);
+                  /*> yFONT_print  (s_font,   8, YF_MIDCEN, x_norm);                  <*/
+                  yFONT_print  (s_font,   8, YF_MIDCEN, yCOLOR_deg2name (x_deg));
                } glPopMatrix();
             }
          } glPopMatrix();
@@ -312,7 +339,7 @@ DRAW_variants       (void)
    yCOLOR_deg2hex  (s_ccolor, x_base);
    glPushMatrix(); {
       x_pos  = 660;
-      y_pos  = win_h / 2 - 40;
+      y_pos  = win_h / 2 - 30;
       for (i = 0; i < s_nvariant; ++i) {
          /*---(identify variant)---------*/
          if (i == 0)  rc = yCOLOR_variant ("FIRST", x_base, x_hex);
@@ -321,12 +348,12 @@ DRAW_variants       (void)
          /*---(check column change)------*/
          if (s_variants [i].abbr[0] == '2' ) {
             x_pos += 100;
-            y_pos  = win_h / 2 - 30;
+            y_pos  = win_h / 2 - 20;
          }
          glPushMatrix(); {
             glTranslatef (x_pos , y_pos,   0.0);
             /*---(set color)----------------*/
-            yCOLOR_hex2color (x_hex);
+            yCOLOR_hex2color (x_hex, 1.0);
             /*---(show category)------------*/
             if (s_variants [i].cat[0] != '-' && strcmp (x_cat, s_variants [i].cat) != 0) {
                glTranslatef (   0, -10.0,   0.0);
@@ -392,7 +419,7 @@ DRAW_normings       (void)
       for (i = 0; i < s_nnorming; ++i) {
          if (s_normings [i].abbr[0] == '\0') break;
          yCOLOR__norming (i, x_hex , x_norm);
-         yCOLOR_hex2color (x_norm);
+         yCOLOR_hex2color (x_norm, 1.0);
          glBegin         (GL_POLYGON); {
             glVertex3f  (    0.0,  50.0,     0.0);
             glVertex3f  (  100.0,  50.0,     0.0);
@@ -424,32 +451,31 @@ DRAW_scale          (void)
 {
    /*---(locals)-----------+-----------+-*/
    int         i           =  0;             /* loop iterator -- word          */
-   float       x           =  0.0;
-   float       y           =  0.0;
-   float       x_inc       = 80.0;
    char        x_text      [LEN_STR];
-   int         x_set       =  0;             /* loop iterator -- word          */
-   char        x_base      [LEN_HEX] = "";
-   char        x_hex       [LEN_HEX] = "";
-   yCOLOR_use (YCOLOR_LARGE);
+   yCOLOR_use (YCOLOR_GIANT);
    for (i = -120; i <= 480; i += 10) {
       glPushMatrix(); {
-         yCOLOR_deg2hex  (i, x_base);
-         yCOLOR_hex2color (x_base);
+         yCOLOR_deg2color  (i, 1.0);
          glTranslatef ( 370 + (i * 2.0), -win_h / 2 - 10,   0.0);
          glBegin         (GL_POLYGON); {
-            glVertex3f  (    0.0,  30.0,     0.0);
-            glVertex3f  (   20.0,  30.0,     0.0);
+            glVertex3f  (    0.0,  70.0,     0.0);
+            glVertex3f  (   20.0,  70.0,     0.0);
             glVertex3f  (   20.0,   0.0,     0.0);
             glVertex3f  (    0.0,   0.0,     0.0);
          } glEnd   ();
+         if (s_notation == 'y') {
+            glRotatef    (90, 0.0f, 0.0f, 1.0f);
+            glTranslatef (  40,  -8.0,   0.0);
+            glColor4f   (  0.0,   0.0,   0.0, 1.0f);
+            yFONT_print  (s_font,   7, YF_MIDCEN, yCOLOR_deg2name (i));
+         }
       } glPopMatrix();
       if (i % 30 == 0) {
          glPushMatrix(); {
+            yCOLOR_deg2color  (i, 1.0);
             sprintf (x_text, "%d", i);
             glTranslatef ( 370 + (i * 2.0), -win_h / 2 - 10,   0.0);
-            glTranslatef (  10,  40.0,   0.0);
-            /*> glColor4f   (  1.0,   1.0,   1.0, 1.0f);                              <*/
+            glTranslatef (  10,  80.0,   0.0);
             yFONT_print  (s_font,   8, YF_MIDCEN, x_text);
          } glPopMatrix();
       }
@@ -480,7 +506,7 @@ DRAW_box            (char *a_base, char *a_var, char a_size, int a_xpos, int a_y
    }
    if (strlen (a_var) == 1)  yCOLOR_accent  (a_var [0], a_base, x_hex);
    else                      yCOLOR_variant (a_var    , a_base, x_hex);
-   yCOLOR_hex2color (x_hex);
+   yCOLOR_hex2color (x_hex, 1.0);
    glBegin         (GL_POLYGON); {
       glVertex3f  ( a_xpos         , a_ypos + x_tall, x_zpos);
       glVertex3f  ( a_xpos + x_wide, a_ypos + x_tall, x_zpos);
@@ -489,7 +515,7 @@ DRAW_box            (char *a_base, char *a_var, char a_size, int a_xpos, int a_y
    } glEnd   ();
    if (s_notation == 'y') {
       /*> yCOLOR_variant ("none", a_base, x_hex);                                     <* 
-       *> yCOLOR_hex2color (x_hex);                                                     <*/
+       *> yCOLOR_hex2color (x_hex, 1.0);                                                     <*/
       glPushMatrix(); {
          sprintf (x_text, "%-2.2s", a_var);
          glTranslatef ( a_xpos + (x_wide/2), a_ypos + 10, 30.0);
@@ -520,11 +546,11 @@ DRAW_layout         (void)
    char        x_hex4      [LEN_HEX] = "";
    yCOLOR_use (YCOLOR_WHEEL);
    glPushMatrix(); {
-      glTranslatef ( 850 , -win_h / 2 + 50,   0.0);
+      glTranslatef ( 850 , -win_h / 2 + 80,   0.0);
       /*---(upper-left)------------------*/
       yCOLOR_deg2hex  (s_ccolor, x_base);
       yCOLOR_variant ("CURRENT", x_base, x_hex1);
-      yCOLOR_hex2color (x_hex1);
+      yCOLOR_hex2color (x_hex1, 1.0);
       if (s_accent == 'y') {
          DRAW_box (x_hex1 , "CURRENT" , '1',  0,  5);
          DRAW_box (x_hex1 , "v"       , 'b',  0,  6);
@@ -545,7 +571,7 @@ DRAW_layout         (void)
       /*---(upper-right)-----------------*/
       yCOLOR_deg2hex  (s_ccolor -  30, x_base);
       yCOLOR_variant ("CURRENT", x_base, x_hex2);
-      yCOLOR_hex2color (x_hex2);
+      yCOLOR_hex2color (x_hex2, 1.0);
 
       strlcpy  (x_hex2 , x_base    , LEN_HEX);
       DRAW_box (x_hex2 , "CURRENT" , '2',  8,  5);
@@ -559,7 +585,7 @@ DRAW_layout         (void)
       /*---(lower-left)------------------*/
       yCOLOR_deg2hex  (s_ccolor +  30, x_base);
       yCOLOR_variant ("CURRENT", x_base, x_hex3);
-      yCOLOR_hex2color (x_hex3);
+      yCOLOR_hex2color (x_hex3, 1.0);
 
       strlcpy  (x_hex3 , x_base    , LEN_HEX);
       DRAW_box (x_hex3 , "CURRENT" , '3',  0,  0);
@@ -573,7 +599,7 @@ DRAW_layout         (void)
       /*---(lower-right)-----------------*/
       yCOLOR_deg2hex  (s_ccolor + 180, x_base);
       yCOLOR_variant ("CURRENT", x_base, x_hex4);
-      yCOLOR_hex2color (x_hex4);
+      yCOLOR_hex2color (x_hex4, 1.0);
 
       strlcpy  (x_hex4 , x_base    , LEN_HEX);
       DRAW_box (x_hex4 , "CURRENT" , '4',  8,  0);
@@ -807,6 +833,7 @@ char
 PROG_init          ()
 {
    yCOLOR_init     (YCOLOR_WHEEL);
+   yCOLOR_scale    (YCOLOR_LINEAR   ,  0.0, 100.0);
    return 0;
 }
 

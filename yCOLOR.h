@@ -158,18 +158,34 @@
 
 
 #define     YCOLOR_WHEEL     'w'     /* wheel of 36 colors (ryb wheel)        */
-#define     YCOLOR_SMALL     's'     /* strip of 25 colors (red to blue)      */
-#define     YCOLOR_LARGE     'l'     /* strip of 67 colors (brown to grey)    */
+#define     YCOLOR_SPOKES    'k'     /* wheel of 12 colors (ryb wheel)        */
+#define     YCOLOR_REDBLU    'r'     /* strip of 25 colors (red to blue)      */
+#define     YCOLOR_SMALL     's'     /* strip of 16 colors (brown to grey)    */
+#define     YCOLOR_LARGE     'l'     /* strip of 34 colors (brown to grey)    */
+#define     YCOLOR_GIANT     'g'     /* strip of 67 colors (brown to grey)    */
+
+#define     YCOLOR_NONE      'l'     /* linear measurment scale               */
+#define     YCOLOR_LINEAR    'l'     /* linear measurment scale               */
+#define     YCOLOR_SQUARED   's'     /* squared/exponential measurement scale */
+#define     YCOLOR_PARABOLIC 'p'     /* parabolic measurement scale           */
 
 /*---(utility)------------------------*/
 char        yCOLOR_init          (char   a_use);
 char        yCOLOR_use           (char   a_use);
+char        yCOLOR_scale         (char   a_scale, float a_min, float a_max);
+char        yCOLOR_custom        (void);
 /*---(color by degree)----------------*/
 char        yCOLOR_deg2index     (int    a_deg  , int   *a_index);
+char        yCOLOR_deg2color     (int    a_deg  , float  a_alpha);
 char        yCOLOR_deg2hex       (int    a_deg  , char  *a_hex  );
-char        yCOLOR_deg2color     (int    a_deg);
+char       *yCOLOR_deg2name      (int    a_deg  );
+/*---(color by index number)----------*/
+char        yCOLOR_num2color     (int    a_num  , float  a_alpha);
+char       *yCOLOR_num2hex       (int    a_num  );
+char       *yCOLOR_num2name      (int    a_num  );
+float       yCOLOR_num2cutoff    (int    a_num  );
 /*---(color by hex)-------------------*/
-char        yCOLOR_hex2color     (char  *a_hex);
+char        yCOLOR_hex2color     (char  *a_hex  , float  a_alpha);
 /*---(HSV color format)---------------*/
 char        yCOLOR_hex2hsv       (char  *a_hex  , float *a_hue, float *a_sat, float *a_val);
 char        yCOLOR_hsv2hex       (float  a_hue  , float  a_sat, float  a_val, char  *a_hex);

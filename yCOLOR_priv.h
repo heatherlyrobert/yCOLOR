@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YFONT_VER_NUM   "1.0e"
-#define     YFONT_VER_TXT   "adapted to support power meter program"
+#define     YFONT_VER_NUM   "1.0f"
+#define     YFONT_VER_TXT   "custom setup and studly colors"
 
 
 
@@ -75,15 +75,25 @@ typedef     struct      cVERT       tVERT;
 #define   MAX_COLOR    80
 #define   MAX_OPTION   10
 
-extern const char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_HEX];
+extern char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL];
 
+typedef struct cCOLORS tCOLORS;
+struct cCOLORS {
+   char        name        [LEN_LABEL];
+   char        hex         [LEN_HEX];
+   float       pct;
+   float       cut;
+   float       red;
+   float       grn;
+   float       blu;
+};
+extern  tCOLORS  s_colors  [MAX_COLOR];
 
 
 /*---(color variations)------------------------------*/
 #define    MAX_VARIANT      100
 typedef struct cVARIANT tVARIANT;
-struct cVARIANT
-{
+struct cVARIANT {
    char        cat         [10];       /* category of variations              */
    char        abbr        [10];       /* abbreviation for variant            */
    char        name        [35];       /* full name of variant                */
@@ -98,8 +108,7 @@ extern tVARIANT    s_variants  [MAX_VARIANT];
 /*---(color norming methods)-------------------------*/
 #define    MAX_NORMING      100
 typedef struct cNORMING tNORMING;
-struct cNORMING
-{
+struct cNORMING {
    char        abbr[8];
    char        name[35];
    double      red;
@@ -112,8 +121,10 @@ tNORMING s_normings   [MAX_NORMING];
 
 
 extern char  s_use;
+extern char  s_scale;
 extern int   s_cset;
 extern int   s_ccolor;
+extern int   s_tcolor;
 extern int   s_ncolor;
 extern int   s_cvariant;
 extern int   s_lvariant;
