@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YFONT_VER_NUM   "1.0f"
-#define     YFONT_VER_TXT   "custom setup and studly colors"
+#define     YFONT_VER_NUM   "1.0g"
+#define     YFONT_VER_TXT   "added extra color spectrums"
 
 
 
@@ -86,6 +86,7 @@ struct cCOLORS {
    float       red;
    float       grn;
    float       blu;
+   char        norm        [LEN_HEX];
 };
 extern  tCOLORS  s_colors  [MAX_COLOR];
 

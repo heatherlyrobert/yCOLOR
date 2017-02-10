@@ -832,8 +832,8 @@ DUMP_scale         ()
 char
 PROG_init          ()
 {
-   yCOLOR_init     (YCOLOR_WHEEL);
-   yCOLOR_scale    (YCOLOR_LINEAR   ,  0.0, 100.0);
+   yCOLOR_init     (YCOLOR_REDBLU);
+   yCOLOR_scale    (YCOLOR_PARABOLIC,  0.0,  50.0);
    return 0;
 }
 

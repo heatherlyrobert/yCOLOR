@@ -160,7 +160,10 @@
 #define     YCOLOR_WHEEL     'w'     /* wheel of 36 colors (ryb wheel)        */
 #define     YCOLOR_SPOKES    'k'     /* wheel of 12 colors (ryb wheel)        */
 #define     YCOLOR_REDBLU    'r'     /* strip of 25 colors (red to blue)      */
-#define     YCOLOR_SMALL     's'     /* strip of 16 colors (brown to grey)    */
+#define     YCOLOR_REDMAU    'm'     /* strip of 36 colors (red to mauve)     */
+#define     YCOLOR_BROMAU    'B'     /* strip of 49 colors (brown to mauve)   */
+#define     YCOLOR_BROMAU2   'b'     /* strip of 25 colors (brown to mauve)   */
+#define     YCOLOR_SMALL     's'     /* strip of 21 colors (brown to grey)    */
 #define     YCOLOR_LARGE     'l'     /* strip of 34 colors (brown to grey)    */
 #define     YCOLOR_GIANT     'g'     /* strip of 67 colors (brown to grey)    */
 
@@ -184,14 +187,20 @@ char        yCOLOR_num2color     (int    a_num  , float  a_alpha);
 char       *yCOLOR_num2hex       (int    a_num  );
 char       *yCOLOR_num2name      (int    a_num  );
 float       yCOLOR_num2cutoff    (int    a_num  );
+/*---(color by value)-----------------*/
+char        yCOLOR_val2error     (float  a_alpha);
+char        yCOLOR_val2color     (double a_val  , float a_alpha);
 /*---(color by hex)-------------------*/
 char        yCOLOR_hex2color     (char  *a_hex  , float  a_alpha);
+char        yCOLOR_hex2rgb       (char  *a_hex  , float *a_red, float *a_grn, float *a_blu);
+char        yCOLOR_rgb2hex       (char  *a_hex  , float  a_red, float  a_grn, float  a_blu);
 /*---(HSV color format)---------------*/
 char        yCOLOR_hex2hsv       (char  *a_hex  , float *a_hue, float *a_sat, float *a_val);
 char        yCOLOR_hsv2hex       (float  a_hue  , float  a_sat, float  a_val, char  *a_hex);
 /*---(variations)---------------------*/
 char        yCOLOR_variant       (char  *a_name , char  *a_hex, char  *a_out);
 char        yCOLOR_accent        (char   a_level, char  *a_hex, char  *a_out);
+char        yCOLOR_normalize     (char  *a_hex  , char  *a_out);
 /*---(special)------------------------*/
 char        yCOLOR_error         (char   a_level, char  *a_hex, char  *a_out);
 

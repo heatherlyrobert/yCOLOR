@@ -100,8 +100,8 @@ const char s_newRYB [12][1][LEN_LABEL] = {
    /*-060 */ "#a52a2a", /* "#bb5050", */
    /* 000 */ "#ee0000",
    /* 060 */ "#ee7f00",
-   /* 120 */ "#bbbb00",
-   /* 180 */ "#00cc22",
+   /* 120 */ "#ccbb00",
+   /* 180 */ "#00cc11",
    /* 240 */ "#2222ff",
    /* 300 */ "#bb00bb",
    /* 360 */ "#SPACER",
@@ -235,7 +235,7 @@ yCOLOR_use           (char  a_use)
    int         x_index     =   0;
    char        x_hex       [LEN_HEX];
    /*---(defense)------------------------*/
-   --rce;  if (strchr ("wkrslg", a_use) == NULL) {
+   --rce;  if (strchr ("wkrmBbslg", a_use) == NULL) {
       a_use = YCOLOR_WHEEL;   /* safe default */
    }
    /*---(set global)---------------------*/
@@ -262,6 +262,33 @@ yCOLOR_use           (char  a_use)
       x_ncolor = 25;
       for (i = 0; i < x_ncolor; ++i) {
          x_index = i + 12;
+         strlcpy (s_colors [i].name, s_RYB [x_index][0     ], LEN_LABEL);
+         strlcpy (s_colors [i].hex , s_RYB [x_index][s_cset], LEN_LABEL);
+      }
+      break;
+   case YCOLOR_REDMAU  :
+      x_ncolor = 37;
+      for (i = 0; i < x_ncolor; ++i) {
+         x_index = i + 12;
+         if (x_index > 12 + 30)  x_index += 6;
+         strlcpy (s_colors [i].name, s_RYB [x_index][0     ], LEN_LABEL);
+         strlcpy (s_colors [i].hex , s_RYB [x_index][s_cset], LEN_LABEL);
+      }
+      break;
+   case YCOLOR_BROMAU  :
+      x_ncolor = 49;
+      for (i = 0; i < x_ncolor; ++i) {
+         x_index = i;
+         if (x_index > 12 + 30)  x_index += 6;
+         strlcpy (s_colors [i].name, s_RYB [x_index][0     ], LEN_LABEL);
+         strlcpy (s_colors [i].hex , s_RYB [x_index][s_cset], LEN_LABEL);
+      }
+      break;
+   case YCOLOR_BROMAU2 :
+      x_ncolor = 25;
+      for (i = 0; i < x_ncolor; ++i) {
+         x_index = i * 2;
+         if (x_index > 12 + 30)  x_index += 6;
          strlcpy (s_colors [i].name, s_RYB [x_index][0     ], LEN_LABEL);
          strlcpy (s_colors [i].hex , s_RYB [x_index][s_cset], LEN_LABEL);
       }
@@ -298,9 +325,7 @@ yCOLOR_use           (char  a_use)
    /*---(set rgb values)-----------------*/
    for (i = 0; i < x_ncolor; ++i) {
       strlcpy (x_hex, s_colors [i].hex, LEN_HEX);
-      s_colors [i].red = yCOLOR__unhex (x_hex[1], x_hex[2]);
-      s_colors [i].grn = yCOLOR__unhex (x_hex[3], x_hex[4]);
-      s_colors [i].blu = yCOLOR__unhex (x_hex[5], x_hex[6]);
+      yCOLOR_hex2rgb (x_hex, &s_colors [i].red, &s_colors [i].grn, &s_colors [i].blu);
    }
    /*---(complete)-----------------------*/
    s_ncolor = x_ncolor;
@@ -350,10 +375,11 @@ yCOLOR_scale         (char  a_scale, float a_min, float a_max)
          s_colors [c].pct = (float) (i * i) / x_max;
          if (i < 0.0)  s_colors [c].pct *= -1;
          s_colors [c].cut  = s_colors [c].pct * a_max;
-         /*> printf ("%2d   %4d   %4d   %5.2f   %6.1f\n", c,  i, (i * i), s_colors [c].pct, s_colors [c].cut);   <*/
+         printf ("%2d   %4d   %4d   %5.2f   %6.1f\n", c,  i, (i * i), s_colors [c].pct, s_colors [c].cut);
          ++c;
       }
-      /*> s_colors [s_ncolor - 1].cut = a_max * -10.0;                                <*/
+      /*> s_colors [0].cut = - (a_max * a_max);                                       <*/
+      s_colors [s_ncolor - 1].cut = a_max * a_max;
       break;
    default               :
       break;
@@ -390,14 +416,16 @@ yCOLOR__interpolate  (int a_beg, int a_end)
       /*> if (x_base >= 8)  x_index += 6;                                             <*/
       /*---(calc start)------------------*/
       strlcpy (x_hex , s_RYB [x_index + 0][10], LEN_HEX);
-      x_red1 = yCOLOR__unhex (x_hex[1], x_hex[2]);
-      x_grn1 = yCOLOR__unhex (x_hex[3], x_hex[4]);
-      x_blu1 = yCOLOR__unhex (x_hex[5], x_hex[6]);
+      yCOLOR_hex2rgb (x_hex, &x_red1, &x_grn1, &x_blu1);
+      /*> x_red1 = yCOLOR__unhex (x_hex[1], x_hex[2]);                                <* 
+       *> x_grn1 = yCOLOR__unhex (x_hex[3], x_hex[4]);                                <* 
+       *> x_blu1 = yCOLOR__unhex (x_hex[5], x_hex[6]);                                <*/
       /*---(calc end)--------------------*/
       strlcpy (x_hex , s_RYB [x_index + 6][10], LEN_HEX);
-      x_red2 = yCOLOR__unhex (x_hex[1], x_hex[2]);
-      x_grn2 = yCOLOR__unhex (x_hex[3], x_hex[4]);
-      x_blu2 = yCOLOR__unhex (x_hex[5], x_hex[6]);
+      yCOLOR_hex2rgb (x_hex, &x_red2, &x_grn2, &x_blu2);
+      /*> x_red2 = yCOLOR__unhex (x_hex[1], x_hex[2]);                                <* 
+       *> x_grn2 = yCOLOR__unhex (x_hex[3], x_hex[4]);                                <* 
+       *> x_blu2 = yCOLOR__unhex (x_hex[5], x_hex[6]);                                <*/
       /*---(calc increments)-------------*/
       x_rinc = (x_red2 - x_red1) / 6.0;
       x_ginc = (x_grn2 - x_grn1) / 6.0;
@@ -408,11 +436,12 @@ yCOLOR__interpolate  (int a_beg, int a_end)
          x_grn1 += x_ginc;
          x_blu1 += x_binc;
          /*---(truncate into 0-255)--------------*/
-         u_red = x_red1 * 255;
-         u_grn = x_grn1 * 255;
-         u_blu = x_blu1 * 255;
-         /*---(place into RGB hex)---------------*/
-         snprintf (x_hex, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);
+         yCOLOR_rgb2hex  (x_hex, x_red1, x_grn1, x_blu1);
+         /*> u_red = x_red1 * 255;                                                    <* 
+          *> u_grn = x_grn1 * 255;                                                    <* 
+          *> u_blu = x_blu1 * 255;                                                    <* 
+          *> /+---(place into RGB hex)---------------+/                               <* 
+          *> snprintf (x_hex, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);         <*/
          strlcpy (s_RYB [x_index + x_sub][10], x_hex, LEN_HEX);
       }
    }
@@ -445,11 +474,6 @@ yCOLOR_custom        (void)
    x_index = 8 * 6;
    strlcpy (s_RYB [x_index][10], s_newRYB [x_base], LEN_HEX);
    yCOLOR__interpolate ( 8, 11);
-   /*---(print results)------------------*/
-   /*> for (x_index = 0; x_index < MAX_COLOR; ++x_index) {                                                                        <* 
-    *>    printf ("%2d  %-15.15s  %-10.10s  %-10.10s\n", x_index, s_RYB [x_index][0], s_RYB [x_index][10], s_RYB [x_index][6]);   <* 
-    *> }                                                                                                                          <* 
-    *> printf ("\n");                                                                                                             <*/
    /*---(complete)-----------------------*/
    return 0;
 }
@@ -617,9 +641,66 @@ yCOLOR_num2cutoff    (int a_num)
 
 
 /*============================--------------------============================*/
+/*===----                       color by value                         ----===*/
+/*============================--------------------============================*/
+static void      o___BY_VALUE________________o (void) {;}
+
+char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
+yCOLOR_val2error     (float a_alpha)
+{
+   glColor4f (0.998, 0.059, 0.690, a_alpha);
+   return 0;
+}
+
+char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
+yCOLOR_val2color     (double a_val, float a_alpha)
+{
+   /*---(locals)-----------+-----------+-*/
+   int         x_index     = -1;
+   int         i           =  0;
+   /*---(find color)---------------------*/
+   for (i = 0; i < s_ncolor; ++i) {
+      if (s_colors [i].cut <  0 && a_val >= s_colors [i].cut)  continue;
+      if (s_colors [i].cut >= 0 && a_val >  s_colors [i].cut)  continue;
+      x_index = i;
+      break;
+   }
+   /*---(set color)----------------------*/
+   if (x_index < 0)  glColor4f (0.998, 0.059, 0.690, a_alpha);
+   else              glColor4f (s_colors [i].red, s_colors [i].grn, s_colors [i].blu, a_alpha);
+   /*---(complete)-----------------------*/
+   return 0;
+}
+
+
+
+/*============================--------------------============================*/
 /*===----                       color by hex code                      ----===*/
 /*============================--------------------============================*/
 static void      o___BY_HEX__________________o (void) {;}
+
+float
+yCOLOR__unhex        (char a_one, char a_two)
+{
+   /*---(locals)-----------+-----------+-*/
+   float       x_one       = 0.0;
+   float       x_two       = 0.0;
+   float       x_result    = 0.0;
+   /*---(first char)---------------------*/
+   if      (a_one >= '0' && a_one <= '9')   x_one = a_one - '0';
+   else if (a_one >= 'a' && a_one <= 'f')   x_one = a_one - 'a' + 10;
+   else if (a_one >= 'A' && a_one <= 'F')   x_one = a_one - 'A' + 10;
+   else                                     x_one = 0.0;
+   /*---(second char)--------------------*/
+   if      (a_two >= '0' && a_two <= '9')   x_two = a_two - '0';
+   else if (a_two >= 'a' && a_two <= 'f')   x_two = a_two - 'a' + 10;
+   else if (a_two >= 'A' && a_two <= 'F')   x_two = a_two - 'A' + 10;
+   else                                     x_two = 0.0;
+   /*---(calc)---------------------------*/
+   x_result =  ((x_one * 16.0) + x_two) / 255.0;
+   /*---(complete)-----------------------*/
+   return x_result;
+}
 
 char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
 yCOLOR_hex2color     (char *a_hex, float a_alpha)
@@ -647,35 +728,50 @@ yCOLOR_hex2color     (char *a_hex, float a_alpha)
    return 0;
 }
 
-
-
-/*============================--------------------============================*/
-/*===----                          conversions                         ----===*/
-/*============================--------------------============================*/
-static void      o___CONVERSION______________o (void) {;}
-
-float
-yCOLOR__unhex        (char a_one, char a_two)
+char       /*=((p_convert))===* return  = simple error code                   */
+yCOLOR_hex2rgb      (char *a_hex, float *a_red, float *a_grn, float *a_blu)            /* value color component          (0.0-1.0) */
 {
    /*---(locals)-----------+-----------+-*/
-   float       x_one       = 0.0;
-   float       x_two       = 0.0;
-   float       x_result    = 0.0;
-   /*---(first char)---------------------*/
-   if      (a_one >= '0' && a_one <= '9')   x_one = a_one - '0';
-   else if (a_one >= 'a' && a_one <= 'f')   x_one = a_one - 'a' + 10;
-   else if (a_one >= 'A' && a_one <= 'F')   x_one = a_one - 'A' + 10;
-   else                                     x_one = 0.0;
-   /*---(second char)--------------------*/
-   if      (a_two >= '0' && a_two <= '9')   x_two = a_two - '0';
-   else if (a_two >= 'a' && a_two <= 'f')   x_two = a_two - 'a' + 10;
-   else if (a_two >= 'A' && a_two <= 'F')   x_two = a_two - 'A' + 10;
-   else                                     x_two = 0.0;
-   /*---(calc)---------------------------*/
-   x_result =  ((x_one * 16.0) + x_two) / 255.0;
+   float       x_red       = 0.0;
+   float       x_grn       = 0.0;
+   float       x_blu       = 0.0;
+   /*---(remove from hex)----------------*/
+   x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);
+   x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);
+   x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);
+   /*---(return values)------------------*/
+   if (a_red)  *a_red = x_red;
+   if (a_grn)  *a_grn = x_grn;
+   if (a_blu)  *a_blu = x_blu;
    /*---(complete)-----------------------*/
-   return x_result;
+   return 0;
 }
+
+char       /*=((p_convert))===* return  = simple error code                   */
+yCOLOR_rgb2hex      (char *a_hex, float a_red, float a_grn, float a_blu)            /* value color component          (0.0-1.0) */
+{
+   /*---(locals)-----------+-----------+-*/
+   uchar       x_red       = 0;
+   uchar       x_grn       = 0;
+   uchar       x_blu       = 0;
+   char        x_hex       [LEN_HEX];
+   /*---(round to one byte)----------------*/
+   x_red = a_red * 255;
+   x_grn = a_grn * 255;
+   x_blu = a_blu * 255;
+   /*---(place into RGB hex)---------------*/
+   snprintf (x_hex, LEN_HEX, "#%02x%02x%02x", x_red, x_grn, x_blu);
+   if (a_hex)  strlcpy (a_hex, x_hex, LEN_HEX);
+   /*---(complete)-----------------------*/
+   return 0;
+}
+
+
+
+/*============================--------------------============================*/
+/*===----                             hsv                              ----===*/
+/*============================--------------------============================*/
+static void      o___BY_HSV__________________o (void) {;}
 
 char       /*=((p_convert))===* return  = simple error code                   */
 yCOLOR_hex2hsv      (     /* PURPOSE = convert RGB hex into HSV            */
@@ -693,9 +789,10 @@ yCOLOR_hex2hsv      (     /* PURPOSE = convert RGB hex into HSV            */
    float       x_del       = 0.0;
    /*---(simple defense)-------------------*/
    if (strlen(a_hex) != 7)    return -2;
-   x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);
-   x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);
-   x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);
+   yCOLOR_hex2rgb  (a_hex, &x_red, &x_grn, &x_blu);
+   /*> x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);                                  <* 
+    *> x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);                                  <* 
+    *> x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);                                  <*/
    /*---(setup)----------------------------*/
    x_min   = yCOLOR__min3 (x_red, x_grn, x_blu);
    x_max   = yCOLOR__max3 (x_red, x_grn, x_blu);
@@ -759,12 +856,13 @@ yCOLOR_hsv2hex    (           /* PURPOSE = convert HSV to RGB HEX              *
       default: x_red = a_val; x_grn = p;     x_blu = q;     break;
       }
    }
-   /*---(truncate into 0-255)--------------*/
-   uchar u_red = x_red * 255;
-   uchar u_grn = x_grn * 255;
-   uchar u_blu = x_blu * 255;
-   /*---(place into RGB hex)---------------*/
-   snprintf(a_hex, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);
+   yCOLOR_rgb2hex (a_hex, x_red, x_grn, x_blu);
+   /*> /+---(truncate into 0-255)--------------+/                                     <* 
+    *> uchar u_red = x_red * 255;                                                     <* 
+    *> uchar u_grn = x_grn * 255;                                                     <* 
+    *> uchar u_blu = x_blu * 255;                                                     <* 
+    *> /+---(place into RGB hex)---------------+/                                     <* 
+    *> snprintf(a_hex, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);                <*/
    /*---(complete)-------------------------*/
    return 0;
 }
@@ -912,6 +1010,24 @@ yCOLOR_variant       (       /* PURPOSE = apply a color variation             */
    return 0;
 }
 
+char       /*=((pUPDATE ]]=========* return  = simple error code              */
+yCOLOR_normalize     (char *a_hex, char *a_out)
+{
+   /*---(locals)-----------+-----------+-*/
+   float       x_red       = 0.0;
+   float       x_grn       = 0.0;
+   float       x_blu       = 0.0;
+   float       x_squared   = 0.0;
+   yCOLOR_hex2rgb (a_hex, &x_red, &x_grn, &x_blu);
+   x_squared = (x_red * x_red) + (x_grn * x_grn) + (x_blu * x_blu);
+   x_squared = sqrt (x_squared);
+   x_red = x_red / x_squared;
+   x_grn = x_grn / x_squared;
+   x_blu = x_blu / x_squared;
+   yCOLOR_rgb2hex (a_out, x_red, x_grn, x_blu);
+   return 0;
+}
+
 char       /*=((c_convert))===* return  = simple error code                   */
 yCOLOR_norming_find  (char *a_name)
 {
@@ -932,7 +1048,7 @@ yCOLOR_norming_find  (char *a_name)
 }
 
 char       /*=((pUPDATE ]]=========* return  = simple error code              */
-yCOLOR__norming    (      /* PURPOSE = level color intensity               */
+yCOLOR__norming        (      /* PURPOSE = level color intensity               */
       int       a_index,          /* norming index                            */
       char     *a_hex,            /* rgb three byte hex code        (#rrggbb) */
       char     *a_out)            /* rgb three byte hex code        (#rrggbb) */
@@ -958,9 +1074,10 @@ yCOLOR__norming    (      /* PURPOSE = level color intensity               */
     *> printf("  factor    %5.3fr, %5.3fg, %5.3fb\n", d_red, d_grn, d_blu);                    <*/
    /*> printf("  color     %3dr, %3dg, %3db\n", x_red, x_grn, x_blu);                 <*/
    /*---(pull values)----------------------*/
-   x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);
-   x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);
-   x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);
+   yCOLOR_hex2rgb (a_hex, &x_red, &x_grn, &x_blu);
+   /*> x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);                                  <* 
+    *> x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);                                  <* 
+    *> x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);                                  <*/
    if (s_normings [a_index].is_value == 'y') {
       /*---(update)---------------------------*/
       x_red *= (s_normings [a_index].red);
