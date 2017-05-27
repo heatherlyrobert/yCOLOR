@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YFONT_VER_NUM   "1.0g"
-#define     YFONT_VER_TXT   "added extra color spectrums"
+#define     YCOLOR_VER_NUM   "1.0h"
+#define     YCOLOR_VER_TXT   "moved to make_program makefile enhancement"
 
 
 

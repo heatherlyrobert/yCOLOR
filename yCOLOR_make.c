@@ -219,8 +219,9 @@ DRAW_wheel          (char a_which)
             yCOLOR_deg2color   (x_deg, 1.0);
             strlcpy (x_norm, x_base, LEN_HEX);
             if (a_which != 'o') {
-               yCOLOR_variant ("CURRENT", x_base, x_hex);
-               yCOLOR__norming (s_cnorming, x_hex , x_norm);
+               /*> yCOLOR_variant ("CURRENT", x_base, x_hex);                         <*/
+               /*> yCOLOR__norming (s_cnorming, x_hex , x_norm);                      <*/
+               yCOLOR_normalize (x_base, x_norm);
                yCOLOR_hex2color (x_norm, 1.0);
             }
             /*---(draw)------------------*/
@@ -244,7 +245,8 @@ DRAW_wheel          (char a_which)
                   glVertex3f  (r1, -r1 * sin (5.5 * DEG2RAD),     0.0);
                } glEnd   ();
                s_cset = x_save;
-               yCOLOR_deg2color   (x_deg, 1.0);
+               yCOLOR_hex2color (x_norm, 1.0);
+               /*> yCOLOR_deg2color   (x_deg, 1.0);                                   <*/
             }
             if (x_deg % 60 == 0) {
                glPushMatrix(); {
@@ -636,6 +638,7 @@ DRAW_main          (void)
    glMatrixMode    (GL_MODELVIEW);
    /*---(background)---------------------*/
    DRAW_wheel     ('o');
+   /*> DRAW_wheel     ('O');                                                          <*/
    DRAW_column    ();
    DRAW_variants  ();
    /*> DRAW_normings  ();                                                             <*/

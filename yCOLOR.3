@@ -1,0 +1,366 @@
+.TH yCOLOR 3 2009-Sep "linux" "heatherly custom programming manual"
+
+.B yCOLOR
+\- predictably aesthetic color palettes and transformations
+
+.SH SYNOPSIS
+.nf
+.B #include  <yCOLOR.h>
+.sp
+---debugging-----------------------------------
+.sp
+.BI "yCOLOR_version    ( " "" " );"
+.sp
+---configuration-------------------------------
+.sp
+.BI "yCOLOR_init       ( " "a_use" " );"
+.BI "yCOLOR_use        ( " "a_use" " );"
+.BI "yCOLOR_scale      ( " "a_scale" ", " "a_min" ", " "a_max" " );"
+.sp
+---color by degrees----------------------------
+.sp
+.BI "yCOLOR_deg2index  ( " "a_deg" ", " "*a_index" " );"
+.BI "yCOLOR_deg2color  ( " "a_deg" ", " "a_alpha" " );"
+.BI "yCOLOR_deg2hex    ( " "a_deg" ", " "a_out" " );"
+.BI "yCOLOR_deg2name   ( " "a_deg" " );"
+.sp
+---color by index -----------------------------
+.sp
+.BI "yCOLOR_num2color  ( " "a_num" ", " "a_alpha" " );"
+.BI "yCOLOR_num2hex    ( " "a_num" ", " "a_out" " );"
+.BI "yCOLOR_num2name   ( " "a_num" " );"
+.BI "yCOLOR_num2cutoff ( " "a_num" " );"
+.sp
+---color by hexcode ---------------------------
+.sp
+.BI "yCOLOR_hex2color  ( " "a_hex" ", " "a_alpha" " );"
+.BI "yCOLOR_hex2rgb    ( " "a_hex" ", " "*a_red" ", " "*a_grn" ", " "*a_blu" " );"
+.BI "yCOLOR_rgb2hex    ( " "a_out" ", " "a_red" ", " "a_grn" ", " "a_blu" " );"
+.sp
+---color by value -----------------------------
+.sp
+.BI "yCOLOR_val2color  ( " "a_value" ", " "a_alpha" " );"
+.BI "yCOLOR_val2error  ( " "a_alpha" " );"
+.sp
+---color conversion ---------------------------
+.sp
+.BI "yCOLOR_hex2hsv    ( " "a_hex" ", " "*a_hue" ", " "*a_sat" ", " "*a_val" " );"
+.BI "yCOLOR_hsv2hex    ( " "a_out" ", " "a_hue" ", " "a_sat" ", " "a_val" " );"
+.sp
+---color transformation -----------------------
+.sp
+.BI "yCOLOR_variant    ( " "a_variant" ", " "a_hex" ", " "a_out" " );"
+.BI "yCOLOR_accent     ( " "a_accent"  ", " "a_hex" ", " "a_out" " );"
+.BI "yCOLOR_normalize  ( " "a_hex" ", " "a_out" " );"
+.sp
+.B link with -L/usr/local/libs -lyCOLOR or -lyCOLOR_debug
+
+.SH DESCRIPTION
+yCOLOR presently provides twenty-two (22) publicly available functions in
+eight categories -- debugging, configuration, degree, index, hexcode, value,
+conversion, and transformation.
+
+.SH DEBUGGING FUNCTIONS
+yCOLOR supports detailed logging, tracing, and debugging through the heatherly
+standard yLOG and yURG libraries.  in order to use debugging, programs must
+link with yCOLOR_debug.  no other preparation is required.
+
+.B @@ycolor urgent (yURG).  
+yCOLOR responds to the @@ycolor (normal) and @@YCOLOR (verbose) command
+line urgents.  if the originating program is in debug mode, yCOLOR will
+automatically provide debugging information to yLOG.
+
+.B yCOLOR_version ()
+returns a specially formatted version string for the yCOLOR library to be
+used in program log files.
+
+.SH CONFIGURATION FUNCTIONS
+yCOLOR does not keep any configuration files as most information is calculated
+and the basis of data included in the program headers.
+
+.B yCOLOR_init ()
+prepares the yCOLOR library for first use by loading the proper color range
+into the working area.
+
+.B yCOLOR_use ()
+changes the yCOLOR color range in use by the library and places into the
+working area
+
+.B yCOLOR_scale ()
+requests the yCOLOR to setup a measurement scale which associates colors with
+value ranges
+
+.B a_use.  
+always use the header constants below.
+
+   ---wheels-------------------------------------
+   YCOLOR_WHEEL     36 colors from the RYB wheel       (by 10's)
+   YCOLOR_SPOKES    12 colors from the RYB wheel       (by 30's)
+   ---scales-------------------------------------
+   YCOLOR_REDBLU    25 color strip from red to blue    (by 10's)
+   YCOLOR_REDMAU    37 color strip from red to mauve   (by 10's)
+   ---expanded-----------------------------------
+   YCOLOR_BROMAU    49 color strip from brown to mauve (by 10's)
+   YCOLOR_BROMAU2   25 color strip from brown to mauve (by 20's)
+   YCOLOR_SMALL     21 color strip from brown to grey  (by 30's)
+   YCOLOR_LARGE     34 color strip from brown to grey  (by 20's)
+   YCOLOR_GIANT     67 color strip from brown to grey  (by 10's)
+
+.B a_scale.  
+only used by the yCOLOR_scale() and yCOLOR_val2color() functions.  always use
+the header constants below.
+
+   YCOLOR_NONE         same as YCOLOR_LINEAR, below
+   YCOLOR_LINEAR       purely linear measurment scale from min to max
+   YCOLOR_PARABOLIC    parabolic measurement scale from -max to max
+
+.B a_min and a_max.  
+only used by the yCOLOR_scale() and yCOLOR_val2color() functions.  float values
+indicating the lowest and highest values to be matched to specific colors.
+
+.SH COLOR BY DEGREE FUNCTIONS
+degrees refers to the degree on the RYB color wheel, including the prefix
+and suffix colors used by yCOLOR.  the degree value will be clamped/rounded
+to the limits set by the yCOLOR_use() setup in CONFIGURATION.  given our
+RATIONAL LIMITS, all degrees will be rounded to the nearest 10.
+
+.B a_deg.  
+the extended color wheel degree as an integer.
+
+.B a_out.  
+c-string to capture hexcode for color.
+
+.B yCOLOR_deg2index ()
+returns the internal color index (as a integer pointer) for the degree value
+passed as a parameter.
+
+.B yCOLOR_deg2color ()
+sets the current opengl color based on the RYB wheel and alpha value passed.
+
+.B yCOLOR_deg2hex ()
+returns the hexcode (as a c-string) for the degree value passed as a parameter.
+
+.B yCOLOR_deg2name ()
+returns the color name (as a c-string) for the degree value passed as a
+parameter.
+
+.SH COLOR BY INDEX FUNCTIONS
+index refers to the internal sequential order/index of colors.  the index
+value will be clamped/rounded to the limits set by the yCOLOR_use() setup
+in CONFIGURATION.
+
+.B a_num.  
+the sequential color index.
+
+.B a_alpha.  
+float value (0.0 to 1.0) representing color alpha.
+
+.B a_out.  
+c-string to capture hexcode for color.
+
+.B yCOLOR_num2color ()
+sets the current opengl color based on the sequential index passed.
+
+.B yCOLOR_num2hex ()
+returns the hexcode (as a c-string) for the index value passed as a parameter.
+
+.B yCOLOR_num2name ()
+returns the color name (as a c-string) for the index value passed as a parameter.
+
+.B yCOLOR_num2cutoff ()
+returns the color cutoff value for the index value passed as a parameter as
+set by the yCOLOR_scale() function.
+
+.SH COLOR BY HEXCODE FUNCTIONS
+hexcode refers to a seven-character c-string containing a RGB color hex value.
+the hexcode must contain a leading hash (#) and six hex values.
+
+.B a_hex.  
+seven character color descriptor.
+
+.B a_red, a_grn, a_blu.  
+float values (0.0 to 1.0) representing RGB color components.
+
+.B a_alpha.  
+float value (0.0 to 1.0) representing color alpha.
+
+.B yCOLOR_hex2color ()
+sets the current opengl color based on the hexcode passed.
+
+.B yCOLOR_hex2rgb ()
+parses the hexcode into red, green, and blue components.  primarily for
+internal use.
+
+.B yCOLOR_rbg2hex ()
+creates the hexcode based on red, green, and blue components.  primarily for
+internal use.
+
+.SH COLOR BY VALUE FUNCTIONS
+value refers to a float value that is then compared to the cutoff limits set
+using the yCOLOR_scale() function in CONFIGURATION.
+
+.B a_value.  
+float value to be compared to cutoff limits.
+
+.B a_alpha.  
+float value (0.0 to 1.0) representing color alpha.
+
+.B yCOLOR_val2color ()
+sets the current opengl color based on the value passed.
+
+.B yCOLOR_val2error ()
+sets the current opengl color to the standard error color (shocking pink).
+
+.SH COLOR CONVERSIONS
+colors are often easier to manipulate using the HSV color spectrum.  two
+function are provided to convert to ahd from HSV.  these are primarily used
+for internal purposes.
+
+.B a_hex.  
+seven character color descriptor.
+
+.B a_hue, a_sat, a_val.  
+float values representing each component.
+
+.B yCOLOR_hex2hsv ()
+converts a RGB hexcode to the HSV components.
+
+.B yCOLOR_hsv2hex ()
+converts HSV components into a RGB hexcode.
+
+
+.SH RESOURCES
+will only work on an xwindows and opengl system.
+
+.SH AUTHOR
+rsheatherly
+
+.SH SEE ALSO
+ yCOLOR (0)       overview, reasoning, and descision process
+ yCOLOR (3)       library usage and interface
+ yCOLOR_make (1)  review color settings and combinations
+
+.SH COLOPHON
+this page is part of a documentation package mean to make our use of the
+heatherly libraries easier and faster
+
+.TH yCOLOR 0 2009-Sep "linux" "heatherly custom programming manual"
+
+.SH NAME
+.B yCOLOR
+\- predictably aesthetic color scales, palettes, and changes
+
+.SH DESCRIPTION (short)
+yCOLOR is a custom heatherly library for generating, maintaining, and
+supplying consistently aesthetic and professional color scales, changes,
+schemes, and palettes for programs and end-users.
+
+.SH DECISION PROCESS
+.B situation (s).  
+nearly every program requires color to highlight, differentiate, group,
+categorize, and focus end-users.  professional colors are a critical part of
+the user experience and acceptance.
+
+.B complication (c).  
+for the non-artist, this is a difficult, tedious, unreliable task with a nearly
+trivial chance of success.  it is important and it is nearly impossible to
+do right -- awesome.
+
+.B problem statement (p).  
+this is critical for my future as it allows faster and more reliable intake
+and analysis of data.  how do i create a method of generating, applying,
+and using color across all programs.
+
+.B answer (a).  
+start with a consistently beautiful color spectrum; provide ad-hoc capabilities
+to extract spectrums, palettes, and schemes; and bring this into one central
+library to provide relaible results.
+
+.B target use cases (t)
+   -- high volume data visualization
+   -- graphing and charting
+   -- data analysis
+   -- web formatting and presentation (html, css, ...)
+   -- syntax-highlighting
+   -- application theming
+   -- command-line theming
+
+.B objectives (o).  
+   -- consistent, base color spectrum with excellent separation
+   -- mixing, scheming, and theming by color wheel
+   -- provides wide ranges of colors for spectrums, scales, and maps
+   -- large set of publicly available color schemes ready for use
+   -- specialty color schemes for large data set visualization
+
+.SH STANDARDS
+it is critical to establish both standards and rational limits early in the
+development cycle in order to give the project structure.
+
+.B color basis.  
+there are many competing descriptions of color, each having a particular
+prejudice and basis -- all of them are wrong and misguided in their own way.
+each of these has their own prophets and religion.  in twenty years, they
+will all be pushed aside for better ones ;)
+
+   -- RGB (additive).  computer monitors use these three LEDs.
+   -- CMYK (subtractive).  computer printers used these four pigments.
+   -- HSV, HSL.  used to give color a rational mathmatical basis.
+   -- RYB (tonal).  used by artists for mixing colors.
+   -- Munsell
+   -- Pantone
+   -- RYGB (cromie)
+   -- CIE
+
+we will base on RYB whose purpose is beauty.  done.  obvious.
+
+.B color range.  
+yCOLOR will provide an assortment of color ranges in wheel/circle, palette/theme,
+or scale/spectum basis.  the basis is the RYB color wheel which is represented
+by degrees from 0 (red) to 360 (back to red).  our scale has been extended,
+somewhat artificially, on both ends to encompase a larger range for heat maps
+and other creative visualization.
+
+   ---(downward extension, below red)-------------
+   -120  brown
+   -060  cinnimon
+   ---(normal RYB wheel)--------------------------
+   +000  red
+   +060  orange
+   +120  yellow
+   +180  green
+   +240  blue
+   +300  magenta
+   ---(upward extension, above red)---------------
+   +360  mauve
+   +420  steel blue
+   +480  grey
+
+.B color output.  
+yCOLOR is focused on providing color to opengl on linux systems.  period.
+it will therefore provide functions that directly set opengl colors based
+on several different inputs, including, indexes, degrees of the color wheel,
+and hex codes.
+
+.B color storage/description.  
+again, there are many competing strategies for storing colors and how
+accurately the colors are represented.  but, the average eyes are only
+so powerful ;)  since monitors and opengl use RGB, i will store all colors
+as six-character, three-byte RGB hex codes since it is simple, textual, and
+can be simple to type and store in clear text.
+
+
+
+.SH RESOURCES
+will only work on an xwindows and opengl system.
+
+.SH AUTHOR
+rsheatherly
+
+.SH SEE ALSO
+ yCOLOR (0)       overview, reasoning, and descision process
+ yCOLOR (3)       library usage and interface
+ yCOLOR_make (1)  review color settings and combinations
+
+.SH COLOPHON
+this page is part of a documentation package mean to make our use of the
+heatherly libraries easier and faster

@@ -173,6 +173,7 @@
 #define     YCOLOR_PARABOLIC 'p'     /* parabolic measurement scale           */
 
 /*---(utility)------------------------*/
+char*       yCOLOR_version       (void);
 char        yCOLOR_init          (char   a_use);
 char        yCOLOR_use           (char   a_use);
 char        yCOLOR_scale         (char   a_scale, float a_min, float a_max);
@@ -180,11 +181,11 @@ char        yCOLOR_custom        (void);
 /*---(color by degree)----------------*/
 char        yCOLOR_deg2index     (int    a_deg  , int   *a_index);
 char        yCOLOR_deg2color     (int    a_deg  , float  a_alpha);
-char        yCOLOR_deg2hex       (int    a_deg  , char  *a_hex  );
+char        yCOLOR_deg2hex       (int    a_deg  , char  *a_out  );
 char       *yCOLOR_deg2name      (int    a_deg  );
 /*---(color by index number)----------*/
 char        yCOLOR_num2color     (int    a_num  , float  a_alpha);
-char       *yCOLOR_num2hex       (int    a_num  );
+char        yCOLOR_num2hex       (int    a_num  , char  *a_out);
 char       *yCOLOR_num2name      (int    a_num  );
 float       yCOLOR_num2cutoff    (int    a_num  );
 /*---(color by value)-----------------*/
@@ -193,10 +194,10 @@ char        yCOLOR_val2color     (double a_val  , float a_alpha);
 /*---(color by hex)-------------------*/
 char        yCOLOR_hex2color     (char  *a_hex  , float  a_alpha);
 char        yCOLOR_hex2rgb       (char  *a_hex  , float *a_red, float *a_grn, float *a_blu);
-char        yCOLOR_rgb2hex       (char  *a_hex  , float  a_red, float  a_grn, float  a_blu);
+char        yCOLOR_rgb2hex       (char  *a_out  , float  a_red, float  a_grn, float  a_blu);
 /*---(HSV color format)---------------*/
 char        yCOLOR_hex2hsv       (char  *a_hex  , float *a_hue, float *a_sat, float *a_val);
-char        yCOLOR_hsv2hex       (float  a_hue  , float  a_sat, float  a_val, char  *a_hex);
+char        yCOLOR_hsv2hex       (char  *a_out  , float  a_hue  , float  a_sat, float  a_val);
 /*---(variations)---------------------*/
 char        yCOLOR_variant       (char  *a_name , char  *a_hex, char  *a_out);
 char        yCOLOR_accent        (char   a_level, char  *a_hex, char  *a_out);

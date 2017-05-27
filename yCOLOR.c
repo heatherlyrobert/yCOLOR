@@ -29,8 +29,8 @@ char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL] =
    /*-100 */ "carmel"          , "#000000", "#903326", "#905e48", "#905e48", "#5b1f1a", "#6a1f1a", "#5b1f1a", "#5b1f1a", "#5b1f1a", "#5b1f1a",
    /*-090 */ "chocolate"       , "#000000", "#8c2c2d", "#8c4d46", "#8c4d46", "#641e24", "#7a1e24", "#641e24", "#641e24", "#641e24", "#641e24",
    /*-080 */ "chestnut"        , "#000000", "#882633", "#883c44", "#883c44", "#6d1c2d", "#8a1c2d", "#6d1c2d", "#6d1c2d", "#6d1c2d", "#6d1c2d",
-   /*-070 */ "cinnamon"        , "#000000", "#842039", "#842b42", "#842b42", "#761b36", "#9a1b36", "#761b36", "#761b36", "#761b36", "#761b36",
-   /*-060 */ "burnt umber"     , "#000000", "#801a40", "#801a40", "#801a40", "#7f1a40", "#aa1a40", "#7f1a40", "#7f1a40", "#7f1a40", "#7f1a40",
+   /*-070 */ "burnt umber"     , "#000000", "#842039", "#842b42", "#842b42", "#761b36", "#9a1b36", "#761b36", "#761b36", "#761b36", "#761b36",
+   /*-060 */ "cinnimon"        , "#000000", "#801a40", "#801a40", "#801a40", "#7f1a40", "#aa1a40", "#7f1a40", "#7f1a40", "#7f1a40", "#7f1a40",
    /*-050 */ "libstick"        , "#000000", "#951535", "#951535", "#951535", "#941535", "#b51535", "#941535", "#941535", "#941535", "#941535",
    /*-040 */ "auburn"          , "#000000", "#aa112a", "#aa112a", "#aa112a", "#a9112a", "#c0112a", "#a9112a", "#a9112a", "#a9112a", "#a9112a",
    /*-030 */ "cherry"          , "#000000", "#bf0d20", "#bf0d20", "#bf0d20", "#bf0d20", "#cc0d20", "#bf0d20", "#bf0d20", "#bf0d20", "#bf0d20",
@@ -86,7 +86,7 @@ char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL] =
    /* 390 */ "slate"           , "#000000", "#46336c", "#46336c", "#46336c", "#46336c", "#52336c", "#46336c", "#46336c", "#46336c", "#46336c",
    /* 400 */ "graphite"        , "#000000", "#483b72", "#483b72", "#483b72", "#483b72", "#503b72", "#483b72", "#483b72", "#483b72", "#483b72",
    /* 410 */ "smoke"           , "#000000", "#4a4479", "#4a4479", "#4a4479", "#4a4479", "#4e4479", "#4a4479", "#4a4479", "#4a4479", "#4a4479",
-   /* 420 */ "steel"           , "#000000", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f",
+   /* 420 */ "steel blue"      , "#000000", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f", "#4c4c7f",
    /* 430 */ "pewter"          , "#000000", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f", "#52527f",
    /* 440 */ "ash"             , "#000000", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f", "#59597f",
    /* 450 */ "silver"          , "#000000", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f", "#5f5f7f",
@@ -191,6 +191,25 @@ tNORMING s_normings   [MAX_NORMING] =
 /*===----                           utility                            ----===*/
 /*============================--------------------============================*/
 static void      o___UTILITY_________________o (void) {;}
+
+static char      yCOLOR_ver [200] = "";
+
+char*      /* ---- : return library versioning information -------------------*/
+yCOLOR_version      (void)
+{
+   char    t [20] = "";
+#if    __TINYC__ > 0
+   strncpy (t, "[tcc built  ]", 15);
+#elif  __GNUC__  > 0
+   strncpy (t, "[gnu gcc    ]", 15);
+#elif  __HEPH__  > 0
+   strncpy (t, "[hephaestus ]", 15);
+#else
+   strncpy (t, "[unknown    ]", 15);
+#endif
+   snprintf (yCOLOR_ver, 100, "%s   %s : %s", t, YCOLOR_VER_NUM, YCOLOR_VER_TXT);
+   return yCOLOR_ver;
+}
 
 float
 yCOLOR__min3       (float a_1st, float a_2nd, float a_3rd)
@@ -608,14 +627,15 @@ yCOLOR_num2color     (int a_num, float a_alpha)
    return 0;
 }
 
-char*        /*--> use color index to retrieve hex -------[ ------ [ ------ ]-*/
-yCOLOR_num2hex       (int a_num)
+char         /*--> use color index to retrieve hex -------[ ------ [ ------ ]-*/
+yCOLOR_num2hex       (int a_num, char *a_hex)
 {
    /*---(parse color)--------------------*/
    if (a_num <  0       )   a_num = 0;
    if (a_num >= s_ncolor)   a_num = s_ncolor - 1;
    /*---(complete)-----------------------*/
-   return s_colors [a_num].hex;
+   if (a_hex)  strlcpy (a_hex, s_colors [a_num].hex, LEN_HEX);
+   return 0;
 }
 
 char*        /*--> use color index to retrieve name ------[ ------ [ ------ ]-*/
@@ -819,10 +839,10 @@ yCOLOR_hex2hsv      (     /* PURPOSE = convert RGB hex into HSV            */
 
 char       /*=((p_convert))===* return  = simple error code                   */
 yCOLOR_hsv2hex    (           /* PURPOSE = convert HSV to RGB HEX              */
+      char     *a_hex,            /* RGB 24-bit hex code            (#RRGGBB) */
       float     a_hue,            /* hue color component              (0-359) */
       float     a_sat,            /* saturation color component     (0.0-1.0) */
-      float     a_val,            /* value color component          (0.0-1.0) */
-      char     *a_hex)            /* RGB 24-bit hex code            (#RRGGBB) */
+      float     a_val)            /* value color component          (0.0-1.0) */
 {
    /*---(defense)--------------------------*/
    while (a_hue <  0.0)     a_hue += 360.0;
@@ -933,7 +953,7 @@ yCOLOR_accent        (       /* PURPOSE = apply a color variation             */
       break;
    }
    /*---(apply the modifiers)--------------*/
-   rc = yCOLOR_hsv2hex (x_hue, x_sat, x_val, a_out);
+   rc = yCOLOR_hsv2hex (a_out, x_hue, x_sat, x_val);
    /*> printf ("modded hex = %s, hue = %4.2f, sat = %4.2f, val = %4.2f\n", a_out, x_hue, x_sat, x_val);   <*/
    --rce;  if (rc != 0) {
       return rce;
@@ -1002,7 +1022,7 @@ yCOLOR_variant       (       /* PURPOSE = apply a color variation             */
    x_sat   = s_variants [x_index].new_sat;
    x_val   = s_variants [x_index].new_val;
    /*---(apply the modifiers)--------------*/
-   rc = yCOLOR_hsv2hex (x_hue, x_sat, x_val, a_out);
+   rc = yCOLOR_hsv2hex (a_out, x_hue, x_sat, x_val);
    --rce;  if (rc != 0) {
       return rce;
    }
@@ -1025,6 +1045,7 @@ yCOLOR_normalize     (char *a_hex, char *a_out)
    x_grn = x_grn / x_squared;
    x_blu = x_blu / x_squared;
    yCOLOR_rgb2hex (a_out, x_red, x_grn, x_blu);
+   printf ("yCOLOR_normalize, a_hex=%s, a_out=%s\n", a_hex, a_out);
    return 0;
 }
 
@@ -1085,7 +1106,7 @@ yCOLOR__norming        (      /* PURPOSE = level color intensity               *
       x_blu *= (s_normings [a_index].blu);
       x_norm = 1.000 - x_red - x_grn - x_blu;
       yCOLOR_hex2hsv (a_hex, &x_hue, &x_sat, &x_val);
-      yCOLOR_hsv2hex (x_hue, x_sat, x_val * x_norm, a_out);
+      yCOLOR_hsv2hex (a_out, x_hue, x_sat, x_val * x_norm);
    } else if (s_normings [a_index].is_value == 'n') {
       /*---(update)---------------------------*/
       x_red *= (1.0 - s_normings [a_index].red);
