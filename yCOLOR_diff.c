@@ -245,6 +245,43 @@ yCOLOR_diff_label    (int a_color, float a_alpha)
    return 0;
 }
 
+char
+yCOLOR_diff_fore   (void)
+{
+   switch (s_scheme) {
+   case  'w' :
+   case  'l' :
+      glColor4f (0.0f, 0.0f, 0.0f, 1.0f);
+      break;
+   case  'd' :
+   case  'b' :
+      glColor4f (1.0f, 1.0f, 1.0f, 1.0f);
+      break;
+   }
+   return 0;
+}
+
+char
+yCOLOR_diff_back   (void)
+{
+   switch (s_scheme) {
+   case  'w' : glClearColor  (1.0f, 1.0f, 1.0f, 1.0f);   /* white */
+               glColor4f     (1.0f, 1.0f, 1.0f, 1.0f);   /* white */
+               break;
+   case  'l' : glClearColor  (0.6f, 0.6f, 0.6f, 1.0f);   /* light */
+               glColor4f     (0.6f, 0.6f, 0.6f, 1.0f);   /* light */
+               break;
+   case  'd' : glClearColor  (0.2f, 0.2f, 0.2f, 1.0f);   /* dark  */
+               glColor4f     (0.2f, 0.2f, 0.2f, 1.0f);   /* dark  */
+               break;
+   case  'b' : glClearColor  (0.0f, 0.0f, 0.0f, 1.0f);   /* black */
+               glColor4f     (0.0f, 0.0f, 0.0f, 1.0f);   /* black */
+               break;
+   }
+   return 0;
+}
+
+
 
 /*====================------------------------------------====================*/
 /*===----                        color cursor                          ----===*/
