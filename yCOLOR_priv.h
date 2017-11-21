@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.0h"
-#define     YCOLOR_VER_TXT   "moved to make_program makefile enhancement"
+#define     YCOLOR_VER_NUM   "1.0i"
+#define     YCOLOR_VER_TXT   "added max-diff color handling from hyleoroi"
 
 
 
@@ -118,6 +118,9 @@ struct cNORMING {
    char        is_value;
 };
 tNORMING s_normings   [MAX_NORMING];
+
+
+
 
 
 

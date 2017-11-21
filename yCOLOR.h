@@ -171,6 +171,12 @@
 #define     YCOLOR_LINEAR    'l'     /* linear measurment scale               */
 #define     YCOLOR_SQUARED   's'     /* squared/exponential measurement scale */
 #define     YCOLOR_PARABOLIC 'p'     /* parabolic measurement scale           */
+/*---(for diff)---------------*/
+#define     YCOLOR_BLACK     'b'     /* background black                      */
+#define     YCOLOR_DARK      'd'     /* background dark                       */
+#define     YCOLOR_LIGHT     'l'     /* background light                      */
+#define     YCOLOR_WHITE     'w'     /* background white                      */
+
 
 /*---(utility)------------------------*/
 char*       yCOLOR_version       (void);
@@ -204,6 +210,15 @@ char        yCOLOR_accent        (char   a_level, char  *a_hex, char  *a_out);
 char        yCOLOR_normalize     (char  *a_hex  , char  *a_out);
 /*---(special)------------------------*/
 char        yCOLOR_error         (char   a_level, char  *a_hex, char  *a_out);
+/*---(maxdiff)------------------------*/
+char        yCOLOR_diff_scheme   (char a_scheme);
+char        yCOLOR_diff_start    (int a_start);
+char        yCOLOR_diff_chaos    (int a_seed);
+int         yCOLOR_diff_total    (void);
+int         yCOLOR_diff_count    (void);
+int         yCOLOR_diff_next     (void);
+char        yCOLOR_diff_color    (int a_color, float a_alpha);
+char        yCOLOR_diff_label    (int a_color, float a_alpha);
 
 
 
