@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.0j"
-#define     YCOLOR_VER_TXT   "added max-diff fore and back color handling also from hyleoroi"
+#define     YCOLOR_VER_NUM   "1.0k"
+#define     YCOLOR_VER_TXT   "ported hyleoroi to yCOLOR, added little things to do it"
 
 
 
