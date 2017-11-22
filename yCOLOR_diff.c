@@ -134,9 +134,10 @@ yCOLOR__diff_filter  (void)
    /*---(header)-------------------------*/
    DEBUG_COLOR  yLOG_enter   (__FUNCTION__);
    DEBUG_COLOR  yLOG_note    ("set global values");
-   s_ndiff         =    0;
-   s_adiff         =    0;
-   s_curr        =    0;
+   s_ndiff  =    0;
+   s_adiff  =    0;
+   s_curr   =    0;
+   /*> printf ("s_cutoff = %5.2f\n", s_cutoff);                                       <*/
    /*---(establish values)---------------*/
    for (i = 0; i < MAX_DIFF; ++i) {
       /*---(filter)----------------------*/
@@ -148,12 +149,14 @@ yCOLOR__diff_filter  (void)
       x_bri =  x_red + x_grn + x_blu;
       ++s_adiff;
       /*---(filter)----------------------*/
-      if (s_cutoff  > 1.5 && x_bri > s_cutoff) {
+      if (s_cutoff > 1.5 && x_bri > s_cutoff) {
          DEBUG_COLOR  yLOG_complex ("skipped"   , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f", s_adiff, x_red, x_grn, x_blu, x_bri);
+         /*> printf ("skipped1  %3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f\n", s_adiff, x_red, x_grn, x_blu, x_bri);   <*/
          continue;
       }
       if (s_cutoff <= 1.5 && x_bri < s_cutoff) {
          DEBUG_COLOR  yLOG_complex ("skipped"   , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f", s_adiff, x_red, x_grn, x_blu, x_bri);
+         /*> printf ("skipped2  %3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f\n", s_adiff, x_red, x_grn, x_blu, x_bri);   <*/
          continue;
       }
       /*---(save to palette)-------------*/
@@ -164,7 +167,9 @@ yCOLOR__diff_filter  (void)
       ++s_ndiff;
       DEBUG_COLOR  yLOG_complex ("saved"     , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f, new=%3d", s_adiff, x_red, x_grn, x_blu, x_bri, s_ndiff);
       /*---(done)------------------------*/
-   }
+   } 
+   /*> printf ("s_adiff = %d\n", s_adiff);                                            <*/
+   /*> printf ("s_ndiff = %d\n", s_ndiff);                                            <*/
    /*---(summary)------------------------*/
    DEBUG_COLOR  yLOG_value   ("s_adiff"   , s_adiff);
    DEBUG_COLOR  yLOG_value   ("s_ndiff"   , s_ndiff);
@@ -198,6 +203,10 @@ yCOLOR_diff_scheme   (char a_scheme)
    case YCOLOR_LIGHT :
       s_scheme  = YCOLOR_LIGHT;
       s_cutoff  = 1.7;
+      break;
+   case YCOLOR_MAX   :
+      s_scheme  = YCOLOR_WHITE;
+      s_cutoff  = 2.8;
       break;
    default          :
    case YCOLOR_WHITE :
@@ -307,7 +316,8 @@ yCOLOR_diff_next     (void)
    if (s_chaos == 'y') {
       x_color  = rand_r (&(s_seed)) % s_ndiff;
    } else {
-      if (s_curr >= s_ndiff)  s_curr -= s_ndiff;
+      if (s_curr >= s_ndiff)  s_curr = 0;
+      if (s_curr <  0)        s_curr = 0;
       x_color  = s_curr;
       ++s_curr;
    }

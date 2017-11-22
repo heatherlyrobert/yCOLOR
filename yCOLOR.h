@@ -172,10 +172,12 @@
 #define     YCOLOR_SQUARED   's'     /* squared/exponential measurement scale */
 #define     YCOLOR_PARABOLIC 'p'     /* parabolic measurement scale           */
 /*---(for diff)---------------*/
+#define     YCOLOR_ALL       'a'     /* do not use any cutoff values          */
 #define     YCOLOR_BLACK     'b'     /* background black                      */
 #define     YCOLOR_DARK      'd'     /* background dark                       */
 #define     YCOLOR_LIGHT     'l'     /* background light                      */
 #define     YCOLOR_WHITE     'w'     /* background white                      */
+#define     YCOLOR_MAX       'x'     /* background white with max color       */
 
 
 /*---(utility)------------------------*/
