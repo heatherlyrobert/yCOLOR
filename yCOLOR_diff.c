@@ -86,9 +86,9 @@ yCOLOR__diff_reset   (void)
    s_scheme   = YCOLOR_WHITE;
    s_chaos    =  '-';
    s_cutoff   =  2.3;
-   s_curr     =  0;
    s_start    =  0;
    s_seed     =  1;
+   s_curr     =  0;
    return 0;
 }
 
@@ -136,7 +136,6 @@ yCOLOR__diff_filter  (void)
    DEBUG_COLOR  yLOG_note    ("set global values");
    s_ndiff  =    0;
    s_adiff  =    0;
-   s_curr   =    0;
    /*> printf ("s_cutoff = %5.2f\n", s_cutoff);                                       <*/
    /*---(establish values)---------------*/
    for (i = 0; i < MAX_DIFF; ++i) {
@@ -225,7 +224,6 @@ yCOLOR_diff_chaos    (int a_seed )
 {
    s_chaos = 'y';
    s_seed  = a_seed;
-   yCOLOR__diff_filter ();
    return 0;
 }
 
@@ -233,7 +231,7 @@ char
 yCOLOR_diff_start    (int a_start)
 {
    s_start = a_start;
-   yCOLOR__diff_filter ();
+   s_curr  = a_start;
    return 0;
 }
 
@@ -313,7 +311,12 @@ int
 yCOLOR_diff_next     (void)
 {
    int         x_color     = 0;
+   int         i           = 0;
    if (s_chaos == 'y') {
+      if (s_curr == s_start) {
+         for (i = 0; i < s_start; ++i) x_color  = rand_r (&(s_seed)) % s_ndiff;
+         ++s_curr;
+      }
       x_color  = rand_r (&(s_seed)) % s_ndiff;
    } else {
       if (s_curr >= s_ndiff)  s_curr = 0;

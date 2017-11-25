@@ -218,6 +218,7 @@ char        yCOLOR_diff_start    (int a_start);
 char        yCOLOR_diff_chaos    (int a_seed);
 int         yCOLOR_diff_total    (void);
 int         yCOLOR_diff_count    (void);
+char        yCOLOR_diff_first    (void);
 int         yCOLOR_diff_next     (void);
 char        yCOLOR_diff_color    (int a_color, float a_alpha);
 char        yCOLOR_diff_label    (int a_color, float a_alpha);
