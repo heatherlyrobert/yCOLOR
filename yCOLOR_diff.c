@@ -80,7 +80,7 @@ static char s_bases [MAX_DIFF][10] =
 /*====================------------------------------------====================*/
 static void      o___PROGRAM_________________o (void) {;}
 
-static char
+static char  /*-> tbd --------------------------------[ leaf   [fz.320.001.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__diff_reset   (void)
 {
    s_scheme   = YCOLOR_WHITE;
@@ -99,7 +99,7 @@ yCOLOR__diff_reset   (void)
 /*====================------------------------------------====================*/
 static void      o___GENERAL_________________o (void) {;}
 
-float
+float        /*-> tbd --------------------------------[ leaf   [fn.430.221.80]*/ /*-[00.0000.01#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__diff_unhex   (char a_one, char a_two)
 {
    float       x_one       = 0.0;
@@ -122,7 +122,7 @@ yCOLOR__diff_unhex   (char a_one, char a_two)
 /*====================------------------------------------====================*/
 static void      o___FILTERING_______________o (void) {;}
 
-char
+char         /*-> tbd --------------------------------[ ------ [fz.B62.051.31]*/ /*-[02.0000.01#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__diff_filter  (void)
 {
    /*---(locals)-----------+-----------+-*/
@@ -184,7 +184,7 @@ yCOLOR__diff_filter  (void)
 /*====================------------------------------------====================*/
 static void      o___SETTING_________________o (void) {;}
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.740.101.12]*/ /*-[01.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_scheme   (char a_scheme)
 {
    /*---(clear out)----------------------*/
@@ -219,7 +219,7 @@ yCOLOR_diff_scheme   (char a_scheme)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ leaf   [gz.210.101.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_chaos    (int a_seed )
 {
    s_chaos = 'y';
@@ -227,7 +227,7 @@ yCOLOR_diff_chaos    (int a_seed )
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ leaf   [gz.210.101.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_start    (int a_start)
 {
    s_start = a_start;
@@ -235,14 +235,14 @@ yCOLOR_diff_start    (int a_start)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ leaf   [gz.210.201.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_color    (int a_color, float a_alpha)
 {
    glColor4f (s_diffs [a_color].red, s_diffs [a_color].grn, s_diffs [a_color].blu, a_alpha);
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ leaf   [gz.210.201.20]*/ /*-[01.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_label    (int a_color, float a_alpha)
 {
    if (s_diffs [a_color].bri < 1.5)
@@ -252,7 +252,7 @@ yCOLOR_diff_label    (int a_color, float a_alpha)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ leaf   [gz.420.001.10]*/ /*-[01.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_fore   (void)
 {
    switch (s_scheme) {
@@ -268,7 +268,7 @@ yCOLOR_diff_fore   (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ leaf   [gz.430.001.10]*/ /*-[04.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_back   (void)
 {
    switch (s_scheme) {
@@ -295,19 +295,19 @@ yCOLOR_diff_back   (void)
 /*====================------------------------------------====================*/
 static void      o___CURSOR__________________o (void) {;}
 
-int
+int          /*-> tbd --------------------------------[ leaf   [gn.210.001.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_total    (void)
 {
    return s_adiff;
 }
 
-int
+int          /*-> tbd --------------------------------[ leaf   [gn.210.001.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_count    (void)
 {
    return s_ndiff;
 }
 
-int
+int          /*-> tbd --------------------------------[ leaf   [gn.430.021.50]*/ /*-[02.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_next     (void)
 {
    int         x_color     = 0;

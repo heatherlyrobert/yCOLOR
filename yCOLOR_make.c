@@ -33,7 +33,7 @@ const    double   DEG2RAD   = M_PI / 180.0;
 
 
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.310.001.11]*/ /*-[01.0000.011.!]-*/ /*-[--.---.---.--]-*/
 FONT_load            (void)
 {
    s_font  = yFONT_load (s_face);
@@ -44,7 +44,7 @@ FONT_load            (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.210.001.01]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 FONT_delete          (void)
 {
    yFONT_free (s_font);
@@ -113,7 +113,7 @@ static void      o___OPENGL__________________o (void) {;}
  *>    return 0;                                                                       <* 
  *> }                                                                                  <*/
 
-char       /* ---- : establish rational drawing settings ---------------------*/
+char         /*-> establish drawing settings ---------[ shoot  [gz.640.001.00]*/ /*-[00.0000.011.!]-*/ /*-[--.---.---.--]-*/
 DRAW_init          (void)
 {
    /*---(color)--------------------------*/
@@ -144,7 +144,7 @@ DRAW_init          (void)
 }
 
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.970.051.24]*/ /*-[04.0070.012.!]-*/ /*-[--.---.---.--]-*/
 DRAW_column         (void)
 {
    /*---(locals)-----------+-----------+-*/
@@ -188,7 +188,7 @@ DRAW_column         (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.SO0.1E1.D7]*/ /*-[05.00O0.012.!]-*/ /*-[--.---.---.--]-*/
 DRAW_wheel          (char a_which)
 {
    /*---(locals)-----------+-----------+-*/
@@ -326,7 +326,7 @@ DRAW_wheel          (char a_which)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.GC0.081.85]*/ /*-[05.0090.012.!]-*/ /*-[--.---.---.--]-*/
 DRAW_variants       (void)
 {
    char        rc          = 0;
@@ -405,7 +405,7 @@ DRAW_variants       (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.980.051.26]*/ /*-[04.0070.00#.!]-*/ /*-[--.---.---.--]-*/
 DRAW_normings       (void)
 {
    int         i           = 0;
@@ -448,7 +448,7 @@ DRAW_normings       (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.860.021.24]*/ /*-[03.0060.012.!]-*/ /*-[--.---.---.--]-*/
 DRAW_scale          (void)
 {
    /*---(locals)-----------+-----------+-*/
@@ -485,7 +485,7 @@ DRAW_scale          (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.9D0.561.44]*/ /*-[02.0060.013.!]-*/ /*-[--.---.---.--]-*/
 DRAW_box            (char *a_base, char *a_var, char a_size, int a_xpos, int a_ypos)
 {
    /*---(locals)-----------+-----------+-*/
@@ -530,7 +530,7 @@ DRAW_box            (char *a_base, char *a_var, char a_size, int a_xpos, int a_y
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.JF0.0C1.25]*/ /*-[02.0000.012.!]-*/ /*-[--.---.---.--]-*/
 DRAW_layout         (void)
 {
    /*---(locals)-----------+-----------+-*/
@@ -621,7 +621,7 @@ DRAW_layout         (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.750.021.05]*/ /*-[00.0000.021.!]-*/ /*-[--.---.---.--]-*/
 DRAW_main          (void)
 {
    /*---(locals)-------------------------*/
@@ -652,7 +652,7 @@ DRAW_main          (void)
    return 0;
 }
 
-char        /* PURPOSE : process the xwindows event stream                    */
+char         /*-> tbd --------------------------------[ ------ [gc.JC0.052.E3]*/ /*-[03.0000.011.!]-*/ /*-[--.---.---.--]-*/
 PROG_event    (void)
 {
    /*---(locals)--------------------------------*/
@@ -827,12 +827,12 @@ PROG_event    (void)
  *>    return 0;                                                                           <* 
  *> }                                                                                      <*/
 
-char
+char         /*-> tbd --------------------------------[ leaf   [gc.100.000.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 DUMP_scale         ()
 {
 }
 
-char
+char         /*-> tbd --------------------------------[ shoot  [gz.210.001.02]*/ /*-[00.0000.011.!]-*/ /*-[--.---.---.--]-*/
 PROG_init          ()
 {
    yCOLOR_init     (YCOLOR_REDBLU);
@@ -840,7 +840,7 @@ PROG_init          ()
    return 0;
 }
 
-int
+int          /*-> tbd --------------------------------[ ------ [gn.ID0.254.H9]*/ /*-[05.0000.000.!]-*/ /*-[--.---.---.--]-*/
 main               (int argc, char *argv[])
 {
    /*---(locals)-----------+-----------+-*/

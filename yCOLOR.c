@@ -194,7 +194,7 @@ static void      o___UTILITY_________________o (void) {;}
 
 static char      yCOLOR_ver [200] = "";
 
-char*      /* ---- : return library versioning information -------------------*/
+char*        /*-> return versioning info -------------[ leaf   [gs.420.012.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_version      (void)
 {
    char    t [20] = "";
@@ -211,7 +211,7 @@ yCOLOR_version      (void)
    return yCOLOR_ver;
 }
 
-float
+float        /*-> tbd --------------------------------[ leaf   [fn.320.305.40]*/ /*-[01.0000.015.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__min3       (float a_1st, float a_2nd, float a_3rd)
 {
    if    (a_1st <= a_2nd) {
@@ -224,7 +224,7 @@ yCOLOR__min3       (float a_1st, float a_2nd, float a_3rd)
    return                         a_2nd;
 }
 
-float
+float        /*-> tbd --------------------------------[ leaf   [fn.320.305.40]*/ /*-[01.0000.015.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__max3       (float a_1st, float a_2nd, float a_3rd)
 {
    if    (a_1st >= a_2nd) {
@@ -244,7 +244,7 @@ yCOLOR__max3       (float a_1st, float a_2nd, float a_3rd)
 /*============================--------------------============================*/
 static void      o___PREPARATION_____________o (void) {;}
 
-char
+char         /*-> tbd --------------------------------[ ------ [ge.MI0.152.81]*/ /*-[02.0000.711.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_use           (char  a_use)
 {
    /*---(locals)-----------+-----------+-*/
@@ -351,7 +351,7 @@ yCOLOR_use           (char  a_use)
    return x_ncolor;
 }
 
-char
+char         /*-> tbd --------------------------------[ leaf   [ge.C90.373.40]*/ /*-[02.0000.102.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_scale         (char  a_scale, float a_min, float a_max)
 {
    /*---(locals)-----------+-----------+-*/
@@ -407,7 +407,7 @@ yCOLOR_scale         (char  a_scale, float a_min, float a_max)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [fz.CA0.2H1.12]*/ /*-[02.0000.014.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__interpolate  (int a_beg, int a_end)
 {
    /*---(locals)-----------+-----------+-*/
@@ -467,7 +467,7 @@ yCOLOR__interpolate  (int a_beg, int a_end)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gz.640.031.01]*/ /*-[01.0000.013.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_custom        (void)
 {
    /*---(locals)-----------+-----------+-*/
@@ -497,7 +497,7 @@ yCOLOR_custom        (void)
    return 0;
 }
 
-char
+char         /*-> tbd --------------------------------[ shoot  [gc.650.121.32]*/ /*-[01.0000.102.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_init          (char  a_use)
 {
    /*---(locals)-----------+-----------+-*/
@@ -534,7 +534,7 @@ yCOLOR_init          (char  a_use)
 /*============================--------------------============================*/
 static void      o___BY_DEGREE_______________o (void) {;}
 
-char
+char         /*-> tbd --------------------------------[ leaf   [ge.750.232.C0]*/ /*-[01.0000.032.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_deg2index     (int a_deg, int *a_index)
 {  /*---(design notes)-------------------*/
    /*
@@ -568,7 +568,7 @@ yCOLOR_deg2index     (int a_deg, int *a_index)
    return rc;
 }
 
-char         /*--> use degree to set opengl color --------[ ------ [ ------ ]-*/
+char         /*-> use degree to set opengl color -----[ ------ [gc.320.221.01]*/ /*-[00.0000.303.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_deg2color     (int a_deg, float a_alpha)
 {
    /*---(locals)-----------+-----------+-*/
@@ -582,7 +582,7 @@ yCOLOR_deg2color     (int a_deg, float a_alpha)
    return rc;
 }
 
-char
+char         /*-> tbd --------------------------------[ ------ [gc.320.221.01]*/ /*-[00.0000.501.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_deg2hex       (int a_deg, char *a_hex)
 {
    /*---(locals)-----------+-----------+-*/
@@ -595,7 +595,7 @@ yCOLOR_deg2hex       (int a_deg, char *a_hex)
    return rc;
 }
 
-char*        /*--> use degree to retrieve name ----s------[ ------ [ ------ ]-*/
+char*        /*-> use degree to retrieve name --------[ ------ [gs.320.122.11]*/ /*-[00.0000.303.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_deg2name      (int a_deg)
 {
    /*---(locals)-----------+-----------+-*/
@@ -615,7 +615,7 @@ yCOLOR_deg2name      (int a_deg)
 /*============================--------------------============================*/
 static void      o___BY_NUMBER_______________o (void) {;}
 
-char         /*--> use color index to set opengl color ---[ ------ [ ------ ]-*/
+char         /*-> use color index to set opengl ------[ leaf   [gz.310.201.20]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_num2color     (int a_num, float a_alpha)
 {
    /*---(parse color)--------------------*/
@@ -627,7 +627,7 @@ yCOLOR_num2color     (int a_num, float a_alpha)
    return 0;
 }
 
-char         /*--> use color index to retrieve hex -------[ ------ [ ------ ]-*/
+char         /*-> use color index to retrieve hex ----[ leaf   [gz.310.201.30]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_num2hex       (int a_num, char *a_hex)
 {
    /*---(parse color)--------------------*/
@@ -638,7 +638,7 @@ yCOLOR_num2hex       (int a_num, char *a_hex)
    return 0;
 }
 
-char*        /*--> use color index to retrieve name ------[ ------ [ ------ ]-*/
+char*        /*-> use color index to retrieve name ---[ leaf   [gs.210.101.20]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_num2name      (int a_num)
 {
    /*---(parse color)--------------------*/
@@ -648,7 +648,7 @@ yCOLOR_num2name      (int a_num)
    return s_colors [a_num].name;
 }
 
-float        /*--> use color index to retrieve cutoff ----[ ------ [ ------ ]-*/
+float        /*-> use index to retrieve cutoff -------[ leaf   [gn.210.101.20]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_num2cutoff    (int a_num)
 {
    /*---(parse color)--------------------*/
@@ -665,14 +665,14 @@ yCOLOR_num2cutoff    (int a_num)
 /*============================--------------------============================*/
 static void      o___BY_VALUE________________o (void) {;}
 
-char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
+char         /*-> use hex code to set opengl color ---[ leaf   [gz.210.101.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_val2error     (float a_alpha)
 {
    glColor4f (0.998, 0.059, 0.690, a_alpha);
    return 0;
 }
 
-char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
+char         /*-> use hex code to set opengl color ---[ leaf   [gz.430.221.40]*/ /*-[01.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_val2color     (double a_val, float a_alpha)
 {
    /*---(locals)-----------+-----------+-*/
@@ -699,7 +699,7 @@ yCOLOR_val2color     (double a_val, float a_alpha)
 /*============================--------------------============================*/
 static void      o___BY_HEX__________________o (void) {;}
 
-float
+float        /*-> tbd --------------------------------[ leaf   [fn.530.231.80]*/ /*-[00.0000.023.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__unhex        (char a_one, char a_two)
 {
    /*---(locals)-----------+-----------+-*/
@@ -722,7 +722,7 @@ yCOLOR__unhex        (char a_one, char a_two)
    return x_result;
 }
 
-char         /*--> use hex code to set opengl color ------[ ------ [ ------ ]-*/
+char         /*-> use hex code to set opengl color ---[ ------ [ge.650.255.41]*/ /*-[01.0000.503.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_hex2color     (char *a_hex, float a_alpha)
 {
    /*---(locals)-----------+-----------+-*/
@@ -748,7 +748,7 @@ yCOLOR_hex2color     (char *a_hex, float a_alpha)
    return 0;
 }
 
-char       /*=((p_convert))===* return  = simple error code                   */
+char         /*-> tbd --------------------------------[ ------ [gc.430.432.31]*/ /*-[00.0000.052.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_hex2rgb      (char *a_hex, float *a_red, float *a_grn, float *a_blu)            /* value color component          (0.0-1.0) */
 {
    /*---(locals)-----------+-----------+-*/
@@ -767,7 +767,7 @@ yCOLOR_hex2rgb      (char *a_hex, float *a_red, float *a_grn, float *a_blu)     
    return 0;
 }
 
-char       /*=((p_convert))===* return  = simple error code                   */
+char         /*-> tbd --------------------------------[ leaf   [gc.430.442.10]*/ /*-[00.0000.034.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_rgb2hex      (char *a_hex, float a_red, float a_grn, float a_blu)            /* value color component          (0.0-1.0) */
 {
    /*---(locals)-----------+-----------+-*/
@@ -793,7 +793,7 @@ yCOLOR_rgb2hex      (char *a_hex, float a_red, float a_grn, float a_blu)        
 /*============================--------------------============================*/
 static void      o___BY_HSV__________________o (void) {;}
 
-char       /*=((p_convert))===* return  = simple error code                   */
+char         /*-> tbd --------------------------------[ ------ [gc.960.164.93]*/ /*-[01.0000.034.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_hex2hsv      (     /* PURPOSE = convert RGB hex into HSV            */
       char     *a_hex,            /* RBG 24-bit hex code            (#RRGGBB) */
       float    *a_hue,            /* hue color component              (0-359) */
@@ -837,7 +837,7 @@ yCOLOR_hex2hsv      (     /* PURPOSE = convert RGB hex into HSV            */
    return 0;
 }
 
-char       /*=((p_convert))===* return  = simple error code                   */
+char         /*-> tbd --------------------------------[ ------ [gc.AA0.192.91]*/ /*-[01.0000.034.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_hsv2hex    (           /* PURPOSE = convert HSV to RGB HEX              */
       char     *a_hex,            /* RGB 24-bit hex code            (#RRGGBB) */
       float     a_hue,            /* hue color component              (0-359) */
@@ -894,7 +894,7 @@ yCOLOR_hsv2hex    (           /* PURPOSE = convert HSV to RGB HEX              *
 /*============================--------------------============================*/
 static void      o___CHANGES_________________o (void) {;}
 
-char       /*=((c_convert))===* return  = simple error code                   */
+char         /*-> tbd --------------------------------[ ------ [ge.E90.179.52]*/ /*-[01.0000.104.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_accent        (       /* PURPOSE = apply a color variation             */
       char      a_level,          /* accent level                             */
       char     *a_hex,            /* rgb three byte hex code        (#rrggbb) */
@@ -962,7 +962,7 @@ yCOLOR_accent        (       /* PURPOSE = apply a color variation             */
    return 0;
 }
 
-char       /*=((c_convert))===* return  = simple error code                   */
+char         /*-> tbd --------------------------------[ ------ [ge.E80.17#.F2]*/ /*-[04.0000.403.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_variant       (       /* PURPOSE = apply a color variation             */
       char     *a_name,           /* variation name                           */
       char     *a_hex,            /* rgb three byte hex code        (#rrggbb) */
@@ -1030,7 +1030,7 @@ yCOLOR_variant       (       /* PURPOSE = apply a color variation             */
    return 0;
 }
 
-char       /*=((pUPDATE ]]=========* return  = simple error code              */
+char         /*-> tbd --------------------------------[ ------ [gc.430.242.02]*/ /*-[00.0000.103.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_normalize     (char *a_hex, char *a_out)
 {
    /*---(locals)-----------+-----------+-*/
@@ -1049,7 +1049,7 @@ yCOLOR_normalize     (char *a_hex, char *a_out)
    return 0;
 }
 
-char       /*=((c_convert))===* return  = simple error code                   */
+char         /*-> tbd --------------------------------[ leaf   [gc.430.122.30]*/ /*-[03.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_norming_find  (char *a_name)
 {
    /*---(locals)-----------+-----------+-*/
@@ -1068,7 +1068,7 @@ yCOLOR_norming_find  (char *a_name)
    return x_index;
 }
 
-char       /*=((pUPDATE ]]=========* return  = simple error code              */
+char         /*-> tbd --------------------------------[ ------ [fc.E90.1L2.33]*/ /*-[01.0000.10#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR__norming        (      /* PURPOSE = level color intensity               */
       int       a_index,          /* norming index                            */
       char     *a_hex,            /* rgb three byte hex code        (#rrggbb) */

@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.0m"
-#define     YCOLOR_VER_TXT   "good updates to start and seed for more capability"
+#define     YCOLOR_VER_NUM   "1.0n"
+#define     YCOLOR_VER_TXT   "apply HTAG statistics and headers"
 
 
 
