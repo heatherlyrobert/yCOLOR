@@ -835,7 +835,8 @@ DUMP_scale         ()
 char         /*-> tbd --------------------------------[ shoot  [gz.210.001.02]*/ /*-[00.0000.011.!]-*/ /*-[--.---.---.--]-*/
 PROG_init          ()
 {
-   yCOLOR_init     (YCOLOR_REDBLU);
+   /*> yCOLOR_init     (YCOLOR_REDBLU);                                               <*/
+   yCOLOR_init     (YCOLOR_WHEEL );
    yCOLOR_scale    (YCOLOR_PARABOLIC,  0.0,  50.0);
    return 0;
 }
@@ -850,74 +851,83 @@ main               (int argc, char *argv[])
    int         x_deg       = 0;
    char        x_base      [LEN_LABEL];
    /*---(read config)--------------------*/
+   printf ("very up front\n");
    if (rc >= 0)  rc = yURG_logger          (argc, argv);
+   printf ("after logger\n");
    if (rc >= 0)  rc = PROG_init            ();
+   printf ("after init\n");
    if (rc >= 0)  rc = yURG_urgs            (argc, argv);
+   printf ("after urges\n");
    /*> if (rc >= 0)  rc = PROG_args            (argc, argv);                          <*/
    /*> if (rc >= 0)  rc = yFONT__conf_parse    ();                                    <*/
    if (rc <  0) {
       return rc;
    }
-   if (argc > 0) {
-      if (strcmp (argv [1], "--big") == 0) {
-         x_deg       = -120;
-         printf ("   /*------------------------------------------------------------------------*/\n");
-         printf ("   /*  RYB (artists color wheel)  61 total values                            */\n");
-         printf ("   /*     30 warm > browns, reds, oranges, yellows                           */\n");
-         printf ("   /*     middle  > green                                                    */\n");
-         printf ("   /*     30 cool > blues, purples, steels, greys                            */\n");
-         printf ("   /*-----------------------------(prefix wheel)-----------------------------*/\n");
-         for (i = 0; i <  11; ++i) {
-            if (i == 2) printf ("   /*-----------------------------(normal wheel)-----------------------------*/\n");
-            if (i == 8) printf ("   /*-----------------------------(suffix wheel)-----------------------------*/\n");
-            printf ("   /* %04d /* ", x_deg);
-            /*> if (x_deg == 180) {                                                      <* 
-             *>    printf ("\"%s\",\n", s_RYB [(i * 6)][4]);                             <* 
-             *>    x_deg += 10;                                                          <* 
-             *>    continue;                                                             <* 
-             *> }                                                                        <*/
-            for (j = 0; j <   6; ++j) {
-               printf ("\"%s\", ", s_RYB [(i * 6) + j][4]);
-               if (x_deg == 180) {
-                  x_deg -= 50;  break;
-               }
-            }
-            x_deg += 60;
-            printf ("\n");
-         }
-         printf ("   /*---------------------------------(done)---------------------------------*/\n");
-         return 0;
-      } else if (strcmp (argv [1], "--small") == 0) {
-         x_deg       = 0;
-         printf ("   /*------------------------------------------------------------------------*/\n");
-         printf ("   /*  RYB (artists color wheel)  25 total values                            */\n");
-         printf ("   /*     12 low  > reds and oranges                                         */\n");
-         printf ("   /*     middle  > yellow                                                   */\n");
-         printf ("   /*     12 high > greens and blues                                         */\n");
-         printf ("   /*------------------------------------------------------------------------*/\n");
-         yCOLOR_use (YCOLOR_WHEEL);
-         for (i = 0; i <=  240; i += 10) {
-            yCOLOR_deg2hex  (i, x_base);
-            printf ("   {  /* %03d */  \"%s\",  0.0,  0.0,  0.0 },\n", i, x_base);
-            /*> for (j = 0; j <   6; ++j) {                                              <* 
-             *>    if (x_deg <= 120)  printf ("\"%s\", ", s_RYB [(i * 6) + j][4]);       <* 
-             *>    if (x_deg >  120)  printf ("\"%s\", ", s_RYB [(i * 6) + j - 5][4]);   <* 
-             *>    if (x_deg == 120) {                                                   <* 
-             *>       x_deg -= 50;  break;                                               <* 
-             *>    }                                                                     <* 
-             *> }                                                                        <* 
-             *> x_deg += 60;                                                             <*/
-            /*> printf ("\n");                                                        <*/
-         }
-         printf ("   {  /* %03d */  \"\"       ,  0.0,  0.0,  0.0 },\n", 999);
-         printf ("   /*---------------------------------(done)---------------------------------*/\n");
-         return 0;
-      }
-   }
-   yXINIT_start ("yCOLOR_make", win_w, win_h, YX_FOCUSABLE, YX_FIXED, YX_SILENT);
+   /*> if (argc > 0) {                                                                                                      <* 
+    *>    if (strcmp (argv [1], "--big") == 0) {                                                                            <* 
+    *>       x_deg       = -120;                                                                                            <* 
+    *>       printf ("   /+------------------------------------------------------------------------+/\n");                  <* 
+    *>       printf ("   /+  RYB (artists color wheel)  61 total values                            +/\n");                  <* 
+    *>       printf ("   /+     30 warm > browns, reds, oranges, yellows                           +/\n");                  <* 
+    *>       printf ("   /+     middle  > green                                                    +/\n");                  <* 
+    *>       printf ("   /+     30 cool > blues, purples, steels, greys                            +/\n");                  <* 
+    *>       printf ("   /+-----------------------------(prefix wheel)-----------------------------+/\n");                  <* 
+    *>       for (i = 0; i <  11; ++i) {                                                                                    <* 
+    *>          if (i == 2) printf ("   /+-----------------------------(normal wheel)-----------------------------+/\n");   <* 
+    *>          if (i == 8) printf ("   /+-----------------------------(suffix wheel)-----------------------------+/\n");   <* 
+    *>          printf ("   /+ %04d /+ ", x_deg);                                                                           <* 
+    *>          /+> if (x_deg == 180) {                                                      <*                             <* 
+    *>           *>    printf ("\"%s\",\n", s_RYB [(i * 6)][4]);                             <*                             <* 
+    *>           *>    x_deg += 10;                                                          <*                             <* 
+    *>           *>    continue;                                                             <*                             <* 
+    *>           *> }                                                                        <+/                            <* 
+    *>          for (j = 0; j <   6; ++j) {                                                                                 <* 
+    *>             printf ("\"%s\", ", s_RYB [(i * 6) + j][4]);                                                             <* 
+    *>             if (x_deg == 180) {                                                                                      <* 
+    *>                x_deg -= 50;  break;                                                                                  <* 
+    *>             }                                                                                                        <* 
+    *>          }                                                                                                           <* 
+    *>          x_deg += 60;                                                                                                <* 
+    *>          printf ("\n");                                                                                              <* 
+    *>       }                                                                                                              <* 
+    *>       printf ("   /+---------------------------------(done)---------------------------------+/\n");                  <* 
+    *>       return 0;                                                                                                      <* 
+    *>    } else if (strcmp (argv [1], "--small") == 0) {                                                                   <* 
+    *>       x_deg       = 0;                                                                                               <* 
+    *>       printf ("   /+------------------------------------------------------------------------+/\n");                  <* 
+    *>       printf ("   /+  RYB (artists color wheel)  25 total values                            +/\n");                  <* 
+    *>       printf ("   /+     12 low  > reds and oranges                                         +/\n");                  <* 
+    *>       printf ("   /+     middle  > yellow                                                   +/\n");                  <* 
+    *>       printf ("   /+     12 high > greens and blues                                         +/\n");                  <* 
+    *>       printf ("   /+------------------------------------------------------------------------+/\n");                  <* 
+    *>       yCOLOR_use (YCOLOR_WHEEL);                                                                                     <* 
+    *>       for (i = 0; i <=  240; i += 10) {                                                                              <* 
+    *>          yCOLOR_deg2hex  (i, x_base);                                                                                <* 
+    *>          printf ("   {  /+ %03d +/  \"%s\",  0.0,  0.0,  0.0 },\n", i, x_base);                                      <* 
+    *>          /+> for (j = 0; j <   6; ++j) {                                              <*                             <* 
+    *>           *>    if (x_deg <= 120)  printf ("\"%s\", ", s_RYB [(i * 6) + j][4]);       <*                             <* 
+    *>           *>    if (x_deg >  120)  printf ("\"%s\", ", s_RYB [(i * 6) + j - 5][4]);   <*                             <* 
+    *>           *>    if (x_deg == 120) {                                                   <*                             <* 
+    *>           *>       x_deg -= 50;  break;                                               <*                             <* 
+    *>           *>    }                                                                     <*                             <* 
+    *>           *> }                                                                        <*                             <* 
+    *>           *> x_deg += 60;                                                             <+/                            <* 
+    *>          /+> printf ("\n");                                                        <+/                               <* 
+    *>       }                                                                                                              <* 
+    *>       printf ("   {  /+ %03d +/  \"\"       ,  0.0,  0.0,  0.0 },\n", 999);                                          <* 
+    *>       printf ("   /+---------------------------------(done)---------------------------------+/\n");                  <* 
+    *>       return 0;                                                                                                      <* 
+    *>    }                                                                                                                 <* 
+    *> }                                                                                                                    <*/
+   printf ("before window open\n");
+   yX11_start ("yCOLOR_make", win_w, win_h, YX_FOCUSABLE, YX_FIXED, YX_SILENT);
+   printf ("window open\n");
    DRAW_init          ();
+   printf ("draw init\n");
    FONT_load          ();
+   printf ("fond load\n");
    DRAW_main          ();
+   printf ("first draw\n");
    /*---(main loop)----------------------*/
    while (rc == 0) {
       rc = PROG_event    ();
