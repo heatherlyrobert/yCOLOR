@@ -179,37 +179,95 @@
 #define     YCOLOR_WHITE     'w'     /* background white                      */
 #define     YCOLOR_MAX       'x'     /* background white with max color       */
 
+#define     YCOLOR_BAS        0
+#define     YCOLOR_BAS_MAX    1
+#define     YCOLOR_BAS_ACC    2
+#define     YCOLOR_BAS_LIG    3
+#define     YCOLOR_BAS_MED    4
+#define     YCOLOR_BAS_DRK    5
+#define     YCOLOR_BAS_MUT    6
+#define     YCOLOR_BAS_TXT    7
+#define     YCOLOR_BAS_MIN    8
 
+#define     YCOLOR_COM       10
+#define     YCOLOR_COM_MAX   11
+#define     YCOLOR_COM_ACC   12
+#define     YCOLOR_COM_LIG   13
+#define     YCOLOR_COM_MED   14
+#define     YCOLOR_COM_DRK   15
+#define     YCOLOR_COM_MUT   16
+#define     YCOLOR_COM_TXT   17
+#define     YCOLOR_COM_MIN   18
+
+#define     YCOLOR_NEG       20
+#define     YCOLOR_NEG_MAX   21
+#define     YCOLOR_NEG_ACC   22
+#define     YCOLOR_NEG_LIG   23
+#define     YCOLOR_NEG_MED   24
+#define     YCOLOR_NEG_DRK   25
+#define     YCOLOR_NEG_MUT   26
+#define     YCOLOR_NEG_TXT   27
+#define     YCOLOR_NEG_MIN   28
+
+#define     YCOLOR_POS       30
+#define     YCOLOR_POS_MAX   31
+#define     YCOLOR_POS_ACC   32
+#define     YCOLOR_POS_LIG   33
+#define     YCOLOR_POS_MED   34
+#define     YCOLOR_POS_DRK   35
+#define     YCOLOR_POS_MUT   36
+#define     YCOLOR_POS_TXT   37
+#define     YCOLOR_POS_MIN   38
+
+#define     YCOLOR_GRY       40
+#define     YCOLOR_GRY_MAX   41
+#define     YCOLOR_GRY_ACC   42
+#define     YCOLOR_GRY_LIG   43
+#define     YCOLOR_GRY_MED   44
+#define     YCOLOR_GRY_DRK   45
+#define     YCOLOR_GRY_MUT   46
+#define     YCOLOR_GRY_TXT   47
+#define     YCOLOR_GRY_MIN   48
+
+typedef     const       char        cchar;
+typedef     const       int         cint;
+typedef     const       float       cfloat;
+typedef     const       double      cdouble;
+
+/*---(program color scheme)-----------*/
+char        yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val);
+char        yCOLOR_set           (cint a_slot, cfloat a_alpha);
 /*---(utility)------------------------*/
 char*       yCOLOR_version       (void);
-char        yCOLOR_init          (char   a_use);
-char        yCOLOR_use           (char   a_use);
-char        yCOLOR_scale         (char   a_scale, float a_min, float a_max);
+char        yCOLOR_init          (char    a_use);
+char        yCOLOR_use           (char    a_use);
+char        yCOLOR_scale         (char    a_scale, float a_min, float a_max);
 char        yCOLOR_custom        (void);
+char        yCOLOR_clear         (int     a_index);
 /*---(color by degree)----------------*/
-char        yCOLOR_deg2index     (int    a_deg  , int   *a_index);
-char        yCOLOR_deg2color     (int    a_deg  , float  a_alpha);
-char        yCOLOR_deg2hex       (int    a_deg  , char  *a_out  );
-char       *yCOLOR_deg2name      (int    a_deg  );
+char        yCOLOR_deg2index     (cint    a_deg  , int    *a_index);
+char        yCOLOR_deg2color     (cint    a_deg  , cfloat  a_alpha);
+char        yCOLOR_deg2hex       (cint    a_deg  , char   *a_out  );
+char       *yCOLOR_deg2name      (cint    a_deg  );
 /*---(color by index number)----------*/
-char        yCOLOR_num2color     (int    a_num  , float  a_alpha);
-char        yCOLOR_num2hex       (int    a_num  , char  *a_out);
-char       *yCOLOR_num2name      (int    a_num  );
-float       yCOLOR_num2cutoff    (int    a_num  );
+char        yCOLOR_num2color     (cint    a_num  , cfloat  a_alpha);
+char        yCOLOR_num2hex       (cint    a_num  , char  *a_out);
+char       *yCOLOR_num2name      (cint    a_num  );
+float       yCOLOR_num2cutoff    (cint    a_num  );
 /*---(color by value)-----------------*/
-char        yCOLOR_val2error     (float  a_alpha);
-char        yCOLOR_val2color     (double a_val  , float a_alpha);
+char        yCOLOR_val2error     (cfloat  a_alpha);
+char        yCOLOR_val2color     (cdouble a_val  , cfloat a_alpha);
 /*---(color by hex)-------------------*/
-char        yCOLOR_hex2color     (char  *a_hex  , float  a_alpha);
-char        yCOLOR_hex2rgb       (char  *a_hex  , float *a_red, float *a_grn, float *a_blu);
-char        yCOLOR_rgb2hex       (char  *a_out  , float  a_red, float  a_grn, float  a_blu);
+char        yCOLOR_hex2color     (cchar   *a_hex , cfloat  a_alpha);
+char        yCOLOR_hex2rgb       (cchar   *a_hex , float  *a_red, float  *a_grn, float  *a_blu);
+char        yCOLOR_rgb2hex       (char    *a_out , cfloat  a_red, cfloat  a_grn, cfloat  a_blu);
 /*---(HSV color format)---------------*/
-char        yCOLOR_hex2hsv       (char  *a_hex  , float *a_hue, float *a_sat, float *a_val);
-char        yCOLOR_hsv2hex       (char  *a_out  , float  a_hue  , float  a_sat, float  a_val);
+char        yCOLOR_hex2hsv       (cchar   *a_hex , float  *a_hue, float  *a_sat, float  *a_val);
+char        yCOLOR_hsv2hex       (char    *a_out , cfloat  a_hue, cfloat  a_sat, cfloat  a_val);
 /*---(variations)---------------------*/
-char        yCOLOR_variant       (char  *a_name , char  *a_hex, char  *a_out);
-char        yCOLOR_accent        (char   a_level, char  *a_hex, char  *a_out);
-char        yCOLOR_normalize     (char  *a_hex  , char  *a_out);
+char        yCOLOR_variant       (cchar  *a_sat  , cchar *a_val , cchar  *a_hex, char   *a_out);
+char        yCOLOR_accent        (cchar   a_level, cchar  *a_hex, char   *a_out);
+char        yCOLOR_normalize     (cchar  *a_hex  , char   *a_out);
 /*---(special)------------------------*/
 char        yCOLOR_error         (char   a_level, char  *a_hex, char  *a_out);
 /*---(max-diff)-----------------------*/

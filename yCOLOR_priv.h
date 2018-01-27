@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.1a"
-#define     YCOLOR_VER_TXT   "added a beautiful base color set from internet.  wow"
+#define     YCOLOR_VER_NUM   "1.1b"
+#define     YCOLOR_VER_TXT   "creates a palette for program use"
 
 
 
@@ -73,7 +73,7 @@ typedef     struct      cVERT       tVERT;
 
 /*===[[ RYB ARTISTS COLOR SPECTRUM ]]=========================================*/
 #define   MAX_COLOR    80
-#define   MAX_OPTION   10
+#define   MAX_OPTION   11
 
 extern char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL];
 
@@ -91,18 +91,16 @@ struct cCOLORS {
 extern  tCOLORS  s_colors  [MAX_COLOR];
 
 
-/*---(color variations)------------------------------*/
-#define    MAX_VARIANT      100
-typedef struct cVARIANT tVARIANT;
-struct cVARIANT {
-   char        cat         [10];       /* category of variations              */
-   char        abbr        [10];       /* abbreviation for variant            */
-   char        name        [35];       /* full name of variant                */
-   float       new_sat;                /* new saturation for HSV              */
-   float       new_val;                /* new value for HSV                   */
-   float       accent;                 /* accent percentage                   */
+typedef struct cPALETTE tPALETTE;
+struct cPALETTE {
+   char        hex         [LEN_HEX];
+   float       red;
+   float       grn;
+   float       blu;
 };
-extern tVARIANT    s_variants  [MAX_VARIANT];
+extern  tPALETTE  s_palette  [MAX_COLOR];
+
+
 
 
 
@@ -120,14 +118,32 @@ struct cNORMING {
 tNORMING s_normings   [MAX_NORMING];
 
 
-
-
-
+typedef  struct cACCESSOR  tACCESSOR;
+struct cACCESSOR {
+   /*---(primary info)-------------------*/
+   int         wheel;                       /* color wheel variation          */
+   int         degree;                      /* color degree                   */
+   /*---(harmony info)-------------------*/
+   char        harmony      [LEN_LABEL];    /* complement, triad, etc         */
+   int         comp;                        /* color degree -- complement     */
+   int         neg;                         /* color degree -- accent A       */
+   int         pos;                         /* color degree -- accent B       */
+   /*---(variant)------------------------*/
+   char        sat_name     [LEN_LABEL];    /* variant saturation name        */
+   char        val_name     [LEN_LABEL];    /* variant value name             */
+   float       sat;
+   float       val;
+   float       acc;
+   /*---(display)------------------------*/
+   char        names;
+   char        hexes;
+   /*---(done)---------------------------*/
+};
+extern tACCESSOR  myCOLOR;
 
 extern char  s_use;
 extern char  s_scale;
 extern int   s_cset;
-extern int   s_ccolor;
 extern int   s_tcolor;
 extern int   s_ncolor;
 extern int   s_cvariant;
@@ -136,22 +152,37 @@ extern int   s_nvariant;
 extern int   s_cnorming;
 extern int   s_nnorming;
 
+extern char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL];
+extern const char s_newRYB [12][1][LEN_LABEL];
 
 
 
 
+char        WHEEL_init              (void);
+char        WHEEL_set               (char *a_name);
 
 
+char        HARM_init               (void);
+char        HARM_set                (char *a_name);
+char        HARM_update             (void);
+char        HARM_seq                (int a_seq, char *a_name, char *a_abbr, int *a_base, int *a_comp, int *a_neg, int *a_pos);
 
+int         yCOLOR_deg_fix          (cint  a_deg);
 float       yCOLOR__min3         (float  a_one  , float  a_two, float  a_three);
 float       yCOLOR__max3         (float  a_one  , float  a_two, float  a_three);
 
 float       yCOLOR__unhex        (char   a_one  , char   a_two  );
 
 
+char        DRAW_dot            (char a_type, int a_deg);
 
 
 
+char        HARM_degree             (int  a_deg);
+char        VARS_init               (void);
+char        SATS_set                (char *a_name);
+char        VALS_set                (char *a_name);
+char        VARS_seq                (int a_seq, char *a_sat, char *a_val, char *a_abbr);
 
 
 

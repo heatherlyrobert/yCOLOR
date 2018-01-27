@@ -20,7 +20,7 @@ INC_MINE   =
 # utilities generated, separate from main program
 NAME_UTIL  = yCOLOR_make
 # libraries only for the utilities
-LIB_UTIL   = -lyX11 -lyCOLOR_debug -lyFONT_debug
+LIB_UTIL   = -lySTR_debug -lyX11_debug -lyVIKEYS_debug -lyCOLOR_debug -lyFONT_debug
 
 
 
