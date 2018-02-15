@@ -411,9 +411,13 @@ yCOLOR_init          (char  a_use)
       if (s_normings [i].abbr[0] == '\0') break;
       ++s_nnorming;
    }
-   HARM_init  ();
-   WHEEL_init ();
-   VARS_init  ();
+   HARM_init   ();
+   WHEEL_init  ();
+   VARS_init   ();
+   HARM_degree (0);
+   HARM_set    ("fcomp");
+   SATS_set    ("full");
+   VALS_set    ("vivid");
    /*---(complete)-----------------------*/
    return x_ncolor;
 }
@@ -824,6 +828,13 @@ yCOLOR_set           (cint a_slot, cfloat a_alpha)
 }
 
 char
+yCOLOR_set_clear     (cint a_slot)
+{
+   glClearColor   (s_palette [a_slot].red, s_palette [a_slot].grn, s_palette [a_slot].blu, 1.0);
+   return 0;
+}
+
+char
 yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
 {
    int         i           =    0;
@@ -835,9 +846,9 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
    /*---(header)-------------------------*/
    DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
    /*---(setup)--------------------------*/
-   yCOLOR_init     (YCOLOR_WHEEL );
-   yCOLOR_scale    (YCOLOR_PARABOLIC,  0.0,  50.0);
-   WHEEL_set       ("five_adj");
+   /*> yCOLOR_init     (YCOLOR_WHEEL );                                               <*/
+   /*> yCOLOR_scale    (YCOLOR_PARABOLIC,  0.0,  50.0);                               <*/
+   /*> WHEEL_set       ("five_adj");                                                  <*/
    /*---(passed values)------------------*/
    HARM_degree     (a_deg);
    DEBUG_YCOLOR   yLOG_value   ("degree"    , myCOLOR.degree);
@@ -905,5 +916,53 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
    DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
    return 0;
 }
+
+char
+yCOLOR__palette_fresh (void)
+{
+   yCOLOR_palette (666, "--", "--", "--");
+   return 0;
+}
+
+char
+yCOLOR_wheel         (cchar *a_name)
+{
+   WHEEL_set   (a_name);
+   yCOLOR__palette_fresh ();
+   return 0;
+}
+
+char
+yCOLOR_deg           (cint a_deg)
+{
+   HARM_degree (a_deg);
+   yCOLOR__palette_fresh ();
+   return 0;
+}
+
+char
+yCOLOR_harm          (cchar *a_name)
+{
+   HARM_set    (a_name);
+   yCOLOR__palette_fresh ();
+   return 0;
+}
+
+char
+yCOLOR_sat           (cchar *a_name)
+{
+   SATS_set    (a_name);
+   yCOLOR__palette_fresh ();
+   return 0;
+}
+
+char
+yCOLOR_val           (cchar *a_name)
+{
+   VALS_set    (a_name);
+   yCOLOR__palette_fresh ();
+   return 0;
+}
+
 
 

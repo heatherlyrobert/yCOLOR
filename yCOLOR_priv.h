@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.1b"
-#define     YCOLOR_VER_TXT   "creates a palette for program use"
+#define     YCOLOR_VER_NUM   "1.2a"
+#define     YCOLOR_VER_TXT   "ncurses colors moved from gyges and work decently already"
 
 
 
@@ -27,6 +27,7 @@
 /*---(opengl standard)-------------------*/
 #include    <GL/gl.h>        /* OPENGL  standard primary header               */
 #include    <GL/glx.h>       /* OPENGL  standard X11 integration              */
+#include    <ncurses.h>      /* NCURSES standard integration                  */
 /*---(heatherly made)--------------------*/
 #include    <yURG.h>         /* CUSTOM  heatherly urgent processing           */
 #include    <yLOG.h>         /* CUSTOM  heatherly program logging             */
@@ -46,6 +47,7 @@
 /*---(string length)------------------*/
 #define     LEN_RECD     2000
 #define     LEN_STR      200
+#define     LEN_DESC     100
 #define     LEN_LABEL    20
 #define     LEN_HEX      10
 
@@ -159,11 +161,9 @@ extern const char s_newRYB [12][1][LEN_LABEL];
 
 
 char        WHEEL_init              (void);
-char        WHEEL_set               (char *a_name);
 
 
 char        HARM_init               (void);
-char        HARM_set                (char *a_name);
 char        HARM_update             (void);
 char        HARM_seq                (int a_seq, char *a_name, char *a_abbr, int *a_base, int *a_comp, int *a_neg, int *a_pos);
 
@@ -176,14 +176,16 @@ float       yCOLOR__unhex        (char   a_one  , char   a_two  );
 
 char        DRAW_dot            (char a_type, int a_deg);
 
+char        yCOLOR__palette_fresh (void);
+
+char        WHEEL_set            (cchar *a_name);
+char        HARM_degree          (cint   a_deg );
+char        HARM_set             (cchar *a_name);
+char        SATS_set             (cchar *a_name);
+char        VALS_set             (cchar *a_name);
 
 
-char        HARM_degree             (int  a_deg);
-char        VARS_init               (void);
-char        SATS_set                (char *a_name);
-char        VALS_set                (char *a_name);
 char        VARS_seq                (int a_seq, char *a_sat, char *a_val, char *a_abbr);
-
 
 
 

@@ -58,7 +58,7 @@ WHEEL__find             (char *a_name)
 }
 
 char
-WHEEL_set               (char *a_name)
+WHEEL_set               (cchar *a_name)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
@@ -120,7 +120,7 @@ WHEEL_init              (void)
       if (s_wheels [i].slot <  0)      break;
       ++s_nwheel;
    }
-   WHEEL_set ("five_adj");
+   /*> WHEEL_set    ("five_adj");                                                     <*/
    return 0;
 }
 

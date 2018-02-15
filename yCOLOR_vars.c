@@ -159,13 +159,12 @@ SATS__find              (char *a_name)
       n = i;
       break;
    }
-   /*> printf ("SATS_set asked %s, was %s, found %d\n", a_name, myCOLOR.sat_name, n);   <*/
    --rce;  if (n < 0)   return rce;
    return n;
 }
 
 char
-SATS_set                (char *a_name)
+SATS_set                (cchar *a_name)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
@@ -174,7 +173,6 @@ SATS_set                (char *a_name)
    if      (a_name == NULL)         n = SATS__find ("--");
    else if (strlen (a_name) == 1)   n = SATS__abbr (a_name [0]);
    else                             n = SATS__find (a_name);
-   /*> printf ("SATS_set asked %s, was %s, found %d\n", a_name, myCOLOR.sat_name, n);   <*/
    if (n < 0)  return n;
    /*---(set color degree)---------------*/
    myCOLOR.sat    = s_sats [n].sat;
@@ -223,13 +221,12 @@ VALS__find              (char *a_name)
       n = i;
       break;
    }
-   /*> printf ("VALS_set asked %s, was %s, found %d\n", a_name, myCOLOR.val_name, n);   <*/
    --rce;  if (n < 0)   return rce;
    return n;
 }
 
 char
-VALS_set                (char *a_name)
+VALS_set                (cchar *a_name)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
@@ -238,7 +235,6 @@ VALS_set                (char *a_name)
    if      (a_name == NULL)         n = VALS__find ("--");
    else if (strlen (a_name) == 1)   n = VALS__abbr (a_name [0]);
    else                             n = VALS__find (a_name);
-   /*> printf ("HARM_set asked %s, was %s, found %d\n", a_name, myCOLOR.harmony, n);      <*/
    if (n < 0)  return n;
    /*---(set color degree)---------------*/
    myCOLOR.val    = s_vals [n].val;
@@ -263,8 +259,6 @@ VARS_init               (void)
       if (s_sats [i].abbr ==  0)      break;
       ++s_nsats;
    }
-   /*> SATS_set  ("full");                                                            <*/
-   /*> VALS_set  ("vivid");                                                           <*/
    return 0;
 }
 
@@ -317,10 +311,11 @@ yCOLOR_accent        (       /* PURPOSE = apply a color variation             */
       return  0;
       break;
    case '!' : /* max/palest    */
-      x_sat   = x_sat - (x_sat * (x_acc * 1.75));
-      x_val   = x_val + (x_val * (x_acc * 1.00));
+      x_sat   = x_sat - (x_sat * (x_acc * 1.25));
+      x_val   = x_val + (x_val * (x_acc * 1.50));
+      break;
    case '^' : /* lightest      */
-      x_sat   = x_sat - (x_sat * (x_acc * 1.00));
+      x_sat   = x_sat - (x_sat * (x_acc * 0.95));
       x_val   = x_val + (x_val * (x_acc * 0.95));
       break;
    case '+' : /* lighter       */
@@ -335,13 +330,13 @@ yCOLOR_accent        (       /* PURPOSE = apply a color variation             */
       x_sat   = x_sat;
       x_val   = x_val - (x_val * (x_acc * 0.95));
       break;
-   case '#' : /* text          */
-      x_sat   = x_sat + (x_sat * (x_acc * 1.00));
-      x_val   = x_val - (x_val * (x_acc * 1.50));
+   case '#' : /* deep          */
+      x_sat   = x_sat + (x_sat * (x_acc * 0.75));
+      x_val   = x_val - (x_val * (x_acc * 1.25));
       break;
    case '@' : /* min/black     */
-      x_sat   = x_sat + (x_sat * (x_acc * 1.75));
-      x_val   = x_val - (x_val * (x_acc * 1.50));
+      x_sat   = x_sat + (x_sat * (x_acc * 1.40));
+      x_val   = x_val - (x_val * (x_acc * 1.75));
       break;
    default  :
       return rce;

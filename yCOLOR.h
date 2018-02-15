@@ -179,6 +179,8 @@
 #define     YCOLOR_WHITE     'w'     /* background white                      */
 #define     YCOLOR_MAX       'x'     /* background white with max color       */
 
+#define     YCOLOR_CLEAR     -1
+
 #define     YCOLOR_BAS        0
 #define     YCOLOR_BAS_MAX    1
 #define     YCOLOR_BAS_ACC    2
@@ -186,7 +188,7 @@
 #define     YCOLOR_BAS_MED    4
 #define     YCOLOR_BAS_DRK    5
 #define     YCOLOR_BAS_MUT    6
-#define     YCOLOR_BAS_TXT    7
+#define     YCOLOR_BAS_MOR    7
 #define     YCOLOR_BAS_MIN    8
 
 #define     YCOLOR_COM       10
@@ -196,7 +198,7 @@
 #define     YCOLOR_COM_MED   14
 #define     YCOLOR_COM_DRK   15
 #define     YCOLOR_COM_MUT   16
-#define     YCOLOR_COM_TXT   17
+#define     YCOLOR_COM_MOR   17
 #define     YCOLOR_COM_MIN   18
 
 #define     YCOLOR_NEG       20
@@ -206,7 +208,7 @@
 #define     YCOLOR_NEG_MED   24
 #define     YCOLOR_NEG_DRK   25
 #define     YCOLOR_NEG_MUT   26
-#define     YCOLOR_NEG_TXT   27
+#define     YCOLOR_NEG_MOR   27
 #define     YCOLOR_NEG_MIN   28
 
 #define     YCOLOR_POS       30
@@ -216,7 +218,7 @@
 #define     YCOLOR_POS_MED   34
 #define     YCOLOR_POS_DRK   35
 #define     YCOLOR_POS_MUT   36
-#define     YCOLOR_POS_TXT   37
+#define     YCOLOR_POS_MOR   37
 #define     YCOLOR_POS_MIN   38
 
 #define     YCOLOR_GRY       40
@@ -226,8 +228,19 @@
 #define     YCOLOR_GRY_MED   44
 #define     YCOLOR_GRY_DRK   45
 #define     YCOLOR_GRY_MUT   46
-#define     YCOLOR_GRY_TXT   47
+#define     YCOLOR_GRY_MOR   47
 #define     YCOLOR_GRY_MIN   48
+
+#define     YCOLOR_MAX        1
+#define     YCOLOR_ACC        2
+#define     YCOLOR_LIG        3
+#define     YCOLOR_MED        4
+#define     YCOLOR_DRK        5
+#define     YCOLOR_MUT        6
+#define     YCOLOR_MOR        7
+#define     YCOLOR_MIN        8
+
+#define     YCOLOR_BLK_WHI
 
 typedef     const       char        cchar;
 typedef     const       int         cint;
@@ -235,8 +248,14 @@ typedef     const       float       cfloat;
 typedef     const       double      cdouble;
 
 /*---(program color scheme)-----------*/
-char        yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val);
-char        yCOLOR_set           (cint a_slot, cfloat a_alpha);
+char        yCOLOR_palette       (cint   a_deg  , cchar *a_harm, cchar *a_sat, cchar *a_val);
+char        yCOLOR_set           (cint   a_slot , cfloat a_alpha);
+char        yCOLOR_set_clear     (cint   a_slot);
+char        yCOLOR_wheel         (cchar *a_name);
+char        yCOLOR_deg           (cint   a_deg );
+char        yCOLOR_harm          (cchar *a_name);
+char        yCOLOR_sat           (cchar *a_name);
+char        yCOLOR_val           (cchar *a_name);
 /*---(utility)------------------------*/
 char*       yCOLOR_version       (void);
 char        yCOLOR_init          (char    a_use);
@@ -284,6 +303,11 @@ char        yCOLOR_diff_fore     (void);
 char        yCOLOR_diff_back     (void);
 
 
+char        yCOLOR_curs_init          (void);
+int         yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_fg, cchar a_bg, cchar a_bold);
+int         yCOLOR_curs_value         (cchar *a_terse);
+char        yCOLOR_curs               (cchar *a_terse);
+char        yCOLOR_cursa              (cchar  a_abbr);
 
 #define       LEN_TEXT  2000
 char          yCOLOR_answer [ LEN_TEXT ];

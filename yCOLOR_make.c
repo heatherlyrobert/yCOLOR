@@ -74,11 +74,11 @@ MAP_driver           (char a_dir)
    /*---(get the size)-------------------*/
    switch (a_dir) {
    case 'R' : case 'r' :
-      x_map   = &s_rowmap;
+      x_map   = &g_ymap;
       x_max   = 500;
       break;
    case 'C' : case 'c' :
-      x_map   = &s_colmap;
+      x_map   = &g_xmap;
       x_max   = 500;
       break;
    }
@@ -212,8 +212,7 @@ static void      o___OPENGL__________________o (void) {;}
 char         /*-> establish drawing settings ---------[ shoot  [gz.640.001.00]*/ /*-[00.0000.011.!]-*/ /*-[--.---.---.--]-*/
 DRAW_init          (void)
 {
-   yVIKEYS_view_init     ("yCOLOR_make", YCOLOR_VER_NUM, 500, 500, 500);
-   yVIKEYS_layout_min    ();
+   yVIKEYS_cmds_direct   (":layout ycolor");
    yVIKEYS_view_moderate (YVIKEYS_MAIN    , YVIKEYS_FLAT, YVIKEYS_MIDCEN, YCOLOR_GRY_MIN, DRAW_view_main );
    yVIKEYS_view_moderate (YVIKEYS_ALT     , YVIKEYS_FLAT, YVIKEYS_MIDCEN, YCOLOR_GRY_MIN, DRAW_view_alt  );
    yVIKEYS_view_simple   (YVIKEYS_PROGRESS, YCOLOR_GRY_MIN, DRAW_view_prog );
@@ -683,6 +682,11 @@ DRAW_box            (cint a_slot, char a_size, int a_xpos, int a_ypos)
       glVertex3f  ( a_xpos + x_wide, a_ypos         , x_zpos);
       glVertex3f  ( a_xpos         , a_ypos         , x_zpos);
    } glEnd   ();
+   /*---(example font)-------------------*/
+   if (strchr ("scb", a_size) == NULL) {
+      ;;
+   }
+   /*---(complete)-----------------------*/
    return 0;
 }
 
@@ -759,28 +763,36 @@ DRAW_layout         (void)
       DRAW_box (YCOLOR_COM_DRK, 's', 10,  0);
       DRAW_box (YCOLOR_COM_LIG, 's', 11,  1);
       DRAW_box (YCOLOR_COM_ACC, 's', 11,  0);
-      DRAW_box (YCOLOR_COM_TXT, 's',  9,  2);
+      DRAW_box (YCOLOR_COM_MOR, 's',  9,  2);
+      DRAW_box (YCOLOR_COM_MIN, 's',  9,  1);
+      DRAW_box (YCOLOR_COM_MAX, 's', 11,  2);
       /*---(upper-right)-----------------*/
       DRAW_box (YCOLOR_NEG_MED, UPPER_RIGHT,  8,  6);
       DRAW_box (YCOLOR_NEG_MUT, 's', 11, 11);
       DRAW_box (YCOLOR_NEG_DRK, 's', 11, 10);
       DRAW_box (YCOLOR_NEG_LIG, 's', 11,  9);
       DRAW_box (YCOLOR_NEG_ACC, 's', 11,  8);
-      DRAW_box (YCOLOR_NEG_TXT, 's', 10, 10);
+      DRAW_box (YCOLOR_NEG_MOR, 's', 10, 10);
+      DRAW_box (YCOLOR_NEG_MIN, 's', 10, 11);
+      DRAW_box (YCOLOR_NEG_MAX, 's', 10,  8);
       /*---(lower-left)------------------*/
       DRAW_box (YCOLOR_POS_MED, LOWER_LEFT ,  0,  0);
       DRAW_box (YCOLOR_POS_MUT, 's',  0,  0);
       DRAW_box (YCOLOR_POS_DRK, 's',  1,  0);
       DRAW_box (YCOLOR_POS_LIG, 's',  2,  0);
       DRAW_box (YCOLOR_POS_ACC, 's',  3,  0);
-      DRAW_box (YCOLOR_POS_TXT, 's',  2,  1);
+      DRAW_box (YCOLOR_POS_MOR, 's',  1,  1);
+      DRAW_box (YCOLOR_POS_MIN, 's',  0,  1);
+      DRAW_box (YCOLOR_POS_MAX, 's',  3,  1);
       /*---(upper-left)------------------*/
       DRAW_box (YCOLOR_BAS_MED, UPPER_LEFT ,  0,  3);
-      DRAW_box (YCOLOR_BAS_MUT, 'b',  0,  6);
-      DRAW_box (YCOLOR_BAS_DRK, 'b',  0,  8);
-      DRAW_box (YCOLOR_BAS_LIG, 'b',  2, 10);
+      DRAW_box (YCOLOR_BAS_MAX, 's',  5,  9);
       DRAW_box (YCOLOR_BAS_ACC, 'b',  4, 10);
-      DRAW_box (YCOLOR_BAS_TXT, 's',  2,  9);
+      DRAW_box (YCOLOR_BAS_LIG, 'b',  2, 10);
+      DRAW_box (YCOLOR_BAS_DRK, 'b',  0,  8);
+      DRAW_box (YCOLOR_BAS_MUT, 'b',  0,  6);
+      DRAW_box (YCOLOR_BAS_MOR, 's',  2,  7);
+      DRAW_box (YCOLOR_BAS_MIN, 's',  2,  8);
    } glPopMatrix();
    return 0;
 }
@@ -1112,7 +1124,7 @@ PROG_event    (void)
    char        s           [LEN_LABEL];
    char        t           [5] = "";
    int         c           =    0;
-   char        x_ch        =  ' ';
+   uchar       x_key       =  ' ';
    char        rc          =    0;;
    int         x_loop      =    0;
    /*---(for timer)----------------------*/
@@ -1122,7 +1134,7 @@ PROG_event    (void)
    DEBUG_TOPS   yLOG_enter    (__FUNCTION__);
    /*---(event loop)---------------------*/
    while (1) {
-      x_ch = -1;
+      x_key = 0;
       if (XPending(DISP)) {
          XNextEvent(DISP, &EVNT);
          switch(EVNT.type) {
@@ -1130,12 +1142,14 @@ PROG_event    (void)
             key_event  = (XKeyEvent *) &EVNT;
             c = XLookupString((XKeyEvent *) &EVNT, t, 5, NULL, NULL);
             if (c < 1) break;
-            x_ch = t [0];
+            x_key = t [0];
             break;
          }
       }
-      x_ch = yVIKEYS_main_input  (RUN_USER, x_ch);
-      rc   = yVIKEYS_main_handle (x_ch);
+      if (x_key != 0) {
+         x_key = yVIKEYS_main_input  (RUN_USER, x_key);
+         rc   = yVIKEYS_main_handle (x_key);
+      }
       if (yVIKEYS_quit ())  break;
       ++x_loop;
       if ((x_loop % 20) == 0)  yVIKEYS_view_all (1.0);
@@ -1331,22 +1345,16 @@ char         /*-> tbd --------------------------------[ shoot  [gz.210.001.02]*/
 PROG_init          ()
 {
    /*---(vikeys)-------------------------*/
-   yVIKEYS_mode_init   ();
-   yVIKEYS_mode_enter  (MODE_MAP);
-   yVIKEYS_cmds_init   ();
-   yVIKEYS_cmds_add    ('v', "wheel"       , ""    , "s"    , WHEEL_set                  , "" );
-   yVIKEYS_cmds_add    ('v', "degree"      , ""    , "i"    , HARM_degree                , "" );
-   yVIKEYS_cmds_add    ('v', "harmony"     , ""    , "s"    , HARM_set                   , "" );
-   yVIKEYS_cmds_add    ('v', "val"         , ""    , "s"    , VALS_set                   , "" );
-   yVIKEYS_cmds_add    ('v', "sat"         , ""    , "s"    , SATS_set                   , "" );
-   yVIKEYS_cmds_add    ('v', "labels"      , ""    , "s"    , SET_names                  , "" );
+   yVIKEYS_init         ();
+   yVIKEYS_cmds_add     ('v', "labels"      , ""    , "s"    , SET_names                  , "" );
+   yVIKEYS_view_config  ("yCOLOR_make", YCOLOR_VER_NUM, YVIKEYS_OPENGL, 500, 500, 500);
+   yVIKEYS_cmds_direct  (":palette 0 fcomp full vivid");
    /*---(color)--------------------------*/
    /*> yCOLOR_init     (YCOLOR_REDBLU);                                               <*/
-   yCOLOR_init     (YCOLOR_WHEEL );
-   yCOLOR_scale    (YCOLOR_PARABOLIC,  0.0,  50.0);
-   myCOLOR.degree     = 0;
-   s_cset             = 1;
-   yCOLOR_palette  (myCOLOR.degree, "--", myCOLOR.sat_name, myCOLOR.val_name);
+   /*> yCOLOR_init     (YCOLOR_WHEEL );                                               <*/
+   /*> yCOLOR_scale    (YCOLOR_PARABOLIC,  0.0,  50.0);                               <*/
+   /*> myCOLOR.degree     = 0;                                                        <*/
+   /*> s_cset             = 1;                                                        <*/
    /*---(complete)-----------------------*/
    return 0;
 }
@@ -1366,13 +1374,13 @@ PROG_args          (int argc, char *argv[])
          if (argc > i + 1)  myCOLOR.degree  = atoi (argv [++i]);
       }
       else if (strncmp(a, "--harmony"           , 20) == 0) {
-         if (argc > i + 1)  HARM_set (argv [++i]);
+         if (argc > i + 1)  HARM_set    (argv [++i]);
       }
       else if (strncmp(a, "--sat"               , 20) == 0) {
-         if (argc > i + 1)  SATS_set (argv [++i]);
+         if (argc > i + 1)  SATS_set    (argv [++i]);
       }
       else if (strncmp(a, "--val"               , 20) == 0) {
-         if (argc > i + 1)  VALS_set (argv [++i]);
+         if (argc > i + 1)  VALS_set    (argv [++i]);
       }
       else {
          /*> printf("\noption [%s] not understood\n", a);                             <*/
@@ -1389,7 +1397,7 @@ PROG_args          (int argc, char *argv[])
 char         /*-> tbd --------------------------------[ shoot  [gz.210.001.02]*/ /*-[00.0000.011.!]-*/ /*-[--.---.---.--]-*/
 PROG_begin         ()
 {
-   yVIKEYS_map_init (YVIKEYS_RIGHT, MAP_col, MAP_row);
+   /*> yVIKEYS_map_config (YVIKEYS_RIGHT, MAP_col, MAP_row, NULL);                    <*/
    return 0;
 }
 
@@ -1476,7 +1484,7 @@ main               (int argc, char *argv[])
    while (!yVIKEYS_quit ()) {
       rc = PROG_event    ();
    }
-   yVIKEYS_view_wrap ();
+   yVIKEYS_wrap ();
    /*---(complete)-----------------------*/
    return rc;
 }

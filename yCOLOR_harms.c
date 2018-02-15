@@ -19,16 +19,18 @@ struct cHARMONY {
 tHARMONY s_harmony  [MAX_HARMONY] =
 {
    /*---   abbr     ---desc-----------------------   comp   neg   pos */
-   { 'M', "mono"  , "monochromatic"                ,    0,    0,    0 },
+   { 'm', "mono"  , "monochromatic"                ,    0,    0,    0 },
    /*---(complements)--------*/
-   { 'C', "comp"  , "complement"                   , -180,    0,    0 },
-   { 'D', "scomp" , "split/double complement"      ,    0, -150, +150 },
-   { 'F', "fcomp" , "full complement"              , -180, -150, +150 },
-   { 'W', "wcomp" , "wide complement"              , -180, -120, +120 },
+   { 'c', "comp"  , "complement"                   , -180,    0,    0 },
+   { 's', "scomp" , "split complement"             ,    0, -150, +150 },
+   { 'd', "dcomp" , "double complement"            , -180,  -30, +150 },
+   { 'D', "rcomp" , "double complement (reversed)" , -180, -150,  +30 },
+   { 'f', "fcomp" , "full complement"              , -180, -150, +150 },
+   { 'w', "wcomp" , "wide complement"              , -180, -120, +120 },
    /*---(triangles)----------*/
-   { 'A', "ana"   , "analogous"                    ,    0,  -30,  +30 },
-   { 'B', "anac"  , "analogous (comp)"             , -180,  -30,  +30 },
-   { ' ', "wana"  , "wide analogous"               ,    0,  -60,  +60 },
+   { 'a', "ana"   , "analogous"                    ,    0,  -30,  +30 },
+   { 'A', "anac"  , "analogous (comp)"             , -180,  -30,  +30 },
+   { '-', "wana"  , "wide analogous"               ,    0,  -60,  +60 },
    { 'Y', "wanac" , "wide analogous (comp)"        , -180,  -60,  +60 },
    { '-', "rana"  , "analogous right"              ,  +30,  -30,  +60 },
    { '-', "lana"  , "analogous left"               ,  -30,  -60,  +30 },
@@ -36,22 +38,22 @@ tHARMONY s_harmony  [MAX_HARMONY] =
    { 'T', "tri"   , "triangle"                     ,    0, -120, +120 },
    /*---(squares)------------*/
    { 'S', "sqr"   , "square"                       , -180,  -90,  +90 },
-   { 'R', "rect"  , "rectangle"                    , -180,  -60, +120 },
-   { 'Z', "mrect" , "mirror rectangle"             , -180, -120,  +60 },
-   { '-', "pole"  , "narrow rectangle"             , -180,  -30, +150 },
-   { '-', "mpole" , "mirror narrow rectangle"      , -180, -150,  +30 },
+   { 'r', "rect"  , "rectangle"                    , -180,  -60, +120 },
+   { 'R', "mrect" , "rectangle (reversed)"         , -180, -120,  +60 },
    /*---(done)---------------*/
    {  0 , ""      , ""                             ,    0,    0,    0 },
 };
 int      s_nharmony    = 0;
 
+
 char
 HARM_degree          (int  a_deg)
 {
    /*> printf ("deg        = %d\n", a_deg);                                           <*/
-   myCOLOR.degree = yCOLOR_deg_fix (a_deg);
+   if (a_deg != 666)   myCOLOR.degree = yCOLOR_deg_fix (a_deg);
    HARM_update ();
    /*> printf ("myCOLOR.degree = %d\n", myCOLOR.degree);                              <*/
+   /*---(complete)-----------------------*/
    return 0;
 }
 
@@ -101,7 +103,7 @@ HARM__find              (char *a_name)
 }
 
 char
-HARM_set                (char *a_name)
+HARM_set                (cchar *a_name)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
@@ -110,7 +112,6 @@ HARM_set                (char *a_name)
    if      (a_name == NULL)         n = HARM__find ("--");
    else if (strlen (a_name) == 1)   n = HARM__abbr (a_name [0]);
    else                             n = HARM__find (a_name);
-   /*> printf ("HARM_set asked %s, was %s, found %d\n", a_name, myCOLOR.harmony, n);      <*/
    if (n < 0)  return n;
    /*---(set color degree)---------------*/
    myCOLOR.comp   = yCOLOR_deg_fix (myCOLOR.degree + s_harmony [n].comp);
