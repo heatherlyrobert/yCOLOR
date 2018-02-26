@@ -157,7 +157,7 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add ("input"    , ' ', "input sub-mode"                                     , 'k' , 'b' , 'b');
    yCOLOR_curs_add ("replace"  , ' ', "replace sub-mode"                                   , 'k' , 'm' , 'b');
    yCOLOR_curs_add ("wander"   , ' ', "wander sub-mode"                                    , 'k' , 'r' , 'b');
-   yCOLOR_curs_add ("select"   , ' ', "source mode text selection"                         , 'g' , 'k' , 'b');
+   yCOLOR_curs_add ("select"   , ' ', "source mode text selection"                         , 'k' , 'w' , 'b');
    /*---(selection)------*/
    yCOLOR_curs_add ("curr"     , ' ', "current cell"                                       , 'k' , 'y' , 'b');
    yCOLOR_curs_add ("root"     , ' ', "root of visual selection"                           , 'y' , 'k' , 'y');

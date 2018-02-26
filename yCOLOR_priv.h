@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.2b"
-#define     YCOLOR_VER_TXT   "ncurses colors cleaned up and look good in gyges"
+#define     YCOLOR_VER_NUM   "1.2c"
+#define     YCOLOR_VER_TXT   "ncurses select color changed to show better"
 
 
 
