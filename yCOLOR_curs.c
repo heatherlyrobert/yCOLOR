@@ -154,7 +154,7 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add ("map"      , ' ', "map mode (2d review of sheet/cell collection"       , 'k' , 'y' , 'b');
    yCOLOR_curs_add ("source"   , ' ', "source mode (single cell review)"                   , 'k' , 'g' , 'b');
    yCOLOR_curs_add ("textreg"  , ' ', "text register sub-mode"                             , 'k' , 'c' , 'b');
-   yCOLOR_curs_add ("input"    , ' ', "input sub-mode"                                     , 'k' , 'b' , 'b');
+   yCOLOR_curs_add ("input"    , ' ', "input sub-mode"                                     , 'w' , 'b' , 'b');
    yCOLOR_curs_add ("replace"  , ' ', "replace sub-mode"                                   , 'k' , 'm' , 'b');
    yCOLOR_curs_add ("wander"   , ' ', "wander sub-mode"                                    , 'k' , 'r' , 'b');
    yCOLOR_curs_add ("select"   , ' ', "source mode text selection"                         , 'k' , 'w' , 'b');

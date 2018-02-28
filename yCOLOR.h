@@ -242,6 +242,14 @@
 
 #define     YCOLOR_BLK_WHI
 
+#define     YCOLOR_WARNING   50
+#define     YCOLOR_SOURCE    51
+#define     YCOLOR_SELECT    52
+#define     YCOLOR_TEXTREG   53
+#define     YCOLOR_REPLACE   54
+#define     YCOLOR_INPUT     55
+
+
 typedef     const       char        cchar;
 typedef     const       int         cint;
 typedef     const       float       cfloat;

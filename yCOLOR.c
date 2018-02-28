@@ -913,6 +913,36 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
       DEBUG_YCOLOR   yLOG_info    ("@"         , x_hex);
       yCOLOR__palette_save ((i * 10) + 8, x_hex);
    }
+   /*---(warning)------------------------*/
+   yCOLOR_deg2hex (  0, x_orig);
+   yCOLOR_variant       ("--", "--", x_orig, x_base);
+   DEBUG_YCOLOR   yLOG_info    ("bad"      , x_base);
+   yCOLOR__palette_save (YCOLOR_WARNING, x_base);
+   /*---(source)-------------------------*/
+   yCOLOR_deg2hex (180, x_orig);
+   yCOLOR_variant       ("--", "--", x_orig, x_base);
+   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
+   yCOLOR__palette_save (YCOLOR_SOURCE , x_base);
+   /*---(select)-------------------------*/
+   yCOLOR_variant       ("--", "--", "#DDDDDD", x_base);
+   DEBUG_YCOLOR   yLOG_info    ("bad"       , x_base);
+   yCOLOR__palette_save (YCOLOR_SELECT , x_base);
+   /*---(textreg)------------------------*/
+   yCOLOR_deg2hex (230, x_orig);
+   yCOLOR_variant       ("--", "--", x_orig, x_base);
+   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
+   yCOLOR__palette_save (YCOLOR_TEXTREG, x_base);
+   /*---(replace)------------------------*/
+   yCOLOR_deg2hex (330, x_orig);
+   yCOLOR_variant       ("--", "--", x_orig, x_base);
+   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
+   yCOLOR__palette_save (YCOLOR_REPLACE, x_base);
+   /*---(input)--------------------------*/
+   yCOLOR_deg2hex (270, x_orig);
+   yCOLOR_variant       ("--", "--", x_orig, x_base);
+   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
+   yCOLOR__palette_save (YCOLOR_INPUT  , x_base);
+   /*---(complete)-----------------------*/
    DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
    return 0;
 }

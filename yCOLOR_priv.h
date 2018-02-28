@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.2c"
-#define     YCOLOR_VER_TXT   "ncurses select color changed to show better"
+#define     YCOLOR_VER_NUM   "1.2d"
+#define     YCOLOR_VER_TXT   "updated ncurses input color to show font better"
 
 
 
@@ -130,6 +130,11 @@ struct cACCESSOR {
    int         comp;                        /* color degree -- complement     */
    int         neg;                         /* color degree -- accent A       */
    int         pos;                         /* color degree -- accent B       */
+   /*---(specific colors)----------------*/
+   int         reg;
+   int         repl;
+   int         inpt;
+   int         bad;
    /*---(variant)------------------------*/
    char        sat_name     [LEN_LABEL];    /* variant saturation name        */
    char        val_name     [LEN_LABEL];    /* variant value name             */
