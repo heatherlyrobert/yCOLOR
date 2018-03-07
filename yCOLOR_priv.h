@@ -10,8 +10,8 @@
 
 
 /* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.2d"
-#define     YCOLOR_VER_TXT   "updated ncurses input color to show font better"
+#define     YCOLOR_VER_NUM   "1.2e"
+#define     YCOLOR_VER_TXT   "updated ncurses to add row/col header colors"
 
 
 

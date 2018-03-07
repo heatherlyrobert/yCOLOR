@@ -140,30 +140,34 @@ yCOLOR_curs_init          (void)
    /*---(globals)------------------------*/
    s_ncurse = 0;
    /*---(window parts)-------------------*/
-   yCOLOR_curs_add ("title"    , ' ', "normal title color"                                 , 'k' , 'k' , 'y');
-   yCOLOR_curs_add ("version"  , ' ', "version number color"                               , 'k' , 'k' , 'y');
-   yCOLOR_curs_add ("status"   , ' ', "normal status color"                                , 'k' , 'y' , '-');
-   yCOLOR_curs_add ("command"  , ' ', "window message"                                     , 'y' , ' ' , '-');
-   yCOLOR_curs_add ("keys"     , ' ', "window keystoke display"                            , 'r' , ' ' , 'y');
-   yCOLOR_curs_add ("menu"     , ' ', "menus and menu entries "                            , 'k' , 'y' , 'b');
+   yCOLOR_curs_add ("title"     , ' ', "normal title color"                                 , 'k' , 'k' , 'y');
+   yCOLOR_curs_add ("version"   , ' ', "version number color"                               , 'k' , 'k' , 'y');
+   yCOLOR_curs_add ("status"    , ' ', "normal status color"                                , 'k' , 'y' , '-');
+   yCOLOR_curs_add ("command"   , ' ', "window message"                                     , 'y' , ' ' , '-');
+   yCOLOR_curs_add ("keys"      , ' ', "window keystoke display"                            , 'r' , ' ' , 'y');
+   yCOLOR_curs_add ("menu"      , ' ', "menus and menu entries "                            , 'k' , 'y' , 'b');
    /*---(trouble)------------------------*/
-   yCOLOR_curs_add ("warn"     , 'w', "cell warning"                                       , 'w' , 'r' , 'y');
-   yCOLOR_curs_add ("error"    , 'E', "cell error"                                         , 'w' , 'r' , 'y');
-   yCOLOR_curs_add ("found"    , ' ', "cell found in most recent search"                   , 'g' , 'w' , 'y');
+   yCOLOR_curs_add ("warn"      , 'w', "cell warning"                                       , 'w' , 'r' , 'y');
+   yCOLOR_curs_add ("error"     , 'E', "cell error"                                         , 'w' , 'r' , 'y');
+   yCOLOR_curs_add ("found"     , ' ', "cell found in most recent search"                   , 'g' , 'w' , 'y');
    /*---(formula modes)------------------*/
-   yCOLOR_curs_add ("map"      , ' ', "map mode (2d review of sheet/cell collection"       , 'k' , 'y' , 'b');
-   yCOLOR_curs_add ("source"   , ' ', "source mode (single cell review)"                   , 'k' , 'g' , 'b');
-   yCOLOR_curs_add ("textreg"  , ' ', "text register sub-mode"                             , 'k' , 'c' , 'b');
-   yCOLOR_curs_add ("input"    , ' ', "input sub-mode"                                     , 'w' , 'b' , 'b');
-   yCOLOR_curs_add ("replace"  , ' ', "replace sub-mode"                                   , 'k' , 'm' , 'b');
-   yCOLOR_curs_add ("wander"   , ' ', "wander sub-mode"                                    , 'k' , 'r' , 'b');
-   yCOLOR_curs_add ("select"   , ' ', "source mode text selection"                         , 'k' , 'w' , 'b');
+   yCOLOR_curs_add ("map"       , ' ', "map mode (2d review of sheet/cell collection"       , 'k' , 'y' , 'b');
+   yCOLOR_curs_add ("source"    , ' ', "source mode (single cell review)"                   , 'k' , 'g' , 'b');
+   yCOLOR_curs_add ("textreg"   , ' ', "text register sub-mode"                             , 'k' , 'c' , 'b');
+   yCOLOR_curs_add ("input"     , ' ', "input sub-mode"                                     , 'w' , 'b' , 'b');
+   yCOLOR_curs_add ("replace"   , ' ', "replace sub-mode"                                   , 'k' , 'm' , 'b');
+   yCOLOR_curs_add ("wander"    , ' ', "wander sub-mode"                                    , 'k' , 'r' , 'b');
+   yCOLOR_curs_add ("select"    , ' ', "source mode text selection"                         , 'k' , 'w' , 'b');
    /*---(selection)------*/
-   yCOLOR_curs_add ("curr"     , ' ', "current cell"                                       , 'k' , 'y' , 'b');
-   yCOLOR_curs_add ("root"     , ' ', "root of visual selection"                           , 'y' , 'k' , 'y');
-   yCOLOR_curs_add ("visu"     , ' ', "selected, not root/curr"                            , 'y' , 'y' , 'y');
-   yCOLOR_curs_add ("mark"     , ' ', "location marks"                                     , 'w' , 'c' , 'y');
-   yCOLOR_curs_add ("srch"     , ' ', "found by search"                                    , 'k' , 'r' , 'y');
+   yCOLOR_curs_add ("curr"      , ' ', "current cell"                                       , 'k' , 'y' , 'b');
+   yCOLOR_curs_add ("root"      , ' ', "root of visual selection"                           , 'y' , 'k' , 'y');
+   yCOLOR_curs_add ("visu"      , ' ', "selected, not root/curr"                            , 'y' , 'y' , 'y');
+   yCOLOR_curs_add ("mark"      , ' ', "location marks"                                     , 'w' , 'c' , 'y');
+   yCOLOR_curs_add ("srch"      , ' ', "found by search"                                    , 'k' , 'r' , 'y');
+   yCOLOR_curs_add ("h_current" , ' ', "row/col header current"                             , 'k' , 'y' , '-');
+   yCOLOR_curs_add ("h_locked"  , ' ', "row/col header locked in place"                     , 'k' , 'r' , '-');
+   yCOLOR_curs_add ("h_used"    , ' ', "row/col header with used cells"                     , 'y' , 'k' , '-');
+   yCOLOR_curs_add ("h_normal"  , ' ', "row/col header normal"                              , 'y' , ' ' , '-');
    /*---(complete)-----------------------*/
    return 0;
 }
