@@ -1,17 +1,57 @@
 /*============================----beg-of-source---============================*/
-#include "yCOLOR.h"
-
-
-
 /*===[[ HEADER GUARD ]]=======================================================*/
 #ifndef     yCOLOR_PRIV
 #define     yCOLOR_PRIV    loaded
 
+#include "yCOLOR.h"
 
 
-/* rapidly evolving version number to aid with visual change confirmation     */
-#define     YCOLOR_VER_NUM   "1.2e"
-#define     YCOLOR_VER_TXT   "updated ncurses to add row/col header colors"
+/*===[[ START HDOC ]]=========================================================*/
+/*---[[ HEADER ]]-------------------------------------------------*
+
+ *   niche         : graphics
+ *   application   : aesthetics
+ *   module        : yPALETTE
+ *   purpose       : provide aesthetic color palettes and transformations
+ *   base_system   : gnu/linux
+ *   lang_name     : c (primarily ansi-c, but with some C89 extensions)
+ *   created       : 2009-09
+ *   author        : the_heatherlys
+ *   dependencies  : none
+ *
+ */
+
+
+
+/*===[[ BEG_HEADER ]]=========================================================*/
+/*345678901-12345678901-12345678901-12345678901-12345678901-12345678901-12345678901-12345678901-*/
+
+/*===[[ ONE_LINERS ]]=========================================================*/
+
+#define     P_FOCUS     "RS (run-time support)"
+#define     P_NICHE     "as (aesthetics)"
+#define     P_PURPOSE   "predictably aesthetic color palettes and transformations"
+
+#define     P_NAMESAKE  "isis-chrysopteros (golden-winged)
+#define     P_HERITAGE  "isis is the goddess of rainbow, color, and messenger of zeus"
+#define     P_IMAGERY   "beautiful young maiden with golden wings and a coat of rainbows"
+
+#define     P_SYSTEM    "gnu/linux   (powerful, ubiquitous, technical, and hackable)"
+#define     P_LANGUAGE  "ansi-c      (wicked, limitless, universal, and everlasting)"
+#define     P_CODESIZE  "large       (appoximately 10,000 slocl)"
+
+#define     P_AUTHOR    "heatherlyrobert"
+#define     P_CREATED   "2009-09"
+#define     P_DEPENDS   "none"
+
+#define     P_VERNUM    "1.2f"
+#define     P_VERTXT    "updated for changes to yLOG"
+
+#define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
+#define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
+#define     P_REMINDER  "there are many better options, but i *own* every byte of this one"
+
+/*===[[ END_HEADER ]]=========================================================*/
 
 
 
@@ -44,12 +84,6 @@
  *
  */
 /*3456789012+123456789012+123456789012+123456789012+123456789012+123456789012*/
-/*---(string length)------------------*/
-#define     LEN_RECD     2000
-#define     LEN_STR      200
-#define     LEN_DESC     100
-#define     LEN_LABEL    20
-#define     LEN_HEX      10
 
 
 

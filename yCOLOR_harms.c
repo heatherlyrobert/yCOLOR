@@ -9,7 +9,7 @@ typedef  struct cHARMONY  tHARMONY;
 struct cHARMONY {
    char        abbr;
    char        name        [LEN_LABEL];
-   char        desc        [LEN_DESC ];
+   char        desc        [LEN_HUND ];
    int         comp;
    int         neg;
    int         pos;

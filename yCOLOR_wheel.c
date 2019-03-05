@@ -10,11 +10,11 @@
 typedef  struct cWHEEL   tWHEEL;
 struct cWHEEL {
    int         slot;
-   char        name        [LEN_DESC ];
+   char        name        [LEN_HUND ];
    char        rating;
    char        type        [LEN_LABEL];
    char        bases       [MAX_BASE ][LEN_LABEL];
-   char        notes       [LEN_DESC ];
+   char        notes       [LEN_HUND ];
 };
 tWHEEL    s_wheels      [MAX_WHEEL] = {
    /*     12345678901234567890  rate  --type--  ---120--- ---090--- ---060--- ---030--- || ---000--- ---030--- ---060--- ---090--- ---120--- ---150--- ---180--- ---210--- ---240--- ---270--- ---300--- ---330--- || ---300--- ---330--- ---360--- ---390--- ---420--- ---450--- ---480---   notes---------------------------------- */

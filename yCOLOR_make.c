@@ -84,8 +84,8 @@ MAP_driver           (char a_dir)
    }
    /*---(clear)--------------------------*/
    for (i= 0; i < LEN_MAP; ++i)  x_map->map [i] =  YVIKEYS_EMPTY;
-   x_map->gmin = x_map->amin = x_map->lmin = x_map->prev = -1;
-   x_map->gmax = x_map->amax = x_map->lmax = x_map->next = -1;
+   x_map->gmin = x_map->gamin = x_map->glmin = x_map->gprev = -1;
+   x_map->gmax = x_map->gamax = x_map->glmax = x_map->gnext = -1;
    /*---(do columns)---------------------*/
    for (i = 0; i <= x_max; ++i) {
       x_map->map [i] = ++x_unit - (x_max / 2);
@@ -213,8 +213,8 @@ char         /*-> establish drawing settings ---------[ shoot  [gz.640.001.00]*/
 DRAW_init          (void)
 {
    yVIKEYS_cmds_direct   (":layout ycolor");
-   yVIKEYS_view_moderate (YVIKEYS_MAIN    , YVIKEYS_FLAT, YVIKEYS_MIDCEN, YCOLOR_GRY_MIN, DRAW_view_main );
-   yVIKEYS_view_moderate (YVIKEYS_ALT     , YVIKEYS_FLAT, YVIKEYS_MIDCEN, YCOLOR_GRY_MIN, DRAW_view_alt  );
+   yVIKEYS_view_basic    (YVIKEYS_MAIN    , YVIKEYS_FLAT, YVIKEYS_MIDCEN, YCOLOR_GRY_MIN, DRAW_view_main );
+   yVIKEYS_view_basic    (YVIKEYS_ALT     , YVIKEYS_FLAT, YVIKEYS_MIDCEN, YCOLOR_GRY_MIN, DRAW_view_alt  );
    yVIKEYS_view_simple   (YVIKEYS_PROGRESS, YCOLOR_GRY_MIN, DRAW_view_prog );
    yVIKEYS_view_simple   (YVIKEYS_NAV     , YCOLOR_GRY_MIN, DRAW_view_nav  );
    yVIKEYS_view_colors   (YCOLOR_POS, YCOLOR_BAS, YCOLOR_NEG, YCOLOR_POS);
@@ -231,7 +231,7 @@ DRAW_column         (void)
    int         x_set       =  0;             /* loop iterator -- word          */
    float       x_wide      =  75.0;
    float       x_inc       =  0.0;
-   char        x_text      [LEN_STR];
+   char        x_text      [LEN_FULL];
    x_inc = (win_h - 40) / 36.0;
    yCOLOR_use (YCOLOR_WHEEL);
    glPushMatrix(); {
@@ -280,7 +280,7 @@ DRAW_wheel          (char a_which)
    float       r1          =  0.0;
    float       r2          =  0.0;
    float       x_inc       = 80.0;
-   char        x_text      [LEN_STR];
+   char        x_text      [LEN_FULL];
    char        x_base      [LEN_HEX] = "";
    char        x_hex       [LEN_HEX] = "";
    char        x_norm      [LEN_HEX] = "";
@@ -542,7 +542,7 @@ DRAW_scale          (void)
 {
    /*---(locals)-----------+-----------+-*/
    int         i           =  0;             /* loop iterator -- word          */
-   char        x_text      [LEN_STR];
+   char        x_text      [LEN_FULL];
    yCOLOR_use (YCOLOR_GIANT);
    for (i = -120; i <= 480; i += 10) {
       glPushMatrix(); {
@@ -746,7 +746,7 @@ DRAW_layout         (void)
    float       x           =  0.0;
    float       y           =  0.0;
    float       x_inc       = 80.0;
-   char        x_text      [LEN_STR];
+   char        x_text      [LEN_FULL];
    int         x_set       =  0;             /* loop iterator -- word          */
    char        x_base      [LEN_HEX] = "";
    char        x_hex1      [LEN_HEX] = "";
@@ -806,7 +806,7 @@ DRAW_layout         (void)
  *>    float       x           =  0.0;                                                                                             <* 
  *>    float       y           =  0.0;                                                                                             <* 
  *>    float       x_inc       = 80.0;                                                                                             <* 
- *>    char        x_text      [LEN_STR];                                                                                          <* 
+ *>    char        x_text      [LEN_FULL];                                                                                         <* 
  *>    int         x_set       =  0;             /+ loop iterator -- word          +/                                              <* 
  *>    char        x_base      [LEN_HEX] = "";                                                                                     <* 
  *>    char        x_hex1      [LEN_HEX] = "";                                                                                     <* 
@@ -1347,7 +1347,7 @@ PROG_init          ()
    /*---(vikeys)-------------------------*/
    yVIKEYS_init         ();
    yVIKEYS_cmds_add     ('v', "labels"      , ""    , "s"    , SET_names                  , "" );
-   yVIKEYS_view_config  ("yCOLOR_make", YCOLOR_VER_NUM, YVIKEYS_OPENGL, 500, 500, 500);
+   yVIKEYS_view_config  ("yCOLOR_make", P_VERNUM, YVIKEYS_OPENGL, 500, 500, 500);
    yVIKEYS_cmds_direct  (":palette 0 fcomp full vivid");
    /*---(color)--------------------------*/
    /*> yCOLOR_init     (YCOLOR_REDBLU);                                               <*/

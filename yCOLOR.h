@@ -2,21 +2,6 @@
 /*-------                 START OF SOURCE :: yCOLOR                    -------*/
 /*----------------------------------------------------------------------------*/
 
-
-/*===[[ START HDOC ]]=========================================================*/
-/*---[[ HEADER ]]-------------------------------------------------*
-
- *   niche         : graphics
- *   application   : aesthetics
- *   module        : yPALETTE
- *   purpose       : provide aesthetic color palettes and transformations
- *   base_system   : gnu/linux
- *   lang_name     : c (primarily ansi-c, but with some C89 extensions)
- *   created       : 2009-09
- *   author        : the_heatherlys
- *   dependencies  : none
- *
- */
 /*---[[ PURPOSE ]]------------------------------------------------*
 
  *   yPALETTE is a set of shared library functions to provide consistently

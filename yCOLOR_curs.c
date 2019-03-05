@@ -30,7 +30,7 @@ typedef  struct cCOLOR_INFO  tCOLOR_INFO;
 struct cCOLOR_INFO {
    char        terse       [LEN_LABEL];     /* short description              */
    char        abbr;                        /* quick ref                      */
-   char        desc        [LEN_DESC ];     /* description/reason             */
+   char        desc        [LEN_HUND ];     /* description/reason             */
    char        fg;                          /* foreground color               */
    char        bg;                          /* background color               */
    char        bold;                        /* bold y/n                       */
@@ -107,7 +107,7 @@ yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_
    /*---(save)---------------------------*/
    strlcpy (s_curses [n].terse, a_terse, LEN_LABEL);
    s_curses [n].abbr  = a_abbr;
-   if (a_desc != NULL)  strlcpy (s_curses [n].desc, a_desc, LEN_DESC);
+   if (a_desc != NULL)  strlcpy (s_curses [n].desc, a_desc, LEN_HUND);
    s_curses [n].fg    = a_fg;
    s_curses [n].bg    = a_bg;
    s_curses [n].bold  = a_bold;

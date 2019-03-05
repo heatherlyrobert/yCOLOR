@@ -55,7 +55,7 @@ yCOLOR_version      (void)
 #else
    strncpy (t, "[unknown    ]", 15);
 #endif
-   snprintf (yCOLOR_ver, 100, "%s   %s : %s", t, YCOLOR_VER_NUM, YCOLOR_VER_TXT);
+   snprintf (yCOLOR_ver, 100, "%s   %s : %s", t, P_VERNUM, P_VERTXT);
    return yCOLOR_ver;
 }
 
