@@ -145,7 +145,9 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add ("status"    , ' ', "normal status color"                                , 'k' , 'y' , '-');
    yCOLOR_curs_add ("command"   , ' ', "window message"                                     , 'y' , ' ' , '-');
    yCOLOR_curs_add ("keys"      , ' ', "window keystoke display"                            , 'r' , ' ' , 'y');
-   yCOLOR_curs_add ("menu"      , ' ', "menus and menu entries "                            , 'k' , 'y' , 'b');
+   yCOLOR_curs_add ("menu"      , ' ', "menu item"                                          , 'k' , 'y' , 'b');
+   yCOLOR_curs_add ("menu_na"   , ' ', "menu item not available"                            , 'w' , 'y' , '-');
+   yCOLOR_curs_add ("menu_bad"  , ' ', "menu item in error"                                 , 'r' , 'y' , 'b');
    /*---(trouble)------------------------*/
    yCOLOR_curs_add ("warn"      , 'w', "cell warning"                                       , 'w' , 'r' , 'y');
    yCOLOR_curs_add ("error"     , 'E', "cell error"                                         , 'w' , 'r' , 'y');

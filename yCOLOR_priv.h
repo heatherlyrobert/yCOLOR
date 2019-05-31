@@ -32,8 +32,8 @@
 #define     P_NICHE     "as (aesthetics)"
 #define     P_PURPOSE   "predictably aesthetic color palettes and transformations"
 
-#define     P_NAMESAKE  "isis-chrysopteros (golden-winged)
-#define     P_HERITAGE  "isis is the goddess of rainbow, color, and messenger of zeus"
+#define     P_NAMESAKE  "iris-chrysopteros (golden-winged)"
+#define     P_HERITAGE  "iris is the goddess of rainbow, color, and messenger of zeus"
 #define     P_IMAGERY   "beautiful young maiden with golden wings and a coat of rainbows"
 
 #define     P_SYSTEM    "gnu/linux   (powerful, ubiquitous, technical, and hackable)"
@@ -44,8 +44,8 @@
 #define     P_CREATED   "2009-09"
 #define     P_DEPENDS   "none"
 
-#define     P_VERNUM    "1.2f"
-#define     P_VERTXT    "updated for changes to yLOG"
+#define     P_VERNUM    "1.2g"
+#define     P_VERTXT    "added a couple colors to ncurse for menus in yVIKEYS"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
