@@ -83,7 +83,7 @@ MAP_driver           (char a_dir)
       break;
    }
    /*---(clear)--------------------------*/
-   for (i= 0; i < LEN_MAP; ++i)  x_map->map [i] =  YVIKEYS_EMPTY;
+   for (i= 0; i < LEN_HUGE; ++i)  x_map->map [i] =  YVIKEYS_EMPTY;
    x_map->gmin = x_map->gamin = x_map->glmin = x_map->gprev = -1;
    x_map->gmax = x_map->gamax = x_map->glmax = x_map->gnext = -1;
    /*---(do columns)---------------------*/
@@ -91,16 +91,16 @@ MAP_driver           (char a_dir)
       x_map->map [i] = ++x_unit - (x_max / 2);
       ++c;
    }
-   x_map->avail = x_max;
-   x_map->gmin  = -(x_max / 2);
-   x_map->gmax  =   x_max / 2;
+   x_map->uavail = x_max;
+   x_map->gmin   = -(x_max / 2);
+   x_map->gmax   =   x_max / 2;
    /*---(other)--------------------------*/
    if (a_dir != tolower (a_dir)) {
-      x_map->beg   = 0;
-      x_map->cur   = 0;
-      x_map->end   = 0;
-      x_map->len   = 0;
-      x_map->tend  = 0;
+      x_map->ubeg  = 0;
+      x_map->ucur  = 0;
+      x_map->uend  = 0;
+      x_map->ulen  = 0;
+      x_map->utend = 0;
       x_map->gbeg  = 0;
       x_map->gcur  = 0;
       x_map->gend  = 0;
@@ -1059,9 +1059,7 @@ DRAW_view_main     (void)
     *> }                                                                                                                             <*/
    /*---(main)---------------------------*/
    yVIKEYS_view_size   (YVIKEYS_MAIN, &x_left, &x_wide, &x_bott, &x_tall, NULL);
-   yVIKEYS_view_coords (YVIKEYS_MAIN, &x_xmin, &x_xlen, &x_ymin, &x_ylen);
-   x_xmax = x_xmin + x_xlen;
-   x_ymax = x_ymin + x_ylen;
+   yVIKEYS_view_bounds (YVIKEYS_MAIN, &x_xmin, &x_xmax, &x_xlen, &x_ymin, &x_ymax, &x_ylen);
    DEBUG_GRAF   yLOG_complex ("main", "bott %4d, left %4d, wide %4d, tall %4d, on %c", x_bott, x_left, x_wide, x_tall, rc);
    DEBUG_WIND   yLOG_note    ("set viewport");
    /*> glViewport      (x_left, x_bott, x_wide, x_tall);                              <* 
@@ -1135,12 +1133,12 @@ PROG_event    (void)
    /*---(event loop)---------------------*/
    while (1) {
       x_key = 0;
-      if (XPending(DISP)) {
-         XNextEvent(DISP, &EVNT);
-         switch(EVNT.type) {
+      if (XPending (YX_DISP)) {
+         XNextEvent(YX_DISP, &YX_EVNT);
+         switch(YX_EVNT.type) {
          case KeyPress:
-            key_event  = (XKeyEvent *) &EVNT;
-            c = XLookupString((XKeyEvent *) &EVNT, t, 5, NULL, NULL);
+            key_event  = (XKeyEvent *) &YX_EVNT;
+            c = XLookupString((XKeyEvent *) &YX_EVNT, t, 5, NULL, NULL);
             if (c < 1) break;
             x_key = t [0];
             break;
@@ -1157,10 +1155,10 @@ PROG_event    (void)
       nanosleep    (&x_dur, NULL);
    }
    /*> while (1) {                                                                              <* 
-    *>    XNextEvent(DISP, &EVNT);                                                              <* 
+    *>    XNextEvent(YX_DISP, &YX_EVNT);                                                              <* 
     *>    /+> printf ("loop %d\n", loop++);                                               <+/   <* 
     *>    /+---(start)----------------------------+/                                            <* 
-    *>    switch(EVNT.type) {                                                                   <* 
+    *>    switch(YX_EVNT.type) {                                                                   <* 
     *>    case FocusIn:                                                                         <* 
     *>       break;                                                                             <* 
     *>    case FocusOut:                                                                        <* 
@@ -1171,8 +1169,8 @@ PROG_event    (void)
     *>       break;                                                                             <* 
     *>    case KeyPress:                                                                        <* 
     *>       /+> printf ("key pressed\n");                                                <+/   <* 
-    *>       key_event  = (XKeyEvent *) &EVNT;                                                  <* 
-    *>       the_bytes = XLookupString((XKeyEvent *) &EVNT, the_key, 5, NULL, NULL);            <* 
+    *>       key_event  = (XKeyEvent *) &YX_EVNT;                                                  <* 
+    *>       the_bytes = XLookupString((XKeyEvent *) &YX_EVNT, the_key, 5, NULL, NULL);            <* 
     *>       if (the_bytes < 1) break;                                                          <* 
     *>       /+> printf ("the key %d\n", the_key [0]);                                    <+/   <* 
     *>       /+---(mode changes)-------+/                                                       <* 
@@ -1345,7 +1343,7 @@ char         /*-> tbd --------------------------------[ shoot  [gz.210.001.02]*/
 PROG_init          ()
 {
    /*---(vikeys)-------------------------*/
-   yVIKEYS_init         ();
+   yVIKEYS_init         ('-');
    yVIKEYS_cmds_add     ('v', "labels"      , ""    , "s"    , SET_names                  , "" );
    yVIKEYS_view_config  ("yCOLOR_make", P_VERNUM, YVIKEYS_OPENGL, 500, 500, 500);
    yVIKEYS_cmds_direct  (":palette 0 fcomp full vivid");

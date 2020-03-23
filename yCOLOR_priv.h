@@ -44,8 +44,8 @@
 #define     P_CREATED   "2009-09"
 #define     P_DEPENDS   "none"
 
-#define     P_VERNUM    "1.2g"
-#define     P_VERTXT    "added a couple colors to ncurse for menus in yVIKEYS"
+#define     P_VERNUM    "1.2h"
+#define     P_VERTXT    "added empty wrap up, but not used yet"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"

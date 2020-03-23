@@ -225,7 +225,7 @@
 #define     YCOLOR_MOR        7
 #define     YCOLOR_MIN        8
 
-#define     YCOLOR_BLK_WHI
+/*> #define     YCOLOR_BLK_WHI                                                        <*/
 
 #define     YCOLOR_WARNING   50
 #define     YCOLOR_SOURCE    51
@@ -297,6 +297,7 @@ char        yCOLOR_diff_back     (void);
 
 
 char        yCOLOR_curs_init          (void);
+char        yCOLOR_curs_wrap          (void);
 int         yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_fg, cchar a_bg, cchar a_bold);
 int         yCOLOR_curs_value         (cchar *a_terse);
 char        yCOLOR_curs               (cchar *a_terse);

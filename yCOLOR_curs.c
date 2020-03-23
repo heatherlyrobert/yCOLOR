@@ -156,7 +156,7 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add ("map"       , ' ', "map mode (2d review of sheet/cell collection"       , 'k' , 'y' , 'b');
    yCOLOR_curs_add ("source"    , ' ', "source mode (single cell review)"                   , 'k' , 'g' , 'b');
    yCOLOR_curs_add ("textreg"   , ' ', "text register sub-mode"                             , 'k' , 'c' , 'b');
-   yCOLOR_curs_add ("input"     , ' ', "input sub-mode"                                     , 'w' , 'b' , 'b');
+   yCOLOR_curs_add ("input"     , ' ', "input sub-mode"                                     , 'k' , 'b' , 'b');
    yCOLOR_curs_add ("replace"   , ' ', "replace sub-mode"                                   , 'k' , 'm' , 'b');
    yCOLOR_curs_add ("wander"    , ' ', "wander sub-mode"                                    , 'k' , 'r' , 'b');
    yCOLOR_curs_add ("select"    , ' ', "source mode text selection"                         , 'k' , 'w' , 'b');
@@ -171,6 +171,12 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add ("h_used"    , ' ', "row/col header with used cells"                     , 'y' , 'k' , '-');
    yCOLOR_curs_add ("h_normal"  , ' ', "row/col header normal"                              , 'y' , ' ' , '-');
    /*---(complete)-----------------------*/
+   return 0;
+}
+
+char         /*-> tbd --------------------------------[ ------ [gc.842.031.62]*/ /*-[02.0000.014.!]-*/ /*-[--.---.---.--]-*/
+yCOLOR_curs_wrap          (void)
+{
    return 0;
 }
 
