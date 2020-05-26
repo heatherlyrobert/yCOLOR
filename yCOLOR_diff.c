@@ -308,6 +308,13 @@ yCOLOR_diff_count    (void)
 }
 
 int          /*-> tbd --------------------------------[ leaf   [gn.430.021.50]*/ /*-[02.0000.00#.!]-*/ /*-[--.---.---.--]-*/
+yCOLOR_diff_first    (void)
+{
+   s_curr = s_start;
+   return yCOLOR_diff_next ();
+}
+
+int          /*-> tbd --------------------------------[ leaf   [gn.430.021.50]*/ /*-[02.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_next     (void)
 {
    int         x_color     = 0;
