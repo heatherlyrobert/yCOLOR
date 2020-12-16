@@ -7,11 +7,11 @@
 #define     MAX_DIFF    400
 typedef     struct      cDIFF       tDIFF;
 struct      cDIFF {
-   char        family;
    float       red;
    float       grn;
    float       blu;
    float       bri;
+   short       map;
 };
 static      tDIFF       s_diffs [MAX_DIFF];
 static      int         s_adiff;       /* count of all colors                */
@@ -104,10 +104,40 @@ static char s_monos [MAX_DIFF][10] =
    "#FBCEB1", "#FFBF00", "#F8BA37", "#E6292C", "#FF8066", "#D23B05",
    "#F7DCB4", "#985629",
    /* shades of blue (32)          */
+   "#000090", "#4848D8", "#7878D8", "#60C0C0", "#489090", "#006060",
+   "#1890F0", "#6078F0", "#90D8C0", "#A8D8F0", "#4890A8", "#D8F0FF",
+   "#48A8A8", "#006090", "#00D8D8", "#6078D8", "#007890", "#78C0F0",
+   "#6890D8", "#3048C0", "#486078", "#004860", "#0090A8", "#6060C0",
+   "#1890A8", "#184878", "#1800C0", "#6048C0", "#003048", "#18A8D8",
+   "#A8FFD8", "#004878",
    /* shades of brown (32)         */
+   "#7F4737", "#8A3324", "#E97451", "#954535", "#EECEAC", "#CC7722",
+   "#A89A8F", "#906E3E", "#800000", "#8B4513", "#D2691E", "#CD853F",
+   "#DAA520", "#F4A460", "#BC8F8F", "#D2B48C", "#DEB887", "#F5DEB3",
+   "#FFDEAD", "#FFE4C4", "#FFF8DC", "#452A19", "#996515", "#C19A6B",
+   "#704214", "#75463A", "#59260B", "#BF914B", "#C19A6B", "#5D432C",
+   "#674C47", "#4A2C2A", 
    /* shades of purple (32)        */
+   "#A32CC4", "#7A4988", "#710393", "#630436", "#E39FF6", "#601A35",
+   "#A1045A", "#B65FCF", "#663046", "#8E93D4", "#4D0F28", "#9078C0",
+   "#311432", "#6030A8", "#67032F", "#9867C5", "#800080", "#9E7BB5",
+   "#4B0082", "#A45EE5", "#183078", "#290916", "#AF69EF", "#4C0121",
+   "#D89EA6", "#4B0082", "#8A2BE2", "#DA70D6", "#543948", "#FF1CAE",
+   "#9932CC", "#8B008B",
    /* shades of grey (32)          */
+   "#6D616F", "#D9DDDC", "#373737", "#828282", "#594D5B", "#D6CFC7", 
+   "#322D31", "#787276", "#696860", "#999DA0", "#C5C6D0", "#88807B", 
+   "#ADADC9", "#877F7D", "#59515E", "#BDB7AB", "#3E3D53", "#B9BBB6", 
+   "#41424C", "#BEBDB8", "#564C4D", "#97978F", "#4D4C5C", "#C7C6C1", 
+   "#7C6E7F", "#222021", "#655967", "#808588", "#7F7D9C", "#777B7E", 
+   "#232023", "#544C4A",
    /* shades of pink (32)          */
+   "#FFC0C0", "#FF1493", "#FF90D8", "#FFB6C1", "#F09090", "#DB7093",
+   "#F0D808", "#C71585", "#FF90A8", "#FEC5E5", "#F078C0", "#FC94AF",
+   "#FFD8F0", "#FAB6CA", "#FF7890", "#FCBACB", "#904860", "#9E4244",
+   "#FF60A8", "#FD5DA8", "#C060A8", "#F26BBA", "#FFA878", "#F25278",
+   "#FFF0D8", "#FDA4BA", "#F0C0A8", "#FF6090", "#A84860", "#D87878",
+   "#783030", "#D8A8A8",
 };
 
 
@@ -117,8 +147,32 @@ static char s_monos [MAX_DIFF][10] =
 /*====================------------------------------------====================*/
 static void      o___PROGRAM_________________o (void) {;}
 
+char
+ycolor__diff_purge   (void)
+{
+   /*---(locals)-----------+-----------+-*/
+   int         i           = 0;
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR  yLOG_senter  (__FUNCTION__);
+   DEBUG_YCOLOR  yLOG_sint    (MAX_DIFF);
+   /*---(default values)-----------------*/
+   for (i = 0; i < MAX_DIFF; ++i) {
+      s_diffs [i].red = -1.000;
+      s_diffs [i].grn = -1.000;
+      s_diffs [i].blu = -1.000;
+      s_diffs [i].bri = -1.000;
+      s_diffs [i].map = -1;
+   }
+   /*---(reset globals)------------------*/
+   s_ndiff  = 0;
+   s_adiff  = 0;
+   /*---(complete)-----------------------*/
+   DEBUG_YCOLOR  yLOG_sexit   (__FUNCTION__);
+   return 0;
+}
+
 static char  /*-> tbd --------------------------------[ leaf   [fz.320.001.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR__diff_reset   (void)
+ycolor__diff_reset   (void)
 {
    s_scheme   = YCOLOR_WHITE;
    s_chaos    =  '-';
@@ -126,6 +180,7 @@ yCOLOR__diff_reset   (void)
    s_start    =  0;
    s_seed     =  1;
    s_curr     =  0;
+   ycolor__diff_purge ();
    return 0;
 }
 
@@ -160,7 +215,7 @@ yCOLOR__diff_unhex   (char a_one, char a_two)
 static void      o___FILTERING_______________o (void) {;}
 
 char         /*-> tbd --------------------------------[ ------ [fz.B62.051.31]*/ /*-[02.0000.01#.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR__diff_filter  (void)
+ycolor__diff_filter  (void)
 {
    /*---(locals)-----------+-----------+-*/
    int         i           = 0;
@@ -169,11 +224,8 @@ yCOLOR__diff_filter  (void)
    float       x_blu       = 0.0;
    float       x_bri       = 0.0;
    /*---(header)-------------------------*/
-   DEBUG_COLOR  yLOG_enter   (__FUNCTION__);
-   DEBUG_COLOR  yLOG_note    ("set global values");
-   s_ndiff  =    0;
-   s_adiff  =    0;
-   /*> printf ("s_cutoff = %5.2f\n", s_cutoff);                                       <*/
+   DEBUG_YCOLOR  yLOG_enter   (__FUNCTION__);
+   DEBUG_YCOLOR  yLOG_note    ("set global values");
    /*---(establish values)---------------*/
    for (i = 0; i < MAX_DIFF; ++i) {
       /*---(filter)----------------------*/
@@ -186,12 +238,12 @@ yCOLOR__diff_filter  (void)
       ++s_adiff;
       /*---(filter)----------------------*/
       if (s_cutoff > 1.5 && x_bri > s_cutoff) {
-         DEBUG_COLOR  yLOG_complex ("skipped"   , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f", s_adiff, x_red, x_grn, x_blu, x_bri);
+         DEBUG_YCOLOR  yLOG_complex ("skipped"   , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f", s_adiff, x_red, x_grn, x_blu, x_bri);
          /*> printf ("skipped1  %3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f\n", s_adiff, x_red, x_grn, x_blu, x_bri);   <*/
          continue;
       }
       if (s_cutoff <= 1.5 && x_bri < s_cutoff) {
-         DEBUG_COLOR  yLOG_complex ("skipped"   , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f", s_adiff, x_red, x_grn, x_blu, x_bri);
+         DEBUG_YCOLOR  yLOG_complex ("skipped"   , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f", s_adiff, x_red, x_grn, x_blu, x_bri);
          /*> printf ("skipped2  %3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f\n", s_adiff, x_red, x_grn, x_blu, x_bri);   <*/
          continue;
       }
@@ -200,17 +252,18 @@ yCOLOR__diff_filter  (void)
       s_diffs [s_ndiff].grn = x_grn;
       s_diffs [s_ndiff].blu = x_blu;
       s_diffs [s_ndiff].bri = x_bri;
+      s_diffs [s_ndiff].map = i;
       ++s_ndiff;
-      DEBUG_COLOR  yLOG_complex ("saved"     , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f, new=%3d", s_adiff, x_red, x_grn, x_blu, x_bri, s_ndiff);
+      DEBUG_YCOLOR  yLOG_complex ("saved"     , "%3d, red=%4.2f, grn=%4.2f, blu=%4.2f, bri=%4.2f, new=%3d", s_adiff, x_red, x_grn, x_blu, x_bri, s_ndiff);
       /*---(done)------------------------*/
    } 
    /*> printf ("s_adiff = %d\n", s_adiff);                                            <*/
    /*> printf ("s_ndiff = %d\n", s_ndiff);                                            <*/
    /*---(summary)------------------------*/
-   DEBUG_COLOR  yLOG_value   ("s_adiff"   , s_adiff);
-   DEBUG_COLOR  yLOG_value   ("s_ndiff"   , s_ndiff);
+   DEBUG_YCOLOR  yLOG_value   ("s_adiff"   , s_adiff);
+   DEBUG_YCOLOR  yLOG_value   ("s_ndiff"   , s_ndiff);
    /*---(complete)-----------------------*/
-   DEBUG_COLOR  yLOG_exit    (__FUNCTION__);
+   DEBUG_YCOLOR  yLOG_exit    (__FUNCTION__);
    return 0;
 }
 
@@ -225,7 +278,7 @@ char         /*-> tbd --------------------------------[ ------ [gz.740.101.12]*/
 yCOLOR_diff_scheme   (char a_scheme)
 {
    /*---(clear out)----------------------*/
-   yCOLOR__diff_reset  ();
+   ycolor__diff_reset  ();
    /*---(set scheme)---------------------*/
    switch (a_scheme) {
    case YCOLOR_BLACK :
@@ -251,7 +304,7 @@ yCOLOR_diff_scheme   (char a_scheme)
       break;
    }
    /*---(filter)-------------------------*/
-   yCOLOR__diff_filter ();
+   ycolor__diff_filter ();
    /*---(complete)-----------------------*/
    return 0;
 }
@@ -275,7 +328,13 @@ yCOLOR_diff_start    (int a_start)
 char         /*-> tbd --------------------------------[ leaf   [gz.210.201.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_diff_color    (int a_color, float a_alpha)
 {
+   char        rce         =  -10;
+   --rce;  if (a_color >= s_ndiff) {
+      DEBUG_YCOLOR  yLOG_complex ("diff_color", "%3d, no color set by that number", a_color);
+      return rce;
+   }
    glColor4f (s_diffs [a_color].red, s_diffs [a_color].grn, s_diffs [a_color].blu, a_alpha);
+   DEBUG_YCOLOR  yLOG_complex ("diff_color", "%3d, %5.3fr, %5.3fg, %5.3fb", a_color, s_diffs [a_color].red, s_diffs [a_color].grn, s_diffs [a_color].blu);
    return 0;
 }
 
@@ -370,6 +429,16 @@ yCOLOR_diff_next     (void)
    }
    return x_color;
 }
+
+char*
+yCOLOR_diff_mapped      (int a_color)
+{
+   char        rce         =  -10;
+   --rce;  if (a_color >= s_ndiff)  return "#------";
+   return s_bases [s_diffs [a_color].map];
+}
+
+
 
 
 /*===============================[[ end-code ]]===============================*/

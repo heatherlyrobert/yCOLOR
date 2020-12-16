@@ -141,6 +141,7 @@
 #ifndef     YCOLOR
 #define     YCOLOR   loaded
 
+#include    "yCOLOR_solo.h"
 
 #define     YCOLOR_WHEEL     'w'     /* wheel of 36 colors (ryb wheel)        */
 #define     YCOLOR_SPOKES    'k'     /* wheel of 12 colors (ryb wheel)        */
@@ -283,17 +284,18 @@ char        yCOLOR_normalize     (cchar  *a_hex  , char   *a_out);
 /*---(special)------------------------*/
 char        yCOLOR_error         (char   a_level, char  *a_hex, char  *a_out);
 /*---(max-diff)-----------------------*/
-char        yCOLOR_diff_scheme   (char a_scheme);
-char        yCOLOR_diff_start    (int a_start);
-char        yCOLOR_diff_chaos    (int a_seed);
-int         yCOLOR_diff_total    (void);
-int         yCOLOR_diff_count    (void);
-int         yCOLOR_diff_first    (void);
-int         yCOLOR_diff_next     (void);
-char        yCOLOR_diff_color    (int a_color, float a_alpha);
-char        yCOLOR_diff_label    (int a_color, float a_alpha);
-char        yCOLOR_diff_fore     (void);
-char        yCOLOR_diff_back     (void);
+char        yCOLOR_diff_scheme      (char a_scheme);
+char        yCOLOR_diff_start       (int a_start);
+char        yCOLOR_diff_chaos       (int a_seed);
+int         yCOLOR_diff_total       (void);
+int         yCOLOR_diff_count       (void);
+int         yCOLOR_diff_first       (void);
+int         yCOLOR_diff_next        (void);
+char        yCOLOR_diff_color       (int a_color, float a_alpha);
+char        yCOLOR_diff_label       (int a_color, float a_alpha);
+char        yCOLOR_diff_fore        (void);
+char        yCOLOR_diff_back        (void);
+char*       yCOLOR_diff_mapped      (int a_color);
 
 
 char        yCOLOR_curs_init          (void);

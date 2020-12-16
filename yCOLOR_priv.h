@@ -3,7 +3,7 @@
 #ifndef     yCOLOR_PRIV
 #define     yCOLOR_PRIV    loaded
 
-#include "yCOLOR.h"
+#include    "yCOLOR.h"
 
 
 /*===[[ START HDOC ]]=========================================================*/
@@ -30,22 +30,33 @@
 
 #define     P_FOCUS     "RS (run-time support)"
 #define     P_NICHE     "as (aesthetics)"
+#define     P_SUBJECT   "color palettes and control"
 #define     P_PURPOSE   "predictably aesthetic color palettes and transformations"
 
 #define     P_NAMESAKE  "iris-chrysopteros (golden-winged)"
 #define     P_HERITAGE  "iris is the goddess of rainbow, color, and messenger of zeus"
 #define     P_IMAGERY   "beautiful young maiden with golden wings and a coat of rainbows"
+#define     P_REASON    ""
+
+#define     P_ONELINE   P_NAMESAKE " " P_SUBJECT
+
+#define     P_BASENAME  ""
+#define     P_FULLPATH  ""
+#define     P_SUFFIX    ""
+#define     P_CONTENT   ""
 
 #define     P_SYSTEM    "gnu/linux   (powerful, ubiquitous, technical, and hackable)"
 #define     P_LANGUAGE  "ansi-c      (wicked, limitless, universal, and everlasting)"
 #define     P_CODESIZE  "large       (appoximately 10,000 slocl)"
+#define     P_DEPENDS   "none"
 
 #define     P_AUTHOR    "heatherlyrobert"
 #define     P_CREATED   "2009-09"
-#define     P_DEPENDS   "none"
 
-#define     P_VERNUM    "1.2j"
-#define     P_VERTXT    "couple small curses color additions to support yVIKEYS notes"
+#define     P_VERMAJOR  ""
+#define     P_VERMINOR  ""
+#define     P_VERNUM    "1.2k"
+#define     P_VERTXT    "added yCOLOR_solo.h for simple terminal color control"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
