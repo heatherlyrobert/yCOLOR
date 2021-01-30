@@ -55,8 +55,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.2k"
-#define     P_VERTXT    "added yCOLOR_solo.h for simple terminal color control"
+#define     P_VERNUM    "1.2l"
+#define     P_VERTXT    "added new yCOLOR_solo color for error marking"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
@@ -127,20 +127,20 @@ extern char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL];
 typedef struct cCOLORS tCOLORS;
 struct cCOLORS {
    char        name        [LEN_LABEL];
-   char        hex         [LEN_HEX];
+   char        hex         [LEN_TERSE];
    float       pct;
    float       cut;
    float       red;
    float       grn;
    float       blu;
-   char        norm        [LEN_HEX];
+   char        norm        [LEN_TERSE];
 };
 extern  tCOLORS  s_colors  [MAX_COLOR];
 
 
 typedef struct cPALETTE tPALETTE;
 struct cPALETTE {
-   char        hex         [LEN_HEX];
+   char        hex         [LEN_TERSE];
    float       red;
    float       grn;
    float       blu;

@@ -294,7 +294,7 @@ yCOLOR_accent        (       /* PURPOSE = apply a color variation             */
       return rce;
    }
    /*---(initialize)-----------------------*/
-   strlcpy (a_out, a_hex, LEN_HEX);
+   strlcpy (a_out, a_hex, LEN_TERSE);
    /*---(search)---------------------------*/
    /*> x_index = s_cvariant;                                                          <*/
    /*> x_accent = s_variants [x_index].accent;                                        <*/
@@ -371,7 +371,7 @@ yCOLOR_variant       (       /* PURPOSE = apply a color variation             */
    /*---(defense)------------------------*/
    --rce;  if (a_hex == NULL)   return rce;
    --rce;  if (a_out == NULL)   return rce;
-   strlcpy (a_out, a_hex, LEN_HEX);
+   strlcpy (a_out, a_hex, LEN_TERSE);
    /*---(saturation)---------------------*/
    --rce;  if (a_sat == NULL)   return rce;
    if (strlen (a_sat) == 1)  n = SATS__abbr (a_sat);
@@ -484,7 +484,7 @@ yCOLOR__norming        (      /* PURPOSE = level color intensity               *
       uchar u_grn = x_grn * 255;
       uchar u_blu = x_blu * 255;
       /*---(place into RGB hex)---------------*/
-      snprintf (a_out, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);
+      snprintf (a_out, LEN_TERSE, "#%02x%02x%02x", u_red, u_grn, u_blu);
    } else if (s_normings [a_index].is_value == 't') {
       /*---(update)---------------------------*/
       x_total = x_red + x_grn + x_blu;
@@ -496,7 +496,7 @@ yCOLOR__norming        (      /* PURPOSE = level color intensity               *
       uchar u_grn = x_grnpct * 255;
       uchar u_blu = x_blupct * 255;
       /*---(place into RGB hex)---------------*/
-      snprintf (a_out, LEN_HEX, "#%02x%02x%02x", u_red, u_grn, u_blu);
+      snprintf (a_out, LEN_TERSE, "#%02x%02x%02x", u_red, u_grn, u_blu);
    }
    /*---(complete)-------------------------*/
    return 0;

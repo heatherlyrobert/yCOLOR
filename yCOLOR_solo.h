@@ -44,3 +44,8 @@
 #define     LITE_GRY   "\e[47;1m"
 
 
+
+/*---(compound)-------------*/
+#define     BOLD_ERR   "\e[41m\e[33;1m"
+
+
