@@ -11,18 +11,27 @@ struct cCOLOR {
    char        terse       [LEN_LABEL];
    char        desc        [LEN_LABEL];
    short       value;
+   char        light;
 };
 static tCOLOR  s_primary [MAX_PRIMARY] = {
-   {  ' ' , "trn" , "transparent"          , -1                    },
-   {  'k' , "blk" , "black"                , COLOR_BLACK           },
-   {  'r' , "red" , "red"                  , COLOR_RED             },
-   {  'g' , "grn" , "green"                , COLOR_GREEN           },
-   {  'y' , "yel" , "yellow"               , COLOR_YELLOW          },
-   {  'b' , "blu" , "blue"                 , COLOR_BLUE            },
-   {  'm' , "mag" , "magenta"              , COLOR_MAGENTA         },
-   {  'c' , "cyn" , "cyan"                 , COLOR_CYAN            },
-   {  'w' , "whi" , "white"                , COLOR_WHITE           },
-   {  '-' , "---" , "end-of-colors"        , -1                    },
+   {  ' ' , "trn" , "transparent"          , -1                    , '-' },
+   {  'k' , "blk" , "black"                , COLOR_BLACK           , '-' },
+   {  'r' , "red" , "red"                  , COLOR_RED             , '-' },
+   {  'g' , "grn" , "green"                , COLOR_GREEN           , '-' },
+   {  'y' , "yel" , "yellow"               , COLOR_YELLOW          , '-' },
+   {  'b' , "blu" , "blue"                 , COLOR_BLUE            , '-, '-' ' },
+   {  'm' , "mag" , "magenta"              , COLOR_MAGENTA         , '-' },
+   {  'c' , "cyn" , "cyan"                 , COLOR_CYAN            , '-' },
+   {  'w' , "whi" , "white"                , COLOR_WHITE           , '-' },
+   {  'K' , "BLK" , "black"                , COLOR_BLACK           , 'y' },
+   {  'R' , "RED" , "red"                  , COLOR_RED             , 'y' },
+   {  'G' , "GRN" , "green"                , COLOR_GREEN           , 'y' },
+   {  'Y' , "YEL" , "yellow"               , COLOR_YELLOW          , 'y' },
+   {  'B' , "BLU" , "blue"                 , COLOR_BLUE            , 'y' },
+   {  'M' , "MAG" , "magenta"              , COLOR_MAGENTA         , 'y' },
+   {  'C' , "CYN" , "cyan"                 , COLOR_CYAN            , 'y' },
+   {  'W' , "WHI" , "white"                , COLOR_WHITE           , 'y' },
+   {  '-' , "---" , "end-of-colors"        , -1                    , '-' },
 };
 
 #define     MAX_NCURSE  100
@@ -33,7 +42,6 @@ struct cCOLOR_INFO {
    char        desc        [LEN_HUND ];     /* description/reason             */
    char        fg;                          /* foreground color               */
    char        bg;                          /* background color               */
-   char        bold;                        /* bold y/n                       */
    int         value;                       /* curses attribute value         */
 };
 static tCOLOR_INFO  s_curses [MAX_NCURSE];
@@ -75,7 +83,7 @@ CURS__find                (cchar *a_terse)
 }
 
 int          /*-> tbd --------------------------------[ ------ [gc.842.031.62]*/ /*-[02.0000.014.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_fg, cchar a_bg, cchar a_bold)
+yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_fg, cchar a_bg)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
@@ -110,22 +118,12 @@ yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_
    if (a_desc != NULL)  strlcpy (s_curses [n].desc, a_desc, LEN_HUND);
    s_curses [n].fg    = a_fg;
    s_curses [n].bg    = a_bg;
-   s_curses [n].bold  = a_bold;
    DEBUG_GRAF  yLOG_char    ("abbr"      , s_curses [n].abbr);
    DEBUG_GRAF  yLOG_value   ("fg"        , s_curses [n].fg);
    DEBUG_GRAF  yLOG_value   ("bg"        , s_curses [n].bg);
    /*---(create)-------------------------*/
    init_pair (n + 20, x_fg, x_bg);
-   if (a_bold == 'y') {
-      s_curses [n].value = COLOR_PAIR (n + 20) | A_BOLD;
-      DEBUG_GRAF  yLOG_value   ("bold"      , s_curses [n].value);
-   } else if (a_bold == 'b') {
-      s_curses [n].value = COLOR_PAIR (n + 20) | A_BLINK;
-      DEBUG_GRAF  yLOG_value   ("blink"     , s_curses [n].value);
-   } else {
-      s_curses [n].value = COLOR_PAIR (n + 20);
-      DEBUG_GRAF  yLOG_value   ("normal"    , s_curses [n].value);
-   }
+   s_curses [n].value = COLOR_PAIR (n + 20);
    /*---(update)-------------------------*/
    if (n == s_ncurse)  ++s_ncurse;
    DEBUG_GRAF  yLOG_value   ("s_ncurse"  , s_ncurse);
@@ -137,41 +135,63 @@ yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_
 char         /*-> tbd --------------------------------[ ------ [gc.842.031.62]*/ /*-[02.0000.014.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_curs_init          (void)
 {
-   /*---(globals)------------------------*/
+   /*---(globals)------------------------*//*-------------------------------------------------fg----bg--*/
    s_ncurse = 0;
    /*---(window parts)-------------------*/
-   yCOLOR_curs_add ("title"     , ' ', "normal title color"                                 , 'k' , 'k' , 'y');
-   yCOLOR_curs_add ("version"   , ' ', "version number color"                               , 'k' , 'k' , 'y');
-   yCOLOR_curs_add ("status"    , ' ', "normal status color"                                , 'k' , 'y' , '-');
-   yCOLOR_curs_add ("command"   , ' ', "window message"                                     , 'y' , ' ' , '-');
-   yCOLOR_curs_add ("keys"      , ' ', "window keystoke display"                            , 'r' , ' ' , 'y');
-   yCOLOR_curs_add ("menu"      , ' ', "menu item"                                          , 'k' , 'y' , 'b');
-   yCOLOR_curs_add ("menu_na"   , ' ', "menu item not available"                            , 'w' , 'y' , '-');
-   yCOLOR_curs_add ("menu_bad"  , ' ', "menu item in error"                                 , 'r' , 'y' , 'b');
-   yCOLOR_curs_add ("note_old"  , ' ', "old note item"                                      , 'k' , 'k' , 'y');
-   yCOLOR_curs_add ("note_cur"  , ' ', "current note item"                                  , 'w' , 'm' , 'y');
+   yCOLOR_curs_add  ("w_titl"    , ' ', "window, normal title"                               , 'k' , 'K' );
+   yCOLOR_curs_add  ("w_vers"    , ' ', "window, version number"                             , 'k' , 'K' );
+   yCOLOR_curs_add  ("w_sbar"    , ' ', "window, normal status"                              , 'k' , 'y' );
+   yCOLOR_curs_add  ("w_cmds"    , ' ', "window, command message"                            , 'y' , ' ' );
+   yCOLOR_curs_add  ("w_keys"    , ' ', "window, keystoke display"                           , 'r' , ' ' );
    /*---(trouble)------------------------*/
-   yCOLOR_curs_add ("warn"      , 'w', "cell warning"                                       , 'w' , 'r' , 'y');
-   yCOLOR_curs_add ("error"     , 'E', "cell error"                                         , 'w' , 'r' , 'y');
-   yCOLOR_curs_add ("found"     , ' ', "cell found in most recent search"                   , 'g' , 'w' , 'y');
+   yCOLOR_curs_add  ("!_warn"    , 'w', "trouble, warning"                                   , 'w' , 'R' );
+   yCOLOR_curs_add  ("!_errs"    , 'E', "trouble, error"                                     , 'w' , 'R' );
    /*---(formula modes)------------------*/
-   yCOLOR_curs_add ("map"       , ' ', "map mode (2d review of sheet/cell collection"       , 'k' , 'y' , 'b');
-   yCOLOR_curs_add ("source"    , ' ', "source mode (single cell review)"                   , 'k' , 'g' , 'b');
-   yCOLOR_curs_add ("textreg"   , ' ', "text register sub-mode"                             , 'k' , 'c' , 'b');
-   yCOLOR_curs_add ("input"     , ' ', "input sub-mode"                                     , 'k' , 'b' , 'b');
-   yCOLOR_curs_add ("replace"   , ' ', "replace sub-mode"                                   , 'k' , 'm' , 'b');
-   yCOLOR_curs_add ("wander"    , ' ', "wander sub-mode"                                    , 'k' , 'r' , 'b');
-   yCOLOR_curs_add ("select"    , ' ', "source mode text selection"                         , 'k' , 'w' , 'b');
-   /*---(selection)------*/
-   yCOLOR_curs_add ("curr"      , ' ', "current cell"                                       , 'k' , 'y' , 'b');
-   yCOLOR_curs_add ("root"      , ' ', "root of visual selection"                           , 'y' , 'k' , 'y');
-   yCOLOR_curs_add ("visu"      , ' ', "selected, not root/curr"                            , 'y' , 'y' , 'y');
-   yCOLOR_curs_add ("mark"      , ' ', "location marks"                                     , 'w' , 'c' , 'y');
-   yCOLOR_curs_add ("srch"      , ' ', "found by search"                                    , 'k' , 'r' , 'y');
-   yCOLOR_curs_add ("h_current" , ' ', "row/col header current"                             , 'k' , 'y' , '-');
-   yCOLOR_curs_add ("h_locked"  , ' ', "row/col header locked in place"                     , 'k' , 'r' , '-');
-   yCOLOR_curs_add ("h_used"    , ' ', "row/col header with used cells"                     , 'y' , 'k' , '-');
-   yCOLOR_curs_add ("h_normal"  , ' ', "row/col header normal"                              , 'y' , ' ' , '-');
+   yCOLOR_curs_add  ("i_maps"    , ' ', "map mode (2d review of sheet/cell collection"       , 'k' , 'Y' );
+   yCOLOR_curs_add  ("i_srcs"    , ' ', "source mode (single cell review)"                   , 'k' , 'G' );
+   yCOLOR_curs_add  ("i_treg"    , ' ', "text register sub-mode"                             , 'k' , 'C' );
+   yCOLOR_curs_add  ("i_inpt"    , ' ', "input sub-mode"                                     , 'k' , 'B' );
+   yCOLOR_curs_add  ("i_repl"    , ' ', "replace sub-mode"                                   , 'k' , 'M' );
+   yCOLOR_curs_add  ("i_wand"    , ' ', "wander sub-mode"                                    , 'k' , 'R' );
+   yCOLOR_curs_add  ("i_sele"    , ' ', "source mode text selection"                         , 'k' , 'W' );
+   /*---(visual)---------*/
+   yCOLOR_curs_add  ("v_curr"    , ' ', "current cell"                                       , 'k' , 'Y' );
+   yCOLOR_curs_add  ("v_root"    , ' ', "root of visual selection"                           , 'Y' , 'k' );
+   yCOLOR_curs_add  ("v_fill"    , ' ', "selected, not root/curr"                            , 'Y' , 'y' );
+   /*---(marking)--------*/
+   yCOLOR_curs_add  ("m_hint"    , ' ', "marks for extended hinting"                         , 'W' , 'c' );
+   yCOLOR_curs_add  ("m_temp"    , ' ', "marks for temporary locations"                      , 'W' , 'c' );
+   yCOLOR_curs_add  ("m_srch"    , ' ', "marks for search results"                           , 'K' , 'r' );
+   /*---(menus)----------*/
+   yCOLOR_curs_add  ("m_menu"    , ' ', "menu, normal item"                                  , 'K' , 'y' );
+   yCOLOR_curs_add  ("m_cant"    , ' ', "menu, item not available"                           , 'w' , 'y' );
+   yCOLOR_curs_add  ("m_errs"    , ' ', "menu, item in error"                                , 'R' , 'y' );
+   /*---(overlays)-------*/
+   yCOLOR_curs_add  ("m_prev"    , ' ', "note, old note item"                                , 'K' , 'k' );
+   yCOLOR_curs_add  ("m_curr"    , ' ', "note, current note item"                            , 'k' , 'K' );
+   /*---(headers)--------*/
+   yCOLOR_curs_add  ("h_curr"    , ' ', "header (row/col) current"                           , 'k' , 'y' );
+   yCOLOR_curs_add  ("h_lock"    , ' ', "header (row/col) locked in place"                   , 'k' , 'r' );
+   yCOLOR_curs_add  ("h_used"    , ' ', "header (row/col) with used cells"                   , 'y' , 'k' );
+   yCOLOR_curs_add  ("h_norm"    , ' ', "header (row/col) normal"                            , 'y' , ' ' );
+   /*---(dependencies)---*/
+   yCOLOR_curs_add  ("d_reqs"    , ' ', "depends, current cell uses this value"              , 'M' , 'm' );
+   yCOLOR_curs_add  ("d_pros"    , ' ', "depends, provides a value to current cell"          , 'G' , 'g' );
+   yCOLOR_curs_add  ("d_like"    , ' ', "depends, adapts formula from current cell"          , 'B' , 'b' );
+   /*---(cell types)-----*/
+   yCOLOR_curs_add  ("9_norm"   , 'n', "numeric, literal"                                    , 'B' , ' ' );
+   yCOLOR_curs_add  ("9_form"   , 'f', "numeric, formula"                                    , 'G' , ' ' );
+   yCOLOR_curs_add  ("9_dang"   , 'f', "numeric, complex/dangerous formula"                  , 'R' , ' ' );
+   yCOLOR_curs_add  ("9_like"   , 'l', "numeric, formula adapted from elsewhere"             , 'w' , ' ' );
+   yCOLOR_curs_add  ("#_norm"   , 's', "string, literal"                                     , 'Y' , ' ' );
+   yCOLOR_curs_add  ("#_form"   , 'm', "string, formula"                                     , 'M' , ' ' );
+   yCOLOR_curs_add  ("#_dang"   , 'm', "string, complex/dangerous formula"                   , 'R' , ' ' );
+   yCOLOR_curs_add  ("#_like"   , 'L', "string, formula adapted from elsewhere"              , 'w' , ' ' );
+   yCOLOR_curs_add  ("p_rang"   , 'p', "range pointer"                                       , 'C' , ' ' );
+   yCOLOR_curs_add  ("p_addr"   , 'p', "address pointer"                                     , 'C' , ' ' );
+   /*---(other)----------*/
+   yCOLOR_curs_add  (">_null"   , '-', "blank cell"                                          , 'b' , ' ' );
+   yCOLOR_curs_add  (">_unkn"   , ' ', "default for unidentified cells"                      , 'Y' , ' ' );
    /*---(complete)-----------------------*/
    return 0;
 }
@@ -197,6 +217,10 @@ yCOLOR_curs          (cchar *a_terse)
    int         n           = 0;
    n = CURS__find (a_terse);
    if (n < 0)  return -1;
+   attroff (A_BOLD);
+   attroff (A_BLINK);
+   if (s_curses [n].fg != tolower (s_curses [n].fg)) attron (A_BOLD);
+   if (s_curses [n].bg != tolower (s_curses [n].bg)) attron (A_BLINK);
    attron  (s_curses [n].value);
 }
 

@@ -300,7 +300,7 @@ char*       yCOLOR_diff_mapped      (int a_color);
 
 char        yCOLOR_curs_init          (void);
 char        yCOLOR_curs_wrap          (void);
-int         yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_fg, cchar a_bg, cchar a_bold);
+int         yCOLOR_curs_add           (cchar *a_terse, cchar a_abbr, cchar *a_desc, cchar a_fg, cchar a_bg);
 int         yCOLOR_curs_value         (cchar *a_terse);
 char        yCOLOR_curs               (cchar *a_terse);
 char        yCOLOR_cursa              (cchar  a_abbr);

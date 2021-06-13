@@ -1,26 +1,4 @@
 /*============================----beg-of-source---============================*/
-/*===[[ HEADER GUARD ]]=======================================================*/
-#ifndef     yCOLOR_PRIV
-#define     yCOLOR_PRIV    loaded
-
-#include    "yCOLOR.h"
-
-
-/*===[[ START HDOC ]]=========================================================*/
-/*---[[ HEADER ]]-------------------------------------------------*
-
- *   niche         : graphics
- *   application   : aesthetics
- *   module        : yPALETTE
- *   purpose       : provide aesthetic color palettes and transformations
- *   base_system   : gnu/linux
- *   lang_name     : c (primarily ansi-c, but with some C89 extensions)
- *   created       : 2009-09
- *   author        : the_heatherlys
- *   dependencies  : none
- *
- */
-
 
 
 /*===[[ BEG_HEADER ]]=========================================================*/
@@ -55,8 +33,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.2l"
-#define     P_VERTXT    "added new yCOLOR_solo color for error marking"
+#define     P_VERNUM    "1.3a"
+#define     P_VERTXT    "updated ncurses color handling to get better color spread"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
@@ -64,6 +42,11 @@
 
 /*===[[ END_HEADER ]]=========================================================*/
 
+/*===[[ HEADER GUARD ]]=======================================================*/
+#ifndef     yCOLOR_PRIV
+#define     yCOLOR_PRIV    loaded
+
+#include    "yCOLOR.h"
 
 
 /*===[[ HEADERS ]]========================================*/
