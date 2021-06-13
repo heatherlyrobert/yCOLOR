@@ -159,9 +159,9 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add  ("v_root"    , ' ', "root of visual selection"                           , 'Y' , 'k' );
    yCOLOR_curs_add  ("v_fill"    , ' ', "selected, not root/curr"                            , 'Y' , 'y' );
    /*---(marking)--------*/
-   yCOLOR_curs_add  ("m_hint"    , ' ', "marks for extended hinting"                         , 'W' , 'c' );
-   yCOLOR_curs_add  ("m_temp"    , ' ', "marks for temporary locations"                      , 'W' , 'c' );
-   yCOLOR_curs_add  ("m_srch"    , ' ', "marks for search results"                           , 'K' , 'r' );
+   yCOLOR_curs_add  ("m_hint"    , ' ', "marks for extended hinting"                         , 'C' , 'c' );
+   yCOLOR_curs_add  ("m_temp"    , ' ', "marks for temporary locations"                      , 'C' , 'k' );
+   yCOLOR_curs_add  ("m_srch"    , ' ', "marks for search results"                           , 'R' , 'r' );
    /*---(menus)----------*/
    yCOLOR_curs_add  ("m_menu"    , ' ', "menu, normal item"                                  , 'K' , 'y' );
    yCOLOR_curs_add  ("m_cant"    , ' ', "menu, item not available"                           , 'w' , 'y' );

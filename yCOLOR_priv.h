@@ -33,8 +33,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.3a"
-#define     P_VERTXT    "updated ncurses color handling to get better color spread"
+#define     P_VERNUM    "1.3b"
+#define     P_VERTXT    "better color combination for search finds and hints finds"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
