@@ -145,7 +145,7 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add  ("w_keys"    , ' ', "window, keystoke display"                           , 'r' , ' ' );
    /*---(trouble)------------------------*/
    yCOLOR_curs_add  ("!_warn"    , 'w', "trouble, warning"                                   , 'w' , 'R' );
-   yCOLOR_curs_add  ("!_errs"    , 'E', "trouble, error"                                     , 'w' , 'R' );
+   yCOLOR_curs_add  ("!_errs"    , 'E', "trouble, error"                                     , 'W' , 'R' );
    /*---(formula modes)------------------*/
    yCOLOR_curs_add  ("i_maps"    , ' ', "map mode (2d review of sheet/cell collection"       , 'k' , 'Y' );
    yCOLOR_curs_add  ("i_srcs"    , ' ', "source mode (single cell review)"                   , 'k' , 'G' );
@@ -160,15 +160,17 @@ yCOLOR_curs_init          (void)
    yCOLOR_curs_add  ("v_fill"    , ' ', "selected, not root/curr"                            , 'Y' , 'y' );
    /*---(marking)--------*/
    yCOLOR_curs_add  ("m_hint"    , ' ', "marks for extended hinting"                         , 'C' , 'c' );
-   yCOLOR_curs_add  ("m_temp"    , ' ', "marks for temporary locations"                      , 'C' , 'k' );
+   yCOLOR_curs_add  ("m_temp"    , ' ', "marks for temporary locations"                      , 'Y' , 'y' );
    yCOLOR_curs_add  ("m_srch"    , ' ', "marks for search results"                           , 'R' , 'r' );
    /*---(menus)----------*/
    yCOLOR_curs_add  ("m_menu"    , ' ', "menu, normal item"                                  , 'K' , 'y' );
    yCOLOR_curs_add  ("m_cant"    , ' ', "menu, item not available"                           , 'w' , 'y' );
    yCOLOR_curs_add  ("m_errs"    , ' ', "menu, item in error"                                , 'R' , 'y' );
    /*---(overlays)-------*/
-   yCOLOR_curs_add  ("m_prev"    , ' ', "note, old note item"                                , 'K' , 'k' );
-   yCOLOR_curs_add  ("m_curr"    , ' ', "note, current note item"                            , 'k' , 'K' );
+   yCOLOR_curs_add  ("m_main"    , ' ', "note, main title/subject"                           , 'W' , 'M' );
+   yCOLOR_curs_add  ("m_warn"    , ' ', "note, displaying a warning"                         , 'W' , 'R' );
+   yCOLOR_curs_add  ("m_curr"    , ' ', "note, current note item"                            , 'k' , 'Y' );
+   yCOLOR_curs_add  ("m_prev"    , ' ', "note, old note item"                                , 'Y' , 'y' );
    /*---(headers)--------*/
    yCOLOR_curs_add  ("h_curr"    , ' ', "header (row/col) current"                           , 'k' , 'y' );
    yCOLOR_curs_add  ("h_lock"    , ' ', "header (row/col) locked in place"                   , 'k' , 'r' );
@@ -233,6 +235,12 @@ yCOLOR_cursa         (cchar a_abbr)
       attron  (s_curses [n].value);
    }
    return -1;
+}
+
+char
+yCOLOR_cursx          (char a_fg, char a_bg)
+{
+   return 0;
 }
 
 

@@ -33,8 +33,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.3b"
-#define     P_VERTXT    "better color combination for search finds and hints finds"
+#define     P_VERNUM    "1.3c"
+#define     P_VERTXT    "cleaned up curses color names for use in hekate and gyges"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
