@@ -121,15 +121,49 @@ tVARIANT    s_variants  [MAX_VARIANT] = {
 };
 
 
+
+/*============================--------------------============================*/
+/*===----                         saturations                          ----===*/
+/*============================--------------------============================*/
+static void      o___SATURATION______________o (void) {;}
+
 char
-SATS__abbr              (char a_abbr)
+ycolor_sat_init         (void)
+{
+   char        i           =    0;
+   DEBUG_YCOLOR   yLOG_senter  (__FUNCTION__);
+   s_nsats  = 0;
+   for (i = 0; i < MAX_SATS; ++i) {
+      /*---(filter)----------------------*/
+      if (s_sats [i].abbr ==  0)      break;
+      ++s_nsats;
+   }
+   ycolor_saturation ("pastel");
+   DEBUG_YCOLOR   yLOG_sint    ("s_nsats");
+   DEBUG_YCOLOR   yLOG_sexit   (__FUNCTION__);
+   return 0;
+}
+
+char
+ycolor_sat_by_abbr      (cchar a_abbr)
 {
    char        rce         =  -10;
    char        i           =    0;
    char        n           =   -1;
-   /*> printf ("HARM__abbr %c\n", a_abbr);                                            <*/
-   --rce;  if (a_abbr <= G_KEY_SPACE)  return rce;
-   --rce;  if (a_abbr >= G_KEY_TILDA)  return rce;
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_senter  (__FUNCTION__);
+   DEBUG_YCOLOR   yLOG_sint    (a_abbr);
+   /*---(defense)------------------------*/
+   --rce;  if (a_abbr <= G_KEY_SPACE) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   --rce;  if (a_abbr >= G_KEY_TILDA) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_schar   (a_abbr);
+   /*---(find)---------------------------*/
    for (i = 0; i < s_nsats; ++i) {
       /*---(filter)----------------------*/
       if (s_sats [i].abbr != a_abbr)      continue;
@@ -137,62 +171,153 @@ SATS__abbr              (char a_abbr)
       n = i;
       break;
    }
-   --rce;  if (n < 0)   return rce;
+   DEBUG_YCOLOR   yLOG_sint    (n);
+   /*---(check for error)----------------*/
+   --rce;  if (n < 0) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   /*---(complete)-----------------------*/
+   DEBUG_YCOLOR   yLOG_sexit   (__FUNCTION__);
    return n;
 }
 
 char
-SATS__find              (char *a_name)
+ycolor_sat_by_name      (cchar *a_name)
 {
    char        rce         =  -10;
-   char        x_name      [LEN_LABEL];
    char        i           =    0;
    char        n           =   -1;
-   if (strcmp (a_name, "--") == 0)  strlcpy (x_name, myCOLOR.sat_name, LEN_LABEL);
-   else                             strlcpy (x_name, a_name          , LEN_LABEL);
-   /*> printf ("HARM__find %s\n", a_name);                                            <*/
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_senter  (__FUNCTION__);
+   /*---(defense)------------------------*/
+   DEBUG_YCOLOR   yLOG_spoint  (a_name);
+   --rce;  if (a_name == NULL) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_snote   (a_name);
+   /*---(find)---------------------------*/
    for (i = 0; i < s_nsats; ++i) {
       /*---(filter)----------------------*/
-      if (s_sats [i].name [0] != x_name [0])      continue;
-      if (strcmp (s_sats [i].name, x_name) != 0)  continue;
+      if (s_sats [i].name [0] != a_name [0])      continue;
+      if (strcmp (s_sats [i].name, a_name) != 0)  continue;
       /*---(accept)----------------------*/
       n = i;
       break;
    }
-   --rce;  if (n < 0)   return rce;
+   DEBUG_YCOLOR   yLOG_sint    (n);
+   /*---(check for error)----------------*/
+   --rce;  if (n < 0) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   /*---(complete)-----------------------*/
+   DEBUG_YCOLOR   yLOG_sexit   (__FUNCTION__);
    return n;
 }
 
 char
-SATS_set                (cchar *a_name)
+ycolor_saturation       (cchar *a_name)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
    char        n           =   -1;
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
+   /*---(current)------------------------*/
+   DEBUG_YCOLOR   yLOG_value   ("sat"       , myCOLOR.sat);
+   DEBUG_YCOLOR   yLOG_info    ("sat_name"  , myCOLOR.sat_name);
+   /*---(leave alone)--------------------*/
+   DEBUG_YCOLOR   yLOG_point   ("a_name"    , a_name);
+   --rce;  if (a_name == NULL) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_info    ("a_name"    , a_name);
+   if (strcmp (a_name, "=") == 0) {
+      DEBUG_YCOLOR   yLOG_note    ("leave same, nothing to do");
+      DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
+      return 1;
+   }
+   /*---(have no effect)-----------------*/
+   if (strcmp (a_name, "-") == 0 || strcmp (a_name, "none") == 0) {
+      DEBUG_YCOLOR   yLOG_note    ("leave same, nothing to do");
+      strlcpy (myCOLOR.sat_name, "NONE", LEN_LABEL);
+      myCOLOR.sat    = -1.0;
+      DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
+      return 0;
+   }
    /*---(find harmony)-------------------*/
-   if      (a_name == NULL)         n = SATS__find ("--");
-   else if (strlen (a_name) == 1)   n = SATS__abbr (a_name [0]);
-   else                             n = SATS__find (a_name);
-   if (n < 0)  return n;
+   if (strlen (a_name) == 1)   n = ycolor_sat_by_abbr (a_name [0]);
+   else                        n = ycolor_sat_by_name (a_name);
+   if (n < 0)  {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, n);
+      return n;
+   }
    /*---(set color degree)---------------*/
    myCOLOR.sat    = s_sats [n].sat;
    strlcpy (myCOLOR.sat_name, s_sats [n].name, LEN_LABEL);
+   /*---(display)------------------------*/
+   DEBUG_YCOLOR   yLOG_value   ("sat"       , myCOLOR.sat);
+   DEBUG_YCOLOR   yLOG_info    ("sat_name"  , myCOLOR.sat_name);
    /*---(complete)-----------------------*/
+   DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
+   return 0;
+}
+
+char
+yCOLOR_sat           (cchar *a_name)
+{
+   ycolor_saturation    (a_name);
+   yCOLOR__palette_fresh ();
    return 0;
 }
 
 
 
+/*============================--------------------============================*/
+/*===----                           values                             ----===*/
+/*============================--------------------============================*/
+static void      o___VALUES__________________o (void) {;}
 
 char
-VALS__abbr              (char a_abbr)
+ycolor_val_init         (void)
+{
+   char        i           =    0;
+   DEBUG_YCOLOR   yLOG_senter  (__FUNCTION__);
+   s_nvals  = 0;
+   for (i = 0; i < MAX_VALS; ++i) {
+      /*---(filter)----------------------*/
+      if (s_vals [i].abbr ==  0)      break;
+      ++s_nvals;
+   }
+   ycolor_value ("warm");
+   DEBUG_YCOLOR   yLOG_sint    ("s_nvals");
+   DEBUG_YCOLOR   yLOG_sexit   (__FUNCTION__);
+   return 0;
+}
+
+char
+ycolor_val_by_abbr      (cchar a_abbr)
 {
    char        rce         =  -10;
    char        i           =    0;
    char        n           =   -1;
-   /*> printf ("HARM__abbr %c\n", a_abbr);                                            <*/
-   --rce;  if (a_abbr <= G_KEY_SPACE)  return rce;
-   --rce;  if (a_abbr >= G_KEY_TILDA)  return rce;
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_senter  (__FUNCTION__);
+   DEBUG_YCOLOR   yLOG_sint    (a_abbr);
+   /*---(defense)------------------------*/
+   --rce;  if (a_abbr <= G_KEY_SPACE) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   --rce;  if (a_abbr >= G_KEY_TILDA) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_schar   (a_abbr);
+   /*---(find)---------------------------*/
    for (i = 0; i < s_nvals; ++i) {
       /*---(filter)----------------------*/
       if (s_vals [i].abbr != a_abbr)      continue;
@@ -200,69 +325,110 @@ VALS__abbr              (char a_abbr)
       n = i;
       break;
    }
-   --rce;  if (n < 0)   return rce;
+   DEBUG_YCOLOR   yLOG_sint    (n);
+   /*---(check for error)----------------*/
+   --rce;  if (n < 0) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   /*---(complete)-----------------------*/
+   DEBUG_YCOLOR   yLOG_sexit   (__FUNCTION__);
    return n;
 }
 
 char
-VALS__find              (char *a_name)
+ycolor_val_by_name      (cchar *a_name)
 {
    char        rce         =  -10;
-   char        x_name      [LEN_LABEL];
    char        i           =    0;
    char        n           =   -1;
-   if (strcmp (a_name, "--") == 0)  strlcpy (x_name, myCOLOR.val_name, LEN_LABEL);
-   else                             strlcpy (x_name, a_name          , LEN_LABEL);
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_senter  (__FUNCTION__);
+   /*---(defense)------------------------*/
+   DEBUG_YCOLOR   yLOG_spoint  (a_name);
+   --rce;  if (a_name == NULL) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_snote   (a_name);
+   /*---(find)---------------------------*/
    for (i = 0; i < s_nvals; ++i) {
       /*---(filter)----------------------*/
-      if (s_vals [i].name [0] != x_name [0])      continue;
-      if (strcmp (s_vals [i].name, x_name) != 0)  continue;
+      if (s_vals [i].name [0] != a_name [0])      continue;
+      if (strcmp (s_vals [i].name, a_name) != 0)  continue;
       /*---(accept)----------------------*/
       n = i;
       break;
    }
-   --rce;  if (n < 0)   return rce;
+   DEBUG_YCOLOR   yLOG_sint    (n);
+   /*---(check for error)----------------*/
+   --rce;  if (n < 0) {
+      DEBUG_YCOLOR   yLOG_sexitr  (__FUNCTION__, rce);
+      return rce;
+   }
+   /*---(complete)-----------------------*/
+   DEBUG_YCOLOR   yLOG_sexit   (__FUNCTION__);
    return n;
 }
 
 char
-VALS_set                (cchar *a_name)
+ycolor_value            (cchar *a_name)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
    char        n           =   -1;
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
+   /*---(current)------------------------*/
+   DEBUG_YCOLOR   yLOG_value   ("val"       , myCOLOR.val);
+   DEBUG_YCOLOR   yLOG_info    ("val_name"  , myCOLOR.val_name);
+   /*---(leave alone)--------------------*/
+   DEBUG_YCOLOR   yLOG_point   ("a_name"    , a_name);
+   --rce;  if (a_name == NULL) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_info    ("a_name"    , a_name);
+   if (strcmp (a_name, "=") == 0) {
+      DEBUG_YCOLOR   yLOG_note    ("leave same, nothing to do");
+      DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
+      return 1;
+   }
+   /*---(have no effect)-----------------*/
+   if (strcmp (a_name, "-") == 0 || strcmp (a_name, "none") == 0) {
+      DEBUG_YCOLOR   yLOG_note    ("leave same, nothing to do");
+      strlcpy (myCOLOR.val_name, "NONE", LEN_LABEL);
+      myCOLOR.val    = -1.0;
+      DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
+      return 0;
+   }
    /*---(find harmony)-------------------*/
-   if      (a_name == NULL)         n = VALS__find ("--");
-   else if (strlen (a_name) == 1)   n = VALS__abbr (a_name [0]);
-   else                             n = VALS__find (a_name);
-   if (n < 0)  return n;
+   if (strlen (a_name) == 1)   n = ycolor_val_by_abbr (a_name [0]);
+   else                        n = ycolor_val_by_name (a_name);
+   DEBUG_YCOLOR   yLOG_sint    (n);
+   /*---(check for error)----------------*/
+   if (n < 0)  {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, n);
+      return n;
+   }
    /*---(set color degree)---------------*/
    myCOLOR.val    = s_vals [n].val;
    strlcpy (myCOLOR.val_name, s_vals [n].name, LEN_LABEL);
+   /*---(display)------------------------*/
+   DEBUG_YCOLOR   yLOG_value   ("val"       , myCOLOR.val);
+   DEBUG_YCOLOR   yLOG_info    ("val_name"  , myCOLOR.val_name);
    /*---(complete)-----------------------*/
+   DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
    return 0;
 }
 
 char
-VARS_init               (void)
+yCOLOR_val           (cchar *a_name)
 {
-   char        i           =    0;
-   s_nvals  = 0;
-   for (i = 0; i < MAX_VALS; ++i) {
-      /*---(filter)----------------------*/
-      if (s_vals [i].abbr ==  0)      break;
-      ++s_nvals;
-   }
-   s_nsats  = 0;
-   for (i = 0; i < MAX_SATS; ++i) {
-      /*---(filter)----------------------*/
-      if (s_sats [i].abbr ==  0)      break;
-      ++s_nsats;
-   }
+   ycolor_value    (a_name);
+   yCOLOR__palette_fresh ();
    return 0;
 }
-
-
 
 
 
@@ -368,32 +534,81 @@ yCOLOR_variant       (       /* PURPOSE = apply a color variation             */
    float       x_sat       =   0.0;    /* HSV saturation                      */
    float       x_val       =   0.0;    /* HSV value                           */
    int         n           =   0;
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
    /*---(defense)------------------------*/
-   --rce;  if (a_hex == NULL)   return rce;
-   --rce;  if (a_out == NULL)   return rce;
+   DEBUG_YCOLOR   yLOG_point   ("a_hex"     , a_hex);
+   --rce;  if (a_hex == NULL) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_info    ("a_hex"     , a_hex);
+   DEBUG_YCOLOR   yLOG_point   ("a_out"     , a_out);
+   --rce;  if (a_out == NULL) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
    strlcpy (a_out, a_hex, LEN_TERSE);
    /*---(saturation)---------------------*/
-   --rce;  if (a_sat == NULL)   return rce;
-   if (strlen (a_sat) == 1)  n = SATS__abbr (a_sat);
-   else                      n = SATS__find (a_sat);
-   --rce;  if (n     <  0   )   return rce;
-   x_newsat = s_sats [n].sat;
+   DEBUG_YCOLOR   yLOG_point   ("a_sat"     , a_sat);
+   --rce; if (a_sat == NULL) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_info    ("a_sat"     , a_sat);
+   --rce; if (strcmp (a_sat, "=") == 0)  x_newsat = myCOLOR.sat;
+   else if   (strcmp (a_sat, "-") == 0)  x_newsat = -1.00;
+   else {
+      if (strlen (a_sat) == 1)  n = ycolor_sat_by_abbr (a_sat);
+      else                      n = ycolor_sat_by_name (a_sat);
+      if (n <  0)  {
+         DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+         return rce;
+      }
+      x_newsat = s_sats [n].sat;
+   }
+   DEBUG_YCOLOR   yLOG_double  ("x_newsat"  , x_newsat);
    /*---(value)--------------------------*/
-   --rce;  if (a_val == NULL)   return rce;
-   if (strlen (a_val) == 1)  n = VALS__abbr (a_val);
-   else                      n = VALS__find (a_val);
-   --rce;  if (n     <  0   )   return rce;
-   x_newval = s_vals [n].val;
+   DEBUG_YCOLOR   yLOG_point   ("a_val"     , a_val);
+   --rce; if (a_val == NULL) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_info    ("a_val"     , a_val);
+   --rce; if (strcmp (a_val, "=") == 0)  x_newval = myCOLOR.val;
+   else if   (strcmp (a_val, "-") == 0)  x_newval = -1.00;
+   else {
+      if (strlen (a_val) == 1)  n = ycolor_val_by_abbr (a_val);
+      else                      n = ycolor_val_by_name (a_val);
+      if (n <  0) {
+         DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+         return rce;
+      }
+      x_newval = s_vals [n].val;
+   }
+   DEBUG_YCOLOR   yLOG_double  ("x_newval"  , x_newval);
    /*---(get the base)---------------------*/
    rc = yCOLOR_hex2hsv (a_hex, &x_hue, &x_sat, &x_val);
-   --rce;  if (rc != 0)   return rce;
+   DEBUG_YCOLOR   yLOG_value   ("hex2hsv"   , rc);
+   --rce;  if (rc != 0) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_complex ("as is"     , "%6.3fh, %6.3fs, %6.3fv", x_hue, x_sat, x_val);
    /*---(get the modifiers)----------------*/
-   x_sat   = x_newsat;
-   x_val   = x_newval;
+   if (x_newsat >= 0)  x_sat = x_newsat;
+   if (x_newval >= 0)  x_val = x_newval;
    /*---(apply the modifiers)--------------*/
+   DEBUG_YCOLOR   yLOG_complex ("becoming"  , "%6.3fh, %6.3fs, %6.3fv", x_hue, x_sat, x_val);
    rc = yCOLOR_hsv2hex (a_out, x_hue, x_sat, x_val);
-   --rce;  if (rc != 0) return rce;
+   DEBUG_YCOLOR   yLOG_value   ("hsv2hex"   , rc);
+   --rce;  if (rc != 0) {
+      DEBUG_YCOLOR   yLOG_exitr   (__FUNCTION__, rce);
+      return rce;
+   }
+   DEBUG_YCOLOR   yLOG_info    ("a_out"     , a_out);
    /*---(complete)-------------------------*/
+   DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
    return 0;
 }
 
@@ -405,13 +620,13 @@ yCOLOR_normalize     (cchar *a_hex, char *a_out)
    float       x_grn       = 0.0;
    float       x_blu       = 0.0;
    float       x_squared   = 0.0;
-   yCOLOR_hex2rgb (a_hex, &x_red, &x_grn, &x_blu);
+   ycolor_hex2rgb (a_hex, &x_red, &x_grn, &x_blu);
    x_squared = (x_red * x_red) + (x_grn * x_grn) + (x_blu * x_blu);
    x_squared = sqrt (x_squared);
    x_red = x_red / x_squared;
    x_grn = x_grn / x_squared;
    x_blu = x_blu / x_squared;
-   yCOLOR_rgb2hex (a_out, x_red, x_grn, x_blu);
+   ycolor_rgb2hex (a_out, x_red, x_grn, x_blu);
    /*> printf ("yCOLOR_normalize, a_hex=%s, a_out=%s\n", a_hex, a_out);               <*/
    return 0;
 }
@@ -462,10 +677,7 @@ yCOLOR__norming        (      /* PURPOSE = level color intensity               *
     *> printf("  factor    %5.3fr, %5.3fg, %5.3fb\n", d_red, d_grn, d_blu);                    <*/
    /*> printf("  color     %3dr, %3dg, %3db\n", x_red, x_grn, x_blu);                 <*/
    /*---(pull values)----------------------*/
-   yCOLOR_hex2rgb (a_hex, &x_red, &x_grn, &x_blu);
-   /*> x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);                                  <* 
-    *> x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);                                  <* 
-    *> x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);                                  <*/
+   ycolor_hex2rgb (a_hex, &x_red, &x_grn, &x_blu);
    if (s_normings [a_index].is_value == 'y') {
       /*---(update)---------------------------*/
       x_red *= (s_normings [a_index].red);
@@ -484,7 +696,7 @@ yCOLOR__norming        (      /* PURPOSE = level color intensity               *
       uchar u_grn = x_grn * 255;
       uchar u_blu = x_blu * 255;
       /*---(place into RGB hex)---------------*/
-      snprintf (a_out, LEN_TERSE, "#%02x%02x%02x", u_red, u_grn, u_blu);
+      snprintf (a_out, LEN_TERSE, "õ%02x%02x%02x", u_red, u_grn, u_blu);
    } else if (s_normings [a_index].is_value == 't') {
       /*---(update)---------------------------*/
       x_total = x_red + x_grn + x_blu;
@@ -496,7 +708,7 @@ yCOLOR__norming        (      /* PURPOSE = level color intensity               *
       uchar u_grn = x_grnpct * 255;
       uchar u_blu = x_blupct * 255;
       /*---(place into RGB hex)---------------*/
-      snprintf (a_out, LEN_TERSE, "#%02x%02x%02x", u_red, u_grn, u_blu);
+      snprintf (a_out, LEN_TERSE, "õ%02x%02x%02x", u_red, u_grn, u_blu);
    }
    /*---(complete)-------------------------*/
    return 0;

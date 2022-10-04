@@ -6,9 +6,10 @@
 # basename of executable, header, and all code files
 NAME_BASE  = yCOLOR
 # additional standard and outside libraries
-LIB_STD    = -lm -lX11 -lGL -lncurses -ltinfo
+# LIB_STD    = -lm -lX11 -lGL -lncurses -ltinfo
+LIB_STD    = -lm -lX11 -lGL
 # all heatherly libraries used, debug versions whenever available
-LIB_MINE   = -lySTR_debug
+LIB_MINE   = -lyCMD_debug -lySTR_debug
 # directory for production code, no trailing slash
 INST_DIR   = /usr/local/bin
 
@@ -18,10 +19,15 @@ INST_DIR   = /usr/local/bin
 # extra include directories required
 INC_MINE   = 
 # utilities generated, separate from main program
-NAME_UTIL  = yCOLOR_make
+NAME_UTIL  = iris
 # libraries only for the utilities
-LIB_UTIL   = -lySTR_debug -lyX11_debug -lyVIKEYS_debug -lyCOLOR_debug -lyFONT_debug
+LIB_UTIL   = -lySTR_debug -lyX11_debug -lyCOLOR_debug -lyFONT_debug
 
+LIB_FOUND  = -lyMODE_debug  -lyKEYS_debug  -lyFILE_debug  -lyVIEW_debug
+LIB_MAJOR  = -lyMAP_debug   -lyCMD_debug   -lyMACRO_debug -lySRC_debug   -lyMARK_debug  -lyMACRO_debug
+LIB_OPENGL = -lyVIOPENGL_debug -lyGOD_debug -lyX11_debug  -lyFONT_debug  -lyCOLOR_debug -lyGLTEX_debug
+LIB_OTHER  = -lyVAR_debug   -lySTR_debug
+LIB_UTIL   = $(LIB_FOUND)   $(LIB_MAJOR)   $(LIB_OPENGL)  $(LIB_OTHER)
 
 
 #===(post-processing)======================================#

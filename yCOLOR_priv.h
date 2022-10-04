@@ -33,8 +33,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.3c"
-#define     P_VERTXT    "cleaned up curses color names for use in hekate and gyges"
+#define     P_VERNUM    "1.3d"
+#define     P_VERTXT    "brought to good conclution for the color script demo"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
@@ -62,11 +62,12 @@
 #include    <GL/gl.h>        /* OPENGL  standard primary header               */
 #include    <GL/glx.h>       /* OPENGL  standard X11 integration              */
 #include    <ncurses.h>      /* NCURSES standard integration                  */
-/*---(heatherly made)--------------------*/
-#include    <yURG.h>         /* CUSTOM  heatherly urgent processing           */
-#include    <yLOG.h>         /* CUSTOM  heatherly program logging             */
-#include    <ySTR.h>         /* CUSTOM  heatherly string handling             */
+/*---(custom core)-----------------------*/
+#include    <yURG.h>              /* heatherly urgent processing              */
+#include    <yLOG.h>              /* heatherly program logging                */
+#include    <ySTR.h>              /* heatherly string processing              */
 #include    <yVAR.h>         /* CUSTOM  heatherly variable testing            */
+#include    <yCMD.h>              /* heatherly vi/vim command processing      */
 
 
 
@@ -102,10 +103,10 @@ typedef     struct      cVERT       tVERT;
 
 
 /*===[[ RYB ARTISTS COLOR SPECTRUM ]]=========================================*/
-#define   MAX_COLOR    80
-#define   MAX_OPTION   11
+#define   MAX_COLOR    90
+#define   MAX_OPTION   16
 
-extern char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL];
+extern const char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL];
 
 typedef struct cCOLORS tCOLORS;
 struct cCOLORS {
@@ -171,6 +172,8 @@ struct cACCESSOR {
    float       acc;
    /*---(display)------------------------*/
    char        names;
+   char        extra;
+   char        conf;
    char        hexes;
    /*---(done)---------------------------*/
 };
@@ -187,24 +190,33 @@ extern int   s_nvariant;
 extern int   s_cnorming;
 extern int   s_nnorming;
 
-extern char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL];
 extern const char s_newRYB [12][1][LEN_LABEL];
 
+
+
+typedef struct cOGL  tOPL;
+struct cOGL    {
+   short       deg;
+   char        name        [LEN_LABEL];
+   char        base        [LEN_TERSE];
+};
+extern const tOPL g_full [700];
+
+
+
+extern char  unit_answer [ LEN_TEXT ];
 
 
 
 char        WHEEL_init              (void);
 
 
-char        HARM_init               (void);
-char        HARM_update             (void);
+char        ycolor_har_init               (void);
 char        HARM_seq                (int a_seq, char *a_name, char *a_abbr, int *a_base, int *a_comp, int *a_neg, int *a_pos);
 
-int         yCOLOR_deg_fix          (cint  a_deg);
 float       yCOLOR__min3         (float  a_one  , float  a_two, float  a_three);
 float       yCOLOR__max3         (float  a_one  , float  a_two, float  a_three);
 
-float       yCOLOR__unhex        (char   a_one  , char   a_two  );
 
 
 char        DRAW_dot            (char a_type, int a_deg);
@@ -212,10 +224,9 @@ char        DRAW_dot            (char a_type, int a_deg);
 char        yCOLOR__palette_fresh (void);
 
 char        WHEEL_set            (cchar *a_name);
-char        HARM_degree          (cint   a_deg );
-char        HARM_set             (cchar *a_name);
-char        SATS_set             (cchar *a_name);
-char        VALS_set             (cchar *a_name);
+char        ycolor_degree        (cint   a_deg);
+char        ycolor_harmony             (cchar *a_name);
+char        ycolor_value             (cchar *a_name);
 
 
 char        VARS_seq                (int a_seq, char *a_sat, char *a_val, char *a_abbr);
@@ -224,19 +235,51 @@ char        VARS_seq                (int a_seq, char *a_sat, char *a_val, char *
 
 
 
+/*===[[ yCOLOR_conv.c ]]======================================================*/
+/*345678901-12345678901-12345678901-12345678901-12345678901-12345678901-123456*/
+int         ycolor_deg2fix          (cint  a_deg);
+char        ycolor_deg2hex          (cint a_deg, char *a_hex);
+/*---(hex)------------------*/
+char        ycolor_hex2rgb          (char *a_hex, float *a_red, float *a_grn, float *a_blu);
+char        ycolor_rgb2hex          (char *a_hex, cfloat a_red, cfloat a_grn, cfloat a_blu);
 
 
 
 
 
+/*===[[ yCOLOR_pal.c ]]=======================================================*/
+/*345678901-12345678901-12345678901-12345678901-12345678901-12345678901-123456*/
+/*---(program)--------------*/
+char        ycolor_palette_purge    (void);
+char        ycolor_palette_init     (void);
+/*---(generate)-------------*/
+char        ycolor_palette__save    (cint a_major, cint a_minor, cchar *a_hex);
+/*---(report)---------------*/
+char        ycolor_palette_debug    (void);
+/*---(done)-----------------*/
 
 
 
 
+/*===[[ yCOLOR_pal.c ]]=======================================================*/
+/*345678901-12345678901-12345678901-12345678901-12345678901-12345678901-123456*/
+char        ycolor_unit__quiet      (void);
+char        ycolor_unit__loud       (void);
+char        ycolor_unit__end        (void);
 
 
 
-
+/*---(saturation)-----------*/
+char        ycolor_sat_init         (void);
+char        ycolor_sat_by_abbr      (cchar a_abbr);
+char        ycolor_sat_by_name      (cchar *a_name);
+char        ycolor_saturation       (cchar *a_name);
+/*---(value)----------------*/
+char        ycolor_val_init         (void);
+char        ycolor_val_by_abbr      (cchar a_abbr);
+char        ycolor_val_by_name      (cchar *a_name);
+char        ycolor_value            (cchar *a_name);
+/*---(done)-----------------*/
 
 #endif
 /*============================----end-of-source---============================*/

@@ -6,7 +6,7 @@
 
 char        s_use       = YCOLOR_WHEEL;
 char        s_scale     = YCOLOR_LINEAR;
-int         s_cset      = 10;
+int         s_cset      =  1;
 int         s_tcolor    =  0;
 int         s_ncolor    =  0;
 int         s_cvariant  =  0;
@@ -30,17 +30,6 @@ tPALETTE    s_palette   [MAX_COLOR];
 static void      o___UTILITY_________________o (void) {;}
 
 static char      yCOLOR_ver [200] = "";
-
-int
-yCOLOR_deg_fix          (cint  a_deg)
-{
-   int         x_deg       =  a_deg;
-   while (x_deg <    0)  x_deg +=  360;
-   while (x_deg >= 360)  x_deg -=  360;
-   x_deg /= 10;
-   x_deg *= 10;
-   return x_deg;
-}
 
 char*        /*-> return versioning info -------------[ leaf   [gs.420.012.00]*/ /*-[00.0000.00#.!]-*/ /*-[--.---.---.--]-*/
 yCOLOR_version      (void)
@@ -192,7 +181,7 @@ yCOLOR_use           (char  a_use)
    /*---(set rgb values)-----------------*/
    for (i = 0; i < x_ncolor; ++i) {
       strlcpy (x_hex, s_colors [i].hex, LEN_TERSE);
-      yCOLOR_hex2rgb (x_hex, &s_colors [i].red, &s_colors [i].grn, &s_colors [i].blu);
+      ycolor_hex2rgb (x_hex, &s_colors [i].red, &s_colors [i].grn, &s_colors [i].blu);
    }
    /*---(complete)-----------------------*/
    s_ncolor = x_ncolor;
@@ -261,7 +250,7 @@ yCOLOR_clear         (int a_index)
    /*---(locals)-----------+-----+-----+-*/
    char        i           =    0;
    for (i = 0; i < MAX_COLOR; ++i) {
-      strlcpy (s_RYB [i][a_index], "#000000", LEN_TERSE);
+      strlcpy (s_RYB [i][a_index], "õ000000", LEN_TERSE);
    }
    return 0;
 }
@@ -323,16 +312,10 @@ yCOLOR__interpolate  (int a_beg, int a_end)
       /*> if (x_base >= 8)  x_index += 6;                                             <*/
       /*---(calc start)------------------*/
       strlcpy (x_hex , s_RYB [x_index + 0][10], LEN_TERSE);
-      yCOLOR_hex2rgb (x_hex, &x_red1, &x_grn1, &x_blu1);
-      /*> x_red1 = yCOLOR__unhex (x_hex[1], x_hex[2]);                                <* 
-       *> x_grn1 = yCOLOR__unhex (x_hex[3], x_hex[4]);                                <* 
-       *> x_blu1 = yCOLOR__unhex (x_hex[5], x_hex[6]);                                <*/
+      ycolor_hex2rgb (x_hex, &x_red1, &x_grn1, &x_blu1);
       /*---(calc end)--------------------*/
       strlcpy (x_hex , s_RYB [x_index + 6][10], LEN_TERSE);
-      yCOLOR_hex2rgb (x_hex, &x_red2, &x_grn2, &x_blu2);
-      /*> x_red2 = yCOLOR__unhex (x_hex[1], x_hex[2]);                                <* 
-       *> x_grn2 = yCOLOR__unhex (x_hex[3], x_hex[4]);                                <* 
-       *> x_blu2 = yCOLOR__unhex (x_hex[5], x_hex[6]);                                <*/
+      ycolor_hex2rgb (x_hex, &x_red2, &x_grn2, &x_blu2);
       /*---(calc increments)-------------*/
       x_rinc = (x_red2 - x_red1) / 6.0;
       x_ginc = (x_grn2 - x_grn1) / 6.0;
@@ -343,12 +326,12 @@ yCOLOR__interpolate  (int a_beg, int a_end)
          x_grn1 += x_ginc;
          x_blu1 += x_binc;
          /*---(truncate into 0-255)--------------*/
-         yCOLOR_rgb2hex  (x_hex, x_red1, x_grn1, x_blu1);
+         ycolor_rgb2hex  (x_hex, x_red1, x_grn1, x_blu1);
          /*> u_red = x_red1 * 255;                                                    <* 
           *> u_grn = x_grn1 * 255;                                                    <* 
           *> u_blu = x_blu1 * 255;                                                    <* 
           *> /+---(place into RGB hex)---------------+/                               <* 
-          *> snprintf (x_hex, LEN_TERSE, "#%02x%02x%02x", u_red, u_grn, u_blu);         <*/
+          *> snprintf (x_hex, LEN_TERSE, "õ%02x%02x%02x", u_red, u_grn, u_blu);         <*/
          strlcpy (s_RYB [x_index + x_sub][10], x_hex, LEN_TERSE);
       }
    }
@@ -364,7 +347,7 @@ yCOLOR_custom        (void)
    char        x_index     =   0;
    /*---(clear hexes)--------------------*/
    for (x_index = 0; x_index < MAX_COLOR; ++x_index) {
-      strlcpy (s_RYB [x_index][10], "#------"        , LEN_TERSE);
+      strlcpy (s_RYB [x_index][10], "õ------"        , LEN_TERSE);
    }
    /*---(copy bases)---------------------*/
    for (x_base = 0; x_base < 12; ++x_base) {
@@ -383,43 +366,6 @@ yCOLOR_custom        (void)
    yCOLOR__interpolate ( 8, 11);
    /*---(complete)-----------------------*/
    return 0;
-}
-
-char         /*-> tbd --------------------------------[ shoot  [gc.650.121.32]*/ /*-[01.0000.102.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR_init          (char  a_use)
-{
-   /*---(locals)-----------+-----------+-*/
-   int         i           = 0;
-   char        x_ncolor    =   0;
-   /*---(setup)--------------------------*/
-   /*> yCOLOR_custom ();                                                              <*/
-   /*---(use)----------------------------*/
-   x_ncolor = yCOLOR_use (a_use);
-   /*---(counts)-------------------------*/
-   s_tcolor = 0;
-   for (i = 0; i < MAX_COLOR  ; ++i) {
-      if (s_RYB      [i][1][0] == '\0')            break;
-      ++s_tcolor;
-   }
-   /*> s_nvariant = 0;                                                                <* 
-    *> for (i = 0; i < MAX_VARIANT; ++i) {                                            <* 
-    *>    if (s_variants [i].abbr [0] == '\0')            break;                      <* 
-    *>    ++s_nvariant;                                                               <* 
-    *> }                                                                              <*/
-   s_nnorming = 0;
-   for (i = 0; i < MAX_NORMING; ++i) {
-      if (s_normings [i].abbr[0] == '\0') break;
-      ++s_nnorming;
-   }
-   HARM_init   ();
-   WHEEL_init  ();
-   VARS_init   ();
-   HARM_degree (0);
-   HARM_set    ("fcomp");
-   SATS_set    ("full");
-   VALS_set    ("vivid");
-   /*---(complete)-----------------------*/
-   return x_ncolor;
 }
 
 
@@ -597,101 +543,6 @@ yCOLOR_val2color     (cdouble a_val, cfloat a_alpha)
 }
 
 
-
-/*============================--------------------============================*/
-/*===----                       color by hex code                      ----===*/
-/*============================--------------------============================*/
-static void      o___BY_HEX__________________o (void) {;}
-
-float        /*-> tbd --------------------------------[ leaf   [fn.530.231.80]*/ /*-[00.0000.023.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR__unhex        (char a_one, char a_two)
-{
-   /*---(locals)-----------+-----------+-*/
-   float       x_one       = 0.0;
-   float       x_two       = 0.0;
-   float       x_result    = 0.0;
-   /*---(first char)---------------------*/
-   if      (a_one >= '0' && a_one <= '9')   x_one = a_one - '0';
-   else if (a_one >= 'a' && a_one <= 'f')   x_one = a_one - 'a' + 10;
-   else if (a_one >= 'A' && a_one <= 'F')   x_one = a_one - 'A' + 10;
-   else                                     x_one = 0.0;
-   /*---(second char)--------------------*/
-   if      (a_two >= '0' && a_two <= '9')   x_two = a_two - '0';
-   else if (a_two >= 'a' && a_two <= 'f')   x_two = a_two - 'a' + 10;
-   else if (a_two >= 'A' && a_two <= 'F')   x_two = a_two - 'A' + 10;
-   else                                     x_two = 0.0;
-   /*---(calc)---------------------------*/
-   x_result =  ((x_one * 16.0) + x_two) / 255.0;
-   /*---(complete)-----------------------*/
-   return x_result;
-}
-
-char         /*-> use hex code to set opengl color ---[ ------ [ge.650.255.41]*/ /*-[01.0000.503.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR_hex2color     (cchar *a_hex, cfloat a_alpha)
-{
-   /*---(locals)-----------+-----------+-*/
-   char        rce         = -10;
-   int         i           =   0;
-   float       x_red       = 0.0;
-   float       x_grn       = 0.0;
-   float       x_blu       = 0.0;
-   /*---(defense)------------------------*/
-   --rce;  if (a_hex == NULL)        return rce;
-   --rce;  if (strlen (a_hex) != 7)  return rce;
-   --rce;  if (a_hex [0] != '#')     return rce;
-   --rce;  for (i = 1; i < 7; ++i) {
-      if (strchr ("0123456789abcdefABCDEF", a_hex [i]) == NULL)  return rce;
-   }
-   /*---(parse color)--------------------*/
-   x_red = yCOLOR__unhex (a_hex[1], a_hex[2]);
-   x_grn = yCOLOR__unhex (a_hex[3], a_hex[4]);
-   x_blu = yCOLOR__unhex (a_hex[5], a_hex[6]);
-   /*---(set color)----------------------*/
-   glColor4f   (x_red, x_grn, x_blu, a_alpha);
-   /*---(complete)-----------------------*/
-   return 0;
-}
-
-char         /*-> tbd --------------------------------[ ------ [gc.430.432.31]*/ /*-[00.0000.052.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR_hex2rgb      (cchar *a_hex, float *a_red, float *a_grn, float *a_blu)            /* value color component          (0.0-1.0) */
-{
-   /*---(locals)-----------+-----------+-*/
-   float       x_red       = 0.0;
-   float       x_grn       = 0.0;
-   float       x_blu       = 0.0;
-   /*---(remove from hex)----------------*/
-   x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);
-   x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);
-   x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);
-   /*---(return values)------------------*/
-   if (a_red)  *a_red = x_red;
-   if (a_grn)  *a_grn = x_grn;
-   if (a_blu)  *a_blu = x_blu;
-   /*---(complete)-----------------------*/
-   return 0;
-}
-
-char         /*-> tbd --------------------------------[ leaf   [gc.430.442.10]*/ /*-[00.0000.034.!]-*/ /*-[--.---.---.--]-*/
-yCOLOR_rgb2hex      (char *a_hex, cfloat a_red, cfloat a_grn, cfloat a_blu)            /* value color component          (0.0-1.0) */
-{
-   /*---(locals)-----------+-----------+-*/
-   uchar       x_red       = 0;
-   uchar       x_grn       = 0;
-   uchar       x_blu       = 0;
-   char        x_hex       [LEN_TERSE];
-   /*---(round to one byte)----------------*/
-   x_red = a_red * 255;
-   x_grn = a_grn * 255;
-   x_blu = a_blu * 255;
-   /*---(place into RGB hex)---------------*/
-   snprintf (x_hex, LEN_TERSE, "#%02x%02x%02x", x_red, x_grn, x_blu);
-   if (a_hex)  strlcpy (a_hex, x_hex, LEN_TERSE);
-   /*---(complete)-----------------------*/
-   return 0;
-}
-
-
-
 /*============================--------------------============================*/
 /*===----                             hsv                              ----===*/
 /*============================--------------------============================*/
@@ -713,10 +564,7 @@ yCOLOR_hex2hsv      (     /* PURPOSE = convert RGB hex into HSV            */
    float       x_del       = 0.0;
    /*---(simple defense)-------------------*/
    if (strlen(a_hex) != 7)    return -2;
-   yCOLOR_hex2rgb  (a_hex, &x_red, &x_grn, &x_blu);
-   /*> x_red = yCOLOR__unhex (a_hex [1], a_hex [2]);                                  <* 
-    *> x_grn = yCOLOR__unhex (a_hex [3], a_hex [4]);                                  <* 
-    *> x_blu = yCOLOR__unhex (a_hex [5], a_hex [6]);                                  <*/
+   ycolor_hex2rgb  (a_hex, &x_red, &x_grn, &x_blu);
    /*---(setup)----------------------------*/
    x_min   = yCOLOR__min3 (x_red, x_grn, x_blu);
    x_max   = yCOLOR__max3 (x_red, x_grn, x_blu);
@@ -784,215 +632,15 @@ yCOLOR_hsv2hex    (           /* PURPOSE = convert HSV to RGB HEX              *
       default: x_red = x_val; x_grn = p;     x_blu = q;     break;
       }
    }
-   yCOLOR_rgb2hex (a_hex, x_red, x_grn, x_blu);
+   ycolor_rgb2hex (a_hex, x_red, x_grn, x_blu);
    /*> /+---(truncate into 0-255)------------+/                                     <* 
     *> uchar u_red = x_red * 255;                                                     <* 
     *> uchar u_grn = x_grn * 255;                                                     <* 
     *> uchar u_blu = x_blu * 255;                                                     <* 
     *> /+---(place into RGB hex)-------------+/                                     <* 
-    *> snprintf(a_hex, LEN_TERSE, "#%02x%02x%02x", u_red, u_grn, u_blu);                <*/
+    *> snprintf(a_hex, LEN_TERSE, "õ%02x%02x%02x", u_red, u_grn, u_blu);                <*/
    /*---(complete)-----------------------*/
    return 0;
 }
-
-
-
-/*============================--------------------============================*/
-/*===----                         export services                      ----===*/
-/*============================--------------------============================*/
-static void      o___SERVICES________________o (void) {;}
-
-char
-yCOLOR__palette_save (cint a_slot, cchar *a_hex)
-{
-   /*---(locals)-----------+-----------+-*/
-   float       x_red       = 0.0;
-   float       x_grn       = 0.0;
-   float       x_blu       = 0.0;
-   /*---(convert)------------------------*/
-   yCOLOR_hex2rgb  (a_hex, &x_red, &x_grn, &x_blu);
-   /*---(save)---------------------------*/
-   strlcpy         (s_palette [a_slot].hex, a_hex, LEN_TERSE);
-   s_palette [a_slot].red = x_red;
-   s_palette [a_slot].grn = x_grn;
-   s_palette [a_slot].blu = x_blu;
-   /*---(complete)-----------------------*/
-   return 0;
-}
-
-char
-yCOLOR_set           (cint a_slot, cfloat a_alpha)
-{
-   glColor4f   (s_palette [a_slot].red, s_palette [a_slot].grn, s_palette [a_slot].blu, a_alpha);
-   return 0;
-}
-
-char
-yCOLOR_set_clear     (cint a_slot)
-{
-   glClearColor   (s_palette [a_slot].red, s_palette [a_slot].grn, s_palette [a_slot].blu, 1.0);
-   return 0;
-}
-
-char
-yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
-{
-   int         i           =    0;
-   int         j           =    0;
-   /*---(locals)-----------+-----------+-*/
-   char        x_orig      [LEN_TERSE] = "";
-   char        x_base      [LEN_TERSE] = "";
-   char        x_hex       [LEN_TERSE] = "";
-   /*---(header)-------------------------*/
-   DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
-   /*---(setup)--------------------------*/
-   /*> yCOLOR_init     (YCOLOR_WHEEL );                                               <*/
-   /*> yCOLOR_scale    (YCOLOR_PARABOLIC,  0.0,  50.0);                               <*/
-   /*> WHEEL_set       ("five_adj");                                                  <*/
-   /*---(passed values)------------------*/
-   HARM_degree     (a_deg);
-   DEBUG_YCOLOR   yLOG_value   ("degree"    , myCOLOR.degree);
-   HARM_set        (a_harm);
-   DEBUG_YCOLOR   yLOG_info    ("harmony"   , myCOLOR.harmony);
-   SATS_set        (a_sat);
-   DEBUG_YCOLOR   yLOG_info    ("sat_name"  , myCOLOR.sat_name);
-   VALS_set        (a_val);
-   DEBUG_YCOLOR   yLOG_info    ("val_name"  , myCOLOR.val_name);
-   /*---(save values)--------------------*/
-   for (i = 0; i < 4; ++i) {
-      switch (i) {
-      case 0 :
-         DEBUG_YCOLOR   yLOG_value   ("DEGREE"    , myCOLOR.degree);
-         yCOLOR_deg2hex (myCOLOR.degree, x_orig);
-         break;
-      case 1 :
-         DEBUG_YCOLOR   yLOG_value   ("COMP"      , myCOLOR.comp);
-         yCOLOR_deg2hex (myCOLOR.comp  , x_orig);
-         break;
-      case 2 :
-         DEBUG_YCOLOR   yLOG_value   ("NEG"       , myCOLOR.neg);
-         yCOLOR_deg2hex (myCOLOR.neg   , x_orig);
-         break;
-      case 3 :
-         DEBUG_YCOLOR   yLOG_value   ("POS"       , myCOLOR.pos);
-         yCOLOR_deg2hex (myCOLOR.pos   , x_orig);
-         break;
-      case 4 :
-         DEBUG_YCOLOR   yLOG_info    ("GREY"      , "n/a");
-         strlcpy (x_orig, "#888888", LEN_TERSE);
-         break;
-      }
-      DEBUG_YCOLOR   yLOG_info    ("x_orig"    , x_orig);
-      /*---(main)------------------------*/
-      yCOLOR_variant       ("--", "--", x_orig, x_base);
-      DEBUG_YCOLOR   yLOG_info    ("x_base"    , x_base);
-      yCOLOR__palette_save ((i * 10) + 0, x_base);
-      yCOLOR__palette_save ((i * 10) + 4, x_base);
-      yCOLOR__palette_save ((i * 10) + 9, x_base);
-      /*---(lighter)---------------------*/
-      yCOLOR_accent        ('!', x_base, x_hex);
-      DEBUG_YCOLOR   yLOG_info    ("!"         , x_hex);
-      yCOLOR__palette_save ((i * 10) + 1, x_hex);
-      yCOLOR_accent        ('^', x_base, x_hex);
-      DEBUG_YCOLOR   yLOG_info    ("^"         , x_hex);
-      yCOLOR__palette_save ((i * 10) + 2, x_hex);
-      yCOLOR_accent        ('+', x_base, x_hex);
-      DEBUG_YCOLOR   yLOG_info    ("+"         , x_hex);
-      yCOLOR__palette_save ((i * 10) + 3, x_hex);
-      /*---(darker)----------------------*/
-      yCOLOR_accent        ('-', x_base, x_hex);
-      DEBUG_YCOLOR   yLOG_info    ("-"         , x_hex);
-      yCOLOR__palette_save ((i * 10) + 5, x_hex);
-      yCOLOR_accent        ('v', x_base, x_hex);
-      DEBUG_YCOLOR   yLOG_info    ("v"         , x_hex);
-      yCOLOR__palette_save ((i * 10) + 6, x_hex);
-      yCOLOR_accent        ('#', x_base, x_hex);
-      DEBUG_YCOLOR   yLOG_info    ("#"         , x_hex);
-      yCOLOR__palette_save ((i * 10) + 7, x_hex);
-      yCOLOR_accent        ('@', x_base, x_hex);
-      DEBUG_YCOLOR   yLOG_info    ("@"         , x_hex);
-      yCOLOR__palette_save ((i * 10) + 8, x_hex);
-   }
-   /*---(warning)------------------------*/
-   yCOLOR_deg2hex (  0, x_orig);
-   yCOLOR_variant       ("--", "--", x_orig, x_base);
-   DEBUG_YCOLOR   yLOG_info    ("bad"      , x_base);
-   yCOLOR__palette_save (YCOLOR_WARNING, x_base);
-   /*---(source)-------------------------*/
-   yCOLOR_deg2hex (180, x_orig);
-   yCOLOR_variant       ("--", "--", x_orig, x_base);
-   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
-   yCOLOR__palette_save (YCOLOR_SOURCE , x_base);
-   /*---(select)-------------------------*/
-   yCOLOR_variant       ("--", "--", "#DDDDDD", x_base);
-   DEBUG_YCOLOR   yLOG_info    ("bad"       , x_base);
-   yCOLOR__palette_save (YCOLOR_SELECT , x_base);
-   /*---(textreg)------------------------*/
-   yCOLOR_deg2hex (230, x_orig);
-   yCOLOR_variant       ("--", "--", x_orig, x_base);
-   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
-   yCOLOR__palette_save (YCOLOR_TEXTREG, x_base);
-   /*---(replace)------------------------*/
-   yCOLOR_deg2hex (330, x_orig);
-   yCOLOR_variant       ("--", "--", x_orig, x_base);
-   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
-   yCOLOR__palette_save (YCOLOR_REPLACE, x_base);
-   /*---(input)--------------------------*/
-   yCOLOR_deg2hex (270, x_orig);
-   yCOLOR_variant       ("--", "--", x_orig, x_base);
-   DEBUG_YCOLOR   yLOG_info    ("source"   , x_base);
-   yCOLOR__palette_save (YCOLOR_INPUT  , x_base);
-   /*---(complete)-----------------------*/
-   DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
-   return 0;
-}
-
-char
-yCOLOR__palette_fresh (void)
-{
-   yCOLOR_palette (666, "--", "--", "--");
-   return 0;
-}
-
-char
-yCOLOR_wheel         (cchar *a_name)
-{
-   WHEEL_set   (a_name);
-   yCOLOR__palette_fresh ();
-   return 0;
-}
-
-char
-yCOLOR_deg           (cint a_deg)
-{
-   HARM_degree (a_deg);
-   yCOLOR__palette_fresh ();
-   return 0;
-}
-
-char
-yCOLOR_harm          (cchar *a_name)
-{
-   HARM_set    (a_name);
-   yCOLOR__palette_fresh ();
-   return 0;
-}
-
-char
-yCOLOR_sat           (cchar *a_name)
-{
-   SATS_set    (a_name);
-   yCOLOR__palette_fresh ();
-   return 0;
-}
-
-char
-yCOLOR_val           (cchar *a_name)
-{
-   VALS_set    (a_name);
-   yCOLOR__palette_fresh ();
-   return 0;
-}
-
 
 
