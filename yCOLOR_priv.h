@@ -33,8 +33,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.3d"
-#define     P_VERTXT    "brought to good conclution for the color script demo"
+#define     P_VERNUM    "1.3e"
+#define     P_VERTXT    "updated for yVIOPENGL_dawn and _dusk change"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
@@ -174,6 +174,7 @@ struct cACCESSOR {
    char        names;
    char        extra;
    char        conf;
+   char        refs;
    char        hexes;
    /*---(done)---------------------------*/
 };

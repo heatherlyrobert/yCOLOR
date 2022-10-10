@@ -112,6 +112,17 @@ DRAW_conf_set        (char *a_opt)
    return 0;
 }
 
+char
+DRAW_refs_set        (char *a_opt)
+{
+   if      (a_opt == NULL)                 myCOLOR.refs  = '-';
+   else if (strcmp (a_opt, "on"  ) == 0)   myCOLOR.refs  = 'y';
+   else if (strcmp (a_opt, "show") == 0)   myCOLOR.refs  = 'y';
+   else if (strcmp (a_opt, "off" ) == 0)   myCOLOR.refs  = '-';
+   else if (strcmp (a_opt, "hide") == 0)   myCOLOR.refs  = '-';
+   return 0;
+}
+
 
 /*====================------------------------------------====================*/
 /*===----                     null maps and labels                     ----===*/
@@ -275,6 +286,7 @@ PROG__init              (int a_argc, char *a_argv[])
    yCMD_add             ('v', "labels"      , ""    , "s"    , DRAW_labels_set            , "show color labels (y/n)" );
    yCMD_add             ('v', "extras"      , ""    , "s"    , DRAW_extras_set            , "show extra colors (y/n)" );
    yCMD_add             ('v', "conf"        , ""    , "s"    , DRAW_conf_set              , "show conf details (y/n)" );
+   yCMD_add             ('v', "refs"        , ""    , "s"    , DRAW_refs_set              , "show conf details (y/n)" );
    /*> yVIKEYS_view_config  ("yCOLOR_make", P_VERNUM, YVIKEYS_OPENGL, 500, 500, 500);   <*/
    /*> yCMD_direct          (":palette 0 fcomp full vivid");                          <*/
    /*---(complete)-----------------------*/
@@ -407,6 +419,7 @@ char       /*----: process the xwindows event stream -------------------------*/
 PROG_dawn          (void)
 {
    DEBUG_PROG   yLOG_enter   (__FUNCTION__);
+   yVIOPENGL_dawn ();
    DRAW_init    ();
    FONT_load    ();
    /*> yKEYS_progress_config ('-', NULL, NULL, NULL, '-');                            <*/
@@ -420,6 +433,7 @@ PROG_dusk          (void)
    /*---(header)-------------------------*/
    DEBUG_PROG  yLOG_enter (__FUNCTION__);
    /*---(process)------------------------*/
+   yVIOPENGL_dusk ();
    /*---(complete)-----------------------*/
    DEBUG_PROG  yLOG_exit  (__FUNCTION__);
    return 0;
@@ -483,13 +497,11 @@ DRAW_init          (void)
 {
    yCMD_direct   (":layout min");
    if (s_alt == 'y')  yCMD_direct   (":alt show");
-   yVIEW_full     (YVIEW_MAIN , YVIEW_FLAT , YVIEW_MIDCEN, 1.0, YCOLOR_SPE + YCOLOR_BLK, DRAW_wheel );
-   /*> yVIKEYS_view_simple   (YVIKEYS_PROGRESS, YCOLOR_GRY_MIN, DRAW_view_prog );     <*/
-   yVIEW_simple   (YVIEW_PROGRESS, YCOLOR_SPE + YCOLOR_BLK, DRAW_view_prog);
-   yVIEW_full     (YVIEW_ALT  , YVIEW_FLAT , YVIEW_MIDCEN, 1.0, YCOLOR_SPE + YCOLOR_BLK, DRAW_layout);
+   yVIEW_full     (YVIEW_MAIN , YVIEW_FLAT , YVIEW_MIDCEN, YCOLOR_SPE, YCOLOR_BLK, DRAW_wheel );
+   yVIEW_simple   (YVIEW_PROGRESS, YCOLOR_SPE, YCOLOR_BLK, DRAW_view_prog);
+   yVIEW_full     (YVIEW_ALT  , YVIEW_FLAT , YVIEW_MIDCEN, YCOLOR_SPE, YCOLOR_BLK, DRAW_layout);
    yVIEW_defsize  (YVIEW_ALT, 500, 0);
-   /*> yVIKEYS_view_simple   (YVIKEYS_NAV     , YCOLOR_GRY_MIN, DRAW_view_nav  );     <*/
-   yVIEW_simple   (YVIEW_NAV     , YCOLOR_SPE + YCOLOR_BLK, DRAW_view_nav );
+   yVIEW_simple   (YVIEW_NAV     , YCOLOR_SPE, YCOLOR_BLK, DRAW_view_nav );
    yVIEW_defsize  (YVIEW_NAV,   0, 0);
    yVIEW_resize   (0, 0, 0);
    /*> yVIKEYS_view_colors   (YCOLOR_POS, YCOLOR_BAS, YCOLOR_NEG, YCOLOR_POS);        <*/
@@ -1030,15 +1042,27 @@ DRAW_box            (cchar a_major, cchar a_minor, char a_size, int a_xpos, int 
       glVertex3f  ( a_xpos + x_wide, a_ypos         , x_zpos);
       glVertex3f  ( a_xpos         , a_ypos         , x_zpos);
    } glEnd   ();
+   if (strchr ("scb" , a_size) != NULL && myCOLOR.refs != '-') {
+      glPushMatrix(); {
+         if (a_minor <= 4) glColor4f    (0.0, 0.0, 0.0, 1.0);
+         else              glColor4f    (1.0, 1.0, 1.0, 1.0);
+         glTranslatef (a_xpos + x_wide / 2.0, a_ypos + x_tall / 2.0,  x_zpos);
+         sprintf (t, "%d", a_minor);
+         yFONT_print  (s_font, 8, YF_MIDCEN, t);
+      } glPopMatrix();
+   }
    if (strchr ("TKJB", a_size) != NULL && myCOLOR.names != '-') {
       switch (a_minor) {
       case YCOLOR_ERR : strlcpy (t, "error"    , LEN_LABEL); break;
       case YCOLOR_WRN : strlcpy (t, "warning"  , LEN_LABEL); break;
       case YCOLOR_SRC : strlcpy (t, "source"   , LEN_LABEL); break;
-      case YCOLOR_SEL : strlcpy (t, "selcction", LEN_LABEL); break;
+      case YCOLOR_SEL : strlcpy (t, "selection", LEN_LABEL); break;
       case YCOLOR_REG : strlcpy (t, "register" , LEN_LABEL); break;
       case YCOLOR_REP : strlcpy (t, "replace"  , LEN_LABEL); break;
       case YCOLOR_INP : strlcpy (t, "input"    , LEN_LABEL); break;
+      case YCOLOR_WDR : strlcpy (t, "wander"   , LEN_LABEL); break;
+      case YCOLOR_CUR : strlcpy (t, "cursor"   , LEN_LABEL); break;
+      case YCOLOR_BLK : strlcpy (t, "black"    , LEN_LABEL); break;
       }
       glPushMatrix(); {
          glColor4f    (0.0, 0.0, 0.0, 1.0);
@@ -1136,6 +1160,9 @@ DRAW_layout         (void)
          DRAW_box (YCOLOR_SPE, YCOLOR_REP, 'T',  8,  9);
          DRAW_box (YCOLOR_SPE, YCOLOR_SEL, 'J',  8,  9);
          DRAW_box (YCOLOR_SPE, YCOLOR_REG, 'T',  8,  8);
+         DRAW_box (YCOLOR_SPE, YCOLOR_WDR, 'J',  8,  8);
+         DRAW_box (YCOLOR_SPE, YCOLOR_CUR, 'T',  8,  7);
+         DRAW_box (YCOLOR_SPE, YCOLOR_BLK, 'J',  8,  7);
       }
       /*---(variegated)------------------*/
       glTranslatef ( 245 ,  245,   0.0);
@@ -1191,8 +1218,8 @@ DRAW_layout         (void)
                yFONT_print  (s_font,  8, YF_BOTLEF, "system browns");
             } glPopMatrix();
             glPushMatrix(); {
-               glTranslatef (  30 ,   35,  50.0);
-               yFONT_print  (s_font,  8, YF_BOTLEF, "variegated");
+               glTranslatef (   0 ,    0,  50.0);
+               yFONT_print  (s_font,  8, YF_MIDLEF, "variegated");
             } glPopMatrix();
          }
       }

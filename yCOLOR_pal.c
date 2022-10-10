@@ -252,11 +252,11 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
    ycolor_palette__save (YCOLOR_SPE, YCOLOR_BLK, "õ000000");
    /*---(error)--------------------------*/
    ycolor_deg2hex (  0, x_orig);
-   yCOLOR_variant       ("-", "balanced", x_orig, x_base);
+   yCOLOR_variant       ("-", "vivid"   , x_orig, x_base);
    ycolor_palette__save (YCOLOR_SPE, YCOLOR_ERR, x_base);
    /*---(warning)------------------------*/
    ycolor_deg2hex (120, x_orig);
-   yCOLOR_variant       ("-", "balanced", x_orig, x_base);
+   yCOLOR_variant       ("-", "vivid"   , x_orig, x_base);
    ycolor_palette__save (YCOLOR_SPE, YCOLOR_WRN, x_base);
    /*---(source)-------------------------*/
    ycolor_deg2hex (180, x_orig);
@@ -276,8 +276,16 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
    ycolor_palette__save (YCOLOR_SPE, YCOLOR_REP, x_base);
    /*---(input)--------------------------*/
    ycolor_deg2hex (230, x_orig);
-   yCOLOR_variant       ("-", "balanced", x_orig, x_base);
+   yCOLOR_variant       ("-", "vivid"   , x_orig, x_base);
    ycolor_palette__save (YCOLOR_SPE, YCOLOR_INP, x_base);
+   /*---(wander)-------------------------*/
+   ycolor_deg2hex (  0, x_orig);
+   yCOLOR_variant       ("-", "balanced", x_orig, x_base);
+   ycolor_palette__save (YCOLOR_SPE, YCOLOR_WDR, x_base);
+   /*---(cursor)-------------------------*/
+   ycolor_deg2hex (120, x_orig);
+   yCOLOR_variant       ("-", "balanced", x_orig, x_base);
+   ycolor_palette__save (YCOLOR_SPE, YCOLOR_CUR, x_base);
    /*---(report out)---------------------*/
    ycolor_palette_debug    ();
    /*---(complete)-----------------------*/
@@ -286,7 +294,7 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
 }
 
 char
-yCOLOR_opengl           (char a_major, char a_minor, float a_alpha)
+ycolor_opengl           (char a_type, char a_major, char a_minor, float a_alpha)
 {
    /*---(locals)-----------+-----+-----+-*/
    char        rce         =  -10;
@@ -314,11 +322,15 @@ yCOLOR_opengl           (char a_major, char a_minor, float a_alpha)
    }
    /*---(set color)----------------------*/
    DEBUG_YCOLOR   yLOG_complex ("color"     , "%5.3fr, %5.3fg, %5.3fb, %5.3fa", s_palette [a_major + a_minor].red, s_palette [a_major + a_minor].grn, s_palette [a_major + a_minor].blu, a_alpha);
-   glColor4f   (s_palette [a_major + a_minor].red, s_palette [a_major + a_minor].grn, s_palette [a_major + a_minor].blu, a_alpha);
+   if (a_type == 'c')  glClearColor(s_palette [a_major + a_minor].red, s_palette [a_major + a_minor].grn, s_palette [a_major + a_minor].blu, a_alpha);
+   else                glColor4f   (s_palette [a_major + a_minor].red, s_palette [a_major + a_minor].grn, s_palette [a_major + a_minor].blu, a_alpha);
    /*---(complete)-----------------------*/
    DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
    return 0;
 }
+
+char yCOLOR_opengl       (char a_major, char a_minor, float a_alpha) { return ycolor_opengl ('-', a_major, a_minor, a_alpha); }
+char yCOLOR_opengl_clear (char a_major, char a_minor)                { return ycolor_opengl ('c', a_major, a_minor, 1.0); }
 
 char
 yCOLOR__palette_fresh (void)

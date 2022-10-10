@@ -45,6 +45,7 @@ yCOLOR_init          (void)
    myCOLOR.names = '-';
    myCOLOR.extra = '-';
    myCOLOR.conf  = '-';
+   myCOLOR.refs  = '-';
    /*---(complete)-----------------------*/
    DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
    return x_ncolor;

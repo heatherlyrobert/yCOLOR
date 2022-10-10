@@ -196,6 +196,8 @@
 #define     YCOLOR_REG        5
 #define     YCOLOR_REP        6
 #define     YCOLOR_INP        7
+#define     YCOLOR_WDR        8
+#define     YCOLOR_CUR        9
 
 #define     YCOLOR_VAR       70
 
@@ -211,12 +213,6 @@
 #define     YCOLOR_TEN        9
 #define     YCOLOR_ELE       10
 #define     YCOLOR_TWE       11
-#define     YCOLOR_THT       12
-#define     YCOLOR_FOT       13
-#define     YCOLOR_FIT       14
-#define     YCOLOR_SIT       15
-#define     YCOLOR_SET       16
-#define     YCOLOR_EIT       17
 
 
 
@@ -292,6 +288,7 @@ char          yCOLOR_answer [ LEN_TEXT ];
 
 char        yCOLOR_palette          (cint   a_deg  , cchar *a_harm, cchar *a_sat, cchar *a_val);
 char        yCOLOR_opengl           (char a_major, char a_minor, float a_alpha);
+char        yCOLOR_opengl_clear     (char a_major, char a_minor);
 
 
 #endif
