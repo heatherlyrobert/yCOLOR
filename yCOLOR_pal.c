@@ -37,6 +37,7 @@ ycolor_palette_init     (void)
    DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
    /*---(clear)--------------------------*/
    ycolor_palette_purge ();
+   ycolor_constant ();
    /*---(complete)-----------------------*/
    DEBUG_YCOLOR   yLOG_exit    (__FUNCTION__);
    return 0;
@@ -191,36 +192,11 @@ ycolor_palette__one  (cchar a_major, cint a_deg)
    return 0;
 }
 
-
 char
-yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
+ycolor_constant      (void)
 {
-   /*---(locals)-----------+-----+-----+-*/
-   char        rc          =    0;
-   int         i           =    0;
-   int         d           =    0;
-   float       x_beg, x_red, x_grn, x_blu;
    char        x_orig      [LEN_TERSE] = "";
    char        x_base      [LEN_TERSE] = "";
-   /*---(header)-------------------------*/
-   DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
-   /*---(report out)---------------------*/
-   ycolor_palette_purge    ();
-   ycolor_palette_debug    ();
-   /*---(passed values)------------------*/
-   ycolor_degree     (a_deg);
-   DEBUG_YCOLOR   yLOG_value   ("degree"    , myCOLOR.degree);
-   ycolor_harmony    (a_harm);
-   DEBUG_YCOLOR   yLOG_info    ("harmony"   , myCOLOR.harmony);
-   ycolor_saturation (a_sat);
-   DEBUG_YCOLOR   yLOG_info    ("sat_name"  , myCOLOR.sat_name);
-   ycolor_value      (a_val);
-   DEBUG_YCOLOR   yLOG_info    ("val_name"  , myCOLOR.val_name);
-   /*---(save values)--------------------*/
-   ycolor_palette__one (YCOLOR_BAS, myCOLOR.degree);
-   ycolor_palette__one (YCOLOR_COM, myCOLOR.comp);
-   ycolor_palette__one (YCOLOR_NEG, myCOLOR.neg);
-   ycolor_palette__one (YCOLOR_POS, myCOLOR.pos);
    /*---(brown)--------------------------*/
    ycolor_palette__save (YCOLOR_BRN, YCOLOR_NOR, "õ994500");
    ycolor_palette__save (YCOLOR_BRN, YCOLOR_MAX, "õffca9f");
@@ -243,11 +219,6 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
    ycolor_palette__save (YCOLOR_GRY, YCOLOR_MOR, "õ202020");
    ycolor_palette__save (YCOLOR_GRY, YCOLOR_MIN, "õ101010");
    ycolor_palette__save (YCOLOR_GRY, YCOLOR_TBD, "õ777777");
-   /*---(rainbow)------------------------*/
-   for (i = 0; i < 10; ++i) {
-      ycolor_deg2hex (i * 36 + myCOLOR.degree, x_base);
-      ycolor_palette__save (YCOLOR_VAR, i, x_base);
-   }
    /*---(black)--------------------------*/
    ycolor_palette__save (YCOLOR_SPE, YCOLOR_BLK, "õ000000");
    /*---(error)--------------------------*/
@@ -286,6 +257,106 @@ yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
    ycolor_deg2hex (120, x_orig);
    yCOLOR_variant       ("-", "balanced", x_orig, x_base);
    ycolor_palette__save (YCOLOR_SPE, YCOLOR_CUR, x_base);
+   /*---(complete)-----------------------*/
+   return 0;
+}
+
+
+char
+yCOLOR_palette       (cint a_deg, cchar *a_harm, cchar *a_sat, cchar *a_val)
+{
+   /*---(locals)-----------+-----+-----+-*/
+   char        rc          =    0;
+   int         i           =    0;
+   int         d           =    0;
+   float       x_beg, x_red, x_grn, x_blu;
+   char        x_orig      [LEN_TERSE] = "";
+   char        x_base      [LEN_TERSE] = "";
+   /*---(header)-------------------------*/
+   DEBUG_YCOLOR   yLOG_enter   (__FUNCTION__);
+   /*---(report out)---------------------*/
+   ycolor_palette_purge    ();
+   ycolor_palette_debug    ();
+   /*---(passed values)------------------*/
+   ycolor_degree     (a_deg);
+   DEBUG_YCOLOR   yLOG_value   ("degree"    , myCOLOR.degree);
+   ycolor_harmony    (a_harm);
+   DEBUG_YCOLOR   yLOG_info    ("harmony"   , myCOLOR.harmony);
+   ycolor_saturation (a_sat);
+   DEBUG_YCOLOR   yLOG_info    ("sat_name"  , myCOLOR.sat_name);
+   ycolor_value      (a_val);
+   DEBUG_YCOLOR   yLOG_info    ("val_name"  , myCOLOR.val_name);
+   /*---(save values)--------------------*/
+   ycolor_palette__one (YCOLOR_BAS, myCOLOR.degree);
+   ycolor_palette__one (YCOLOR_COM, myCOLOR.comp);
+   ycolor_palette__one (YCOLOR_NEG, myCOLOR.neg);
+   ycolor_palette__one (YCOLOR_POS, myCOLOR.pos);
+   /*---(constants)----------------------*/
+   ycolor_constant ();
+   /*> ycolor_palette__save (YCOLOR_BRN, YCOLOR_NOR, "õ994500");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_MAX, "õffca9f");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_ACC, "õe1a06b");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_LIG, "õbb6e2e");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_MED, "õ994500");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_DRK, "õ763500");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_MUT, "õ502400");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_MOR, "õ391900");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_MIN, "õ130800");                      <* 
+    *> ycolor_palette__save (YCOLOR_BRN, YCOLOR_TBD, "õ994500");                      <*/
+   /*---(brown)--------------------------*/
+   /*> ycolor_palette__save (YCOLOR_GRY, YCOLOR_NOR, "õ777777");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_MAX, "õeeeeee");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_ACC, "õbbbbbb");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_LIG, "õ999999");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_MED, "õ777777");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_DRK, "õ606060");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_MUT, "õ404040");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_MOR, "õ202020");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_MIN, "õ101010");                      <* 
+    *> ycolor_palette__save (YCOLOR_GRY, YCOLOR_TBD, "õ777777");                      <*/
+   /*---(rainbow)------------------------*/
+   for (i = 0; i < 10; ++i) {
+      ycolor_deg2hex (i * 36 + myCOLOR.degree, x_base);
+      ycolor_palette__save (YCOLOR_VAR, i, x_base);
+   }
+   /*---(black)--------------------------*/
+   /*> ycolor_palette__save (YCOLOR_SPE, YCOLOR_BLK, "õ000000");                      <*/
+   /*---(error)--------------------------*/
+   /*> ycolor_deg2hex (  0, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "vivid"   , x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_ERR, x_base);                         <*/
+   /*---(warning)------------------------*/
+   /*> ycolor_deg2hex (120, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "vivid"   , x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_WRN, x_base);                         <*/
+   /*---(source)-------------------------*/
+   /*> ycolor_deg2hex (180, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "balanced", x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_SRC, x_base);                         <*/
+   /*---(select)-------------------------*/
+   /*> ycolor_deg2hex ( 60, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "balanced", x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_SEL, x_base);                         <*/
+   /*---(textreg)------------------------*/
+   /*> ycolor_deg2hex (210, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "balanced", x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_REG, x_base);                         <*/
+   /*---(replace)------------------------*/
+   /*> ycolor_deg2hex (315, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "balanced", x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_REP, x_base);                         <*/
+   /*---(input)--------------------------*/
+   /*> ycolor_deg2hex (230, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "vivid"   , x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_INP, x_base);                         <*/
+   /*---(wander)-------------------------*/
+   /*> ycolor_deg2hex (  0, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "balanced", x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_WDR, x_base);                         <*/
+   /*---(cursor)-------------------------*/
+   /*> ycolor_deg2hex (120, x_orig);                                                  <* 
+    *> yCOLOR_variant       ("-", "balanced", x_orig, x_base);                        <* 
+    *> ycolor_palette__save (YCOLOR_SPE, YCOLOR_CUR, x_base);                         <*/
    /*---(report out)---------------------*/
    ycolor_palette_debug    ();
    /*---(complete)-----------------------*/

@@ -9,7 +9,7 @@ NAME_BASE  = yCOLOR
 # LIB_STD    = -lm -lX11 -lGL -lncurses -ltinfo
 LIB_STD    = -lm -lX11 -lGL
 # all heatherly libraries used, debug versions whenever available
-LIB_MINE   = -lyCMD_debug -lySTR_debug
+LIB_MINE   = -lySTR_debug   -lyVIHUB_debug
 # directory for production code, no trailing slash
 INST_DIR   = /usr/local/bin
 

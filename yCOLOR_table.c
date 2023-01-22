@@ -3,7 +3,7 @@
 #include    "yCOLOR_priv.h"
 
 
-const char s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL] =
+const char const s_RYB [MAX_COLOR][MAX_OPTION + 1][LEN_LABEL] =
 {  /*                             original    pass 2     pass 1   paletton    latest      feb 5        6          7          8          9          a          b          c          d          e           f    */
    /*-120 */ "brown"           , "õ000000", "õ99401a", "õ99804d", "õ99804d", "õ4a2208", "õ4a2208", "õ4a2208", "õ4a2208", "õ4a2208", "õ4a2208", "õ------", "õ------", "õ------", "õ------", "õ------", "õ------",
    /*-110 */ "ginderbread"     , "õ000000", "õ943920", "õ946f4a", "õ946f4a", "õ522011", "õ5a2011", "õ522011", "õ522011", "õ522011", "õ522011", "õ------", "õ------", "õ------", "õ------", "õ------", "õ------",
@@ -90,7 +90,7 @@ const char s_newRYB [12][1][LEN_LABEL] = {
 };
 
 
-tNORMING s_normings   [MAX_NORMING] =
+const tNORMING s_normings   [MAX_NORMING] =
 {
    { "no"  , "none"                           , 0.00, 0.00, 0.00, 'n' },
    { "bl"  , "byte_light"                     , 0.05, 0.05, 0.00, 'n' },

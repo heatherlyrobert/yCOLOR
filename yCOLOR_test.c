@@ -20,7 +20,7 @@ ycolor_unit_loud        (void)
    char       *x_args [20]  = {"yCOLOR_unit" };
    yURG_logger   (x_narg, x_args);
    yURG_urgs     (x_narg, x_args);
-   yURG_name     ("ycolor"       , YURG_ON);
+   yURG_by_name     ("ycolor"       , YURG_ON);
    DEBUG_YCOLOR  yLOG_info     ("yCOLOR"    , yCOLOR_version   ());
    yCOLOR_init ();
    return 0;

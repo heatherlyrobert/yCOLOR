@@ -33,8 +33,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.3e"
-#define     P_VERTXT    "updated for yVIOPENGL_dawn and _dusk change"
+#define     P_VERNUM    "1.3f"
+#define     P_VERTXT    "updated to yURG_by_name after yURG change"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
@@ -61,13 +61,11 @@
 /*---(opengl standard)-------------------*/
 #include    <GL/gl.h>        /* OPENGL  standard primary header               */
 #include    <GL/glx.h>       /* OPENGL  standard X11 integration              */
-#include    <ncurses.h>      /* NCURSES standard integration                  */
 /*---(custom core)-----------------------*/
 #include    <yURG.h>              /* heatherly urgent processing              */
 #include    <yLOG.h>              /* heatherly program logging                */
 #include    <ySTR.h>              /* heatherly string processing              */
 #include    <yVAR.h>         /* CUSTOM  heatherly variable testing            */
-#include    <yCMD.h>              /* heatherly vi/vim command processing      */
 
 
 
@@ -146,7 +144,7 @@ struct cNORMING {
    double      blu;
    char        is_value;
 };
-tNORMING s_normings   [MAX_NORMING];
+extern const tNORMING s_normings   [MAX_NORMING];
 
 
 typedef  struct cACCESSOR  tACCESSOR;
@@ -253,6 +251,7 @@ char        ycolor_rgb2hex          (char *a_hex, cfloat a_red, cfloat a_grn, cf
 /*---(program)--------------*/
 char        ycolor_palette_purge    (void);
 char        ycolor_palette_init     (void);
+char        ycolor_constant         (void);
 /*---(generate)-------------*/
 char        ycolor_palette__save    (cint a_major, cint a_minor, cchar *a_hex);
 /*---(report)---------------*/

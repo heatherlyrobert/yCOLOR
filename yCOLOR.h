@@ -165,6 +165,7 @@
 #define     YCOLOR_WHITE     'w'     /* background white                      */
 #define     YCOLOR_MAX       'x'     /* background white with max color       */
 
+#define     YCOLOR_LEAVE     -2
 #define     YCOLOR_CLEAR     -1
 
 
@@ -283,7 +284,7 @@ char        yCOLOR_curs               (cchar *a_terse);
 char        yCOLOR_cursa              (cchar  a_abbr);
 
 #define       LEN_TEXT  2000
-char          yCOLOR_answer [ LEN_TEXT ];
+extern char          yCOLOR_answer [ LEN_TEXT ];
 
 
 char        yCOLOR_palette          (cint   a_deg  , cchar *a_harm, cchar *a_sat, cchar *a_val);

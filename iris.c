@@ -22,7 +22,7 @@
 #include    <yMACRO.h>            /* heatherly vikeys macro processing        */
 #include    <ySRC.h>              /* heatherly vikeys source editing          */
 #include    <yMARK.h>             /* heatherly vikeys search and marking      */
-#include    <yGOD.h>         /* CUSTOM  heatherly opengl godview              */
+/*> #include    <yGOD.h>         /+ CUSTOM  heatherly opengl godview              +/   <*/
 /*---(custom opengl)---------------------*/
 #include    <yVIOPENGL.h>    /* heatherly vikeys opengl handler          */
 #include    <yX11.h>         /* CUSTOM  heatherly xlib/glx setup/teardown     */
@@ -283,12 +283,12 @@ PROG__init              (int a_argc, char *a_argv[])
    /*---(setup yVIKEYS)------------------*/
    DEBUG_PROG   yLOG_note  ("prepare modes");
    /*> yVIKEYS_init         ('-');                                                    <*/
-   yCMD_add             ('v', "labels"      , ""    , "s"    , DRAW_labels_set            , "show color labels (y/n)" );
-   yCMD_add             ('v', "extras"      , ""    , "s"    , DRAW_extras_set            , "show extra colors (y/n)" );
-   yCMD_add             ('v', "conf"        , ""    , "s"    , DRAW_conf_set              , "show conf details (y/n)" );
-   yCMD_add             ('v', "refs"        , ""    , "s"    , DRAW_refs_set              , "show conf details (y/n)" );
+   yVIHUB_yCMD_add             ('v', "labels"      , ""    , "s"    , DRAW_labels_set            , "show color labels (y/n)" );
+   yVIHUB_yCMD_add             ('v', "extras"      , ""    , "s"    , DRAW_extras_set            , "show extra colors (y/n)" );
+   yVIHUB_yCMD_add             ('v', "conf"        , ""    , "s"    , DRAW_conf_set              , "show conf details (y/n)" );
+   yVIHUB_yCMD_add             ('v', "refs"        , ""    , "s"    , DRAW_refs_set              , "show conf details (y/n)" );
    /*> yVIKEYS_view_config  ("yCOLOR_make", P_VERNUM, YVIKEYS_OPENGL, 500, 500, 500);   <*/
-   /*> yCMD_direct          (":palette 0 fcomp full vivid");                          <*/
+   /*> yVIHUB_yCMD_direct          (":palette 0 fcomp full vivid");                          <*/
    /*---(complete)-----------------------*/
    DEBUG_PROG   yLOG_exit  (__FUNCTION__);
    return 0;
@@ -495,8 +495,8 @@ static void      o___OPENGL__________________o (void) {;}
 char         /*-> establish drawing settings ---------[ shoot  [gz.640.001.00]*/ /*-[00.0000.011.!]-*/ /*-[--.---.---.--]-*/
 DRAW_init          (void)
 {
-   yCMD_direct   (":layout min");
-   if (s_alt == 'y')  yCMD_direct   (":alt show");
+   yVIHUB_yCMD_direct   (":layout min");
+   if (s_alt == 'y')  yVIHUB_yCMD_direct   (":alt show");
    yVIEW_full     (YVIEW_MAIN , YVIEW_FLAT , YVIEW_MIDCEN, YCOLOR_SPE, YCOLOR_BLK, DRAW_wheel );
    yVIEW_simple   (YVIEW_PROGRESS, YCOLOR_SPE, YCOLOR_BLK, DRAW_view_prog);
    yVIEW_full     (YVIEW_ALT  , YVIEW_FLAT , YVIEW_MIDCEN, YCOLOR_SPE, YCOLOR_BLK, DRAW_layout);
