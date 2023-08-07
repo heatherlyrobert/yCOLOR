@@ -33,8 +33,8 @@
 
 #define     P_VERMAJOR  ""
 #define     P_VERMINOR  ""
-#define     P_VERNUM    "1.3f"
-#define     P_VERTXT    "updated to yURG_by_name after yURG change"
+#define     P_VERNUM    "1.3g"
+#define     P_VERTXT    "solved an opengl requirement in curses environment issue"
 
 #define     P_PRIORITY  "direct, simple, brief, vigorous, and lucid (h.w. fowler)"
 #define     P_PRINCIPAL "[grow a set] and build your wings on the way down (r. bradbury)"
@@ -67,6 +67,7 @@
 #include    <ySTR.h>              /* heatherly string processing              */
 #include    <yVAR.h>         /* CUSTOM  heatherly variable testing            */
 
+#include    <yVIHUB_solo.h>
 
 
 /*===[[ RATIONAL LIMITS ]]====================================================*/

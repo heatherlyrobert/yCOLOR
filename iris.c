@@ -197,7 +197,7 @@ PROG__header            (void)
    DEBUG_PROG   yLOG_info     ("yMACRO"  , yMACRO_version    ());
    DEBUG_PROG   yLOG_info     ("ySRC"    , ySRC_version      ());
    DEBUG_PROG   yLOG_info     ("yMARK"   , yMARK_version     ());
-   DEBUG_PROG   yLOG_info     ("yGOD"    , yGOD_version      ());
+   /*> DEBUG_PROG   yLOG_info     ("yGOD"    , yGOD_version      ());                 <*/
    DEBUG_PROG   yLOG_note     ("custom opengl");
    DEBUG_PROG   yLOG_info     ("yVIOP"   , yVIOPENGL_version ());
    DEBUG_PROG   yLOG_info     ("yX11"    , yX11_version      ());
@@ -1257,7 +1257,7 @@ DRAW_view_nav      (void)
       x_ymax = 0;
       x_ymin = -x_tall;
       DEBUG_GRAF   yLOG_complex ("alt" , "bott %4d, left %4d, wide %4d, tall %4d, on %c", x_bott, x_left, x_wide, x_tall, rc);
-      DEBUG_WIND   yLOG_note    ("set viewport");
+      DEBUG_GRAF   yLOG_note    ("set viewport");
       int x, y;
       int c = 0;
       char x_name [LEN_LABEL];

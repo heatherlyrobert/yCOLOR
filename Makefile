@@ -25,7 +25,7 @@ LIB_UTIL   = -lySTR_debug -lyX11_debug -lyCOLOR_debug -lyFONT_debug
 
 LIB_FOUND  = -lyMODE_debug  -lyKEYS_debug  -lyFILE_debug  -lyVIEW_debug
 LIB_MAJOR  = -lyMAP_debug   -lyCMD_debug   -lyMACRO_debug -lySRC_debug   -lyMARK_debug  -lyMACRO_debug
-LIB_OPENGL = -lyVIOPENGL_debug -lyGOD_debug -lyX11_debug  -lyFONT_debug  -lyCOLOR_debug -lyGLTEX_debug
+LIB_OPENGL = -lyVIOPENGL_debug -lyX11_debug  -lyFONT_debug  -lyCOLOR_debug -lyGLTEX_debug
 LIB_OTHER  = -lyVAR_debug   -lySTR_debug
 LIB_UTIL   = $(LIB_FOUND)   $(LIB_MAJOR)   $(LIB_OPENGL)  $(LIB_OTHER)
 
